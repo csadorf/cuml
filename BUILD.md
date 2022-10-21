@@ -2,34 +2,65 @@
 
 ## Setting Up Your Build Environment
 
-To install cuML from source, ensure the following dependencies are met:
+The following instructions are targeted at developers and contributors to cuML development. They are tested for Ubuntu LTS releases. Other operating systems may be compatible, but are not explicitly tested.
 
-1. [cuDF](https://github.com/rapidsai/cudf) (>=0.8)
-2. zlib
-3. cmake (>= 3.14)
-4. CUDA (>= 9.2)
-5. Cython (>= 0.29)
-6. gcc (>=7.5.0)
-7. BLAS - Any BLAS compatible with cmake's [FindBLAS](https://cmake.org/cmake/help/v3.14/module/FindBLAS.html). Note that the blas has to be installed to the same folder system as cmake, for example if using conda installed cmake, the blas implementation should also be installed in the conda environment.
-8. clang-format (= 8.0.1) - enforces uniform C++ coding style; required to build cuML from source. The packages `clang=8` and `clang-tools=8` from the conda-forge channel should be sufficient, if you are on conda. If not using conda, install the right version using your OS package manager.
-9. NCCL (>=2.4)
-10. UCX [optional] (>= 1.7) - enables point-to-point messaging in the cuML standard communicator. This is necessary for many multi-node multi-GPU cuML algorithms to function.
+We recommend to create the build environment with conda (or mamba), however we provide instructions on how to build without conda below as well.
 
-It is recommended to use conda for environment/package management. If doing so, a convenience environment .yml file is located in `conda/environments/cuml_dec_cudax.y.yml` (replace x.y for your CUDA version). This file contains most of the dependencies mentioned above (notable exceptions are `gcc` and `zlib`). To use it, for example to create an environment named `cuml_dev` for CUDA 10.2 and Python 3.7, you can use the follow command:
 
-```bash
-conda create -n cuml_dev python=3.7
+### Build with conda / mamba
+
+Ensure that the following prerequisites are met:
+TBD
+
+The easiest way to create a compatible build environment is to use one of the provided environment files located at `conda/environments/cuml_dev_cudaX.Y.yml` (replace X.Y with your targeted CUDA version). For example, to create an environment for Python 3.8 and CUDA 11.5, execute`
+
+```console
+conda create -n cuml_dev python=3.8
 conda activate cuml_dev
-conda env update --file=conda/environments/cuml_dev_cuda11.2.yml
-```
+conda env update --file=conda/environments/cuml_dev_cuda11.5.yml
+````
 
 These conda environments are based on the general RAPIDS meta packages that install common dependencies for RAPIDS projects. To install different versions of packages contained in those meta packages after creating the environment, it is recommended to remove those meta packages (without removing the actual packages contained in the environment) with the following command (having the environment active):
 
 ```bash
 conda remove --force rapids-build-env rapids-notebook-env rapids-doc-env
 ```
+_Note: The above command does not work with mamba, see the related discussion [here](https://github.com/mamba-org/mamba/issues/1523)._
 
-## Installing from Source:
+### Build without conda
+
+To build cuML from source without conda, ensure that the following prerequisites are met:
+
+2. cmake (>= 3.23.1)
+3. gcc (>=7.5.0)
+4. Cuda (>= 11.0)
+5. Python (>= 3.8)
+6. Cython (>= 0.29.17,<0.30)
+7. BLAS - Any BLAS compatible with cmake's [FindBLAS](https://cmake.org/cmake/help/v3.23/module/FindBLAS.html). Note that the blas has to be installed to the same folder system as cmake, for example if using conda installed cmake, the blas implementation should also be installed in the conda environment.
+8. LAPACK (TODO: CHECK VERSION)
+9. [optional] UCX (>= 1.7) - enables point-to-point messaging in the cuML standard communicator. This is necessary for many multi-node multi-GPU cuML algorithms to function.
+
+### Build without conda
+
+To install cuML from source, ensure the following dependencies are met:
+
+1. [cuDF](https://github.com/rapidsai/cudf) (matching the cuml version)
+2. zlib
+3. cmake (>= 3.23.1)
+4. CUDA (>= 11.0)
+5. Python (>= 3.8)
+5. Cython (>= 0.29.17,<0.30)
+6. gcc (>=7.5.0)
+7. BLAS - Any BLAS compatible with cmake's [FindBLAS](https://cmake.org/cmake/help/v3.23/module/FindBLAS.html). Note that the blas has to be installed to the same folder system as cmake, for example if using conda installed cmake, the blas implementation should also be installed in the conda environment.
+7. LAPACK
+8. [i dont think this is required] clang-format (= 8.0.1) - enforces uniform C++ coding style; required to build cuML from source. The packages `clang=8` and `clang-tools=8` from the conda-forge channel should be sufficient, if you are on conda. If not using conda, install the right version using your OS package manager. 
+10. NCCL (>=2.4)
+11. UCX [optional] (>= 1.7) - enables point-to-point messaging in the cuML standard communicator. This is necessary for many multi-node multi-GPU cuML algorithms to function.
+
+It is recommended to use conda for environment/package management. If doing so, a convenience environment .yml file is located in `conda/environments/cuml_dev_cudax.y.yml` (replace x.y for your CUDA version). This file contains most of the dependencies mentioned above (notable exceptions are `gcc` and `zlib`). To use it, for example to create an environment named `cuml_dev` for CUDA 10.5 and Python 3.8, you can use the follow command:
+
+
+## Building from source
 
 ### Recommended process
 
