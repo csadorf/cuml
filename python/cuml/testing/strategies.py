@@ -20,13 +20,12 @@ from hypothesis import assume
 from hypothesis.extra.numpy import arrays, floating_dtypes, array_shapes
 from hypothesis.strategies import (composite, integers, just, none, one_of,
                                    sampled_from)
-from numba import cuda
 from sklearn.datasets import make_regression
 from sklearn.model_selection import train_test_split
 
 
 _CUML_ARRAY_INPUT_TYPES = [
-    'numpy', 'numba', 'cupy', 'series', None,
+    'numpy', 'cupy', 'series', None,
 ]
 
 
@@ -107,9 +106,6 @@ def _create_cuml_array_input(input_type, dtype, shape, order):
 
     if input_type == 'numpy':
         return np.array(cp.asnumpy(array), dtype=dtype, order=order)
-
-    elif input_type == 'numba':
-        return cuda.as_cuda_array(array)
 
     elif input_type == 'series':
         return cudf.Series(array)
