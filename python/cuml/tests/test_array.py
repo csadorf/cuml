@@ -327,8 +327,6 @@ def test_output(output_type, dtype, order, shape):
         assume(dtype not in UNSUPPORTED_CUDF_DTYPES)
     if output_type == "series":
         assume(len(_series_squeezed_shape(shape)) == 1)
-        assume(isinstance(shape, int) or
-               all(shape[d] == 1 for d in range(1, len(shape))))
 
     # Generate input and cuml array
     inp = create_cuml_array_input("numpy", dtype, shape, order)
