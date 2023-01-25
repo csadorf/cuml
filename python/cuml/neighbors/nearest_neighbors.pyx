@@ -1023,7 +1023,8 @@ def kneighbors_graph(X=None, n_neighbors=5, mode='connectivity', verbose=False,
         metric=metric,
         p=p,
         metric_params=metric_params,
-        output_type=cuml.global_settings.root_cm.output_type
+        # TODO: Try to remove this.
+        output_type=cuml.internals.api_decorators._API_CONTEXT.output_type_override,
     ).fit(X)
 
     if include_self == 'auto':
