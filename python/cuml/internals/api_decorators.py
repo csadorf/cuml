@@ -238,6 +238,8 @@ def _make_decorator_function(
         get_output_dtype: bool = False,
         set_output_dtype: bool = False,
         set_n_features_in: bool = False,
+        # TODO: remove this debugging option:
+        _restore_base_array_behavior: bool = False,
     ) -> _DecoratorType:
 
         def decorator_closure(func):
@@ -298,8 +300,20 @@ def _make_decorator_function(
                     else:
                         target_val = None
 
-                    if set_output_type:
+                    if _restore_base_array_behavior:
+                        # This is an attempt to recover the
+                        # ProcessEnterBaseReturnArray.base_output_type_callback
+                        # behavior.
+                        out_type = _API_CONTEXT.output_type_override
+                        if out_type is None:
+                            out_type = self_val.output_type
+                        if out_type == "input":
+                            out_type = self_val._input_type
+                        if out_type != _API_CONTEXT.output_type_override:
+                            _API_CONTEXT.output_type_override = out_type
+                    elif set_output_type:
                         self_val._set_output_type(input_val)
+
                     if set_output_dtype:
                         self_val._set_target_dtype(target_val)
                     if set_n_features_in and len(input_val.shape) >= 2:
@@ -332,14 +346,20 @@ def _make_decorator_function(
                     else:
                         return func(*args, **kwargs)
 
-                    # Check for global output type override
-                    global_output_type = GlobalSettings().output_type
-                    assert global_output_type in (None, "mirror", "input")
-                    out_type_override = _API_CONTEXT.previous_output_type \
-                        or _API_CONTEXT.output_type_override
-                    if out_type_override not in (None, "mirror", "input"):
-                        out_type = out_type_override
-                    assert not out_type == "input"
+                    if _restore_base_array_behavior:
+                        out_type = GlobalSettings().output_type
+                        if out_type in (None, "mirror", "input"):
+                            out_type = _API_CONTEXT.output_type_override
+                        assert out_type not in (None, "mirror", "input")
+                    else:
+                        # Check for global output type override
+                        global_output_type = GlobalSettings().output_type
+                        assert global_output_type in (None, "mirror", "input")
+                        out_type_override = _API_CONTEXT.previous_output_type \
+                            or _API_CONTEXT.output_type_override
+                        if out_type_override not in (None, "mirror", "input"):
+                            out_type = out_type_override
+                        assert not out_type == "input"
 
                     # Check for global output dtype override
                     output_dtype = _API_CONTEXT.output_dtype_override \
@@ -369,6 +389,7 @@ api_base_return_array = _make_decorator_function(
     # BaseReturnArrayCM,
     process_return=True,
     get_output_type=True,
+    _restore_base_array_behavior=True,
 )
 api_return_generic = _make_decorator_function(
     # ReturnGenericCM,
@@ -396,6 +417,7 @@ api_base_return_sparse_array = _make_decorator_function(
     # BaseReturnSparseArrayCM,
     process_return=True,
     get_output_type=True,
+    _restore_base_array_behavior=True,
 )
 
 api_base_return_any_skipall = api_base_return_any(
