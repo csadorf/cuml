@@ -133,6 +133,8 @@ def api_context():
     try:
         if _API_CONTEXT.stack_level == 1:
             with contextlib.ExitStack() as stack:
+                _API_CONTEXT.output_type_override = None
+                _API_CONTEXT.output_dtype_override = None
                 stack.enter_context(cupy_using_allocator(rmm_cupy_allocator))
                 stack.enter_context(_restore_dtype())
                 _API_CONTEXT.previous_output_type =\
