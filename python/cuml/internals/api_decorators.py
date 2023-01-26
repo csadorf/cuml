@@ -145,6 +145,12 @@ def api_context():
     finally:
         _API_CONTEXT.stack_level -= 1
 
+        if _API_CONTEXT.stack_level == 0:
+            # Reset context
+            _API_CONTEXT.previous_output_type = None
+            _API_CONTEXT.output_type_override = None
+            _API_CONTEXT.output_dtype_override = None
+
 
 def in_internal_api():
     return _API_CONTEXT.stack_level > 1
