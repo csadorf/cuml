@@ -297,7 +297,7 @@ def _make_decorator_function(
                 with api_context():
 
                     # if in_internal_api():
-                    #     return func(*args, **kwargs)
+                        # return func(*args, **kwargs)
 
                     self_val = args[0] if has_self else None
 
@@ -358,11 +358,10 @@ def _make_decorator_function(
                         return func(*args, **kwargs)
 
                     if _restore_ProcessReturnArray:
-                        if get_output_type:
-                            out_type = GlobalSettings().output_type
-                            if out_type in (None, "mirror", "input"):
-                                out_type = _API_CONTEXT.output_type_override
-                            assert out_type not in (None, "mirror", "input")
+                        out_type = GlobalSettings().output_type
+                        if out_type in (None, "mirror", "input"):
+                            out_type = _API_CONTEXT.output_type_override
+                        assert out_type not in (None, "mirror", "input")
                     else:
                         # Check for global output type override
                         global_output_type = GlobalSettings().output_type
@@ -376,6 +375,10 @@ def _make_decorator_function(
                     # Check for global output dtype override
                     output_dtype = _API_CONTEXT.output_dtype_override \
                         or output_dtype
+
+
+                    if _API_CONTEXT.stack_level > 1:
+                        out_type = None
 
                     return process_generic(ret, out_type, output_dtype)
 
