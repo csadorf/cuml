@@ -200,6 +200,9 @@ def process_single(value, output_type, output_dtype):
 def process_generic(value, output_type, output_dtype):
     # TODO: Try to refactor to not use isinstance() checks but try-fail
     # approach.
+    if output_type is None:  # short-cut
+        return value
+
     if iu.is_array_like(value):
         return process_single(value, output_type, output_dtype)
 
