@@ -200,8 +200,8 @@ def process_single(value, output_type, output_dtype):
 def process_generic(value, output_type, output_dtype):
     # TODO: Try to refactor to not use isinstance() checks but try-fail
     # approach.
-    if output_type is None:  # short-cut
-        return value
+    # if output_type is None:  # short-cut
+        # return value
 
     if iu.is_array_like(value):
         return process_single(value, output_type, output_dtype)
@@ -296,8 +296,8 @@ def _make_decorator_function(
 
                 with api_context():
 
-                    if in_internal_api():
-                        return func(*args, **kwargs)
+                    # if in_internal_api():
+                    #     return func(*args, **kwargs)
 
                     self_val = args[0] if has_self else None
 
@@ -321,7 +321,8 @@ def _make_decorator_function(
                             _out_type = self_val._input_type
                         if _out_type != _API_CONTEXT.output_type_override:
                             _API_CONTEXT.output_type_override = _out_type
-                    elif set_output_type:
+
+                    if set_output_type:
                         self_val._set_output_type(input_val)
 
                     if set_output_dtype:
@@ -357,10 +358,11 @@ def _make_decorator_function(
                         return func(*args, **kwargs)
 
                     if _restore_ProcessReturnArray:
-                        out_type = GlobalSettings().output_type
-                        if out_type in (None, "mirror", "input"):
-                            out_type = _API_CONTEXT.output_type_override
-                        assert out_type not in (None, "mirror", "input")
+                        if get_output_type:
+                            out_type = GlobalSettings().output_type
+                            if out_type in (None, "mirror", "input"):
+                                out_type = _API_CONTEXT.output_type_override
+                            assert out_type not in (None, "mirror", "input")
                     else:
                         # Check for global output type override
                         global_output_type = GlobalSettings().output_type
