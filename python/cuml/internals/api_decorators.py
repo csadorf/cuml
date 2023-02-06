@@ -314,13 +314,13 @@ def _make_decorator_function(
                         # This is an attempt to recover the
                         # ProcessEnterBaseReturnArray.base_output_type_callback
                         # behavior.
-                        out_type = _API_CONTEXT.output_type_override
-                        if out_type is None:
-                            out_type = self_val.output_type
-                        if out_type == "input":
-                            out_type = self_val._input_type
-                        if out_type != _API_CONTEXT.output_type_override:
-                            _API_CONTEXT.output_type_override = out_type
+                        _out_type = _API_CONTEXT.output_type_override
+                        if _out_type is None:
+                            _out_type = self_val.output_type
+                        if _out_type == "input":
+                            _out_type = self_val._input_type
+                        if _out_type != _API_CONTEXT.output_type_override:
+                            _API_CONTEXT.output_type_override = _out_type
                     elif set_output_type:
                         self_val._set_output_type(input_val)
 
