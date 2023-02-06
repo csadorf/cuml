@@ -247,8 +247,9 @@ def _make_decorator_function(
         get_output_dtype: bool = False,
         set_output_dtype: bool = False,
         set_n_features_in: bool = False,
-        # TODO: remove this debugging option:
-        _restore_base_array_behavior: bool = False,
+        # TODO: remove these debugging options:
+        _restore_ProcessEnterBaseReturnArray: bool = False,
+        _restore_ProcessReturnArray: bool = False,
     ) -> _DecoratorType:
 
         def decorator_closure(func):
@@ -309,7 +310,7 @@ def _make_decorator_function(
                     else:
                         target_val = None
 
-                    if _restore_base_array_behavior:
+                    if _restore_ProcessEnterBaseReturnArray:
                         # This is an attempt to recover the
                         # ProcessEnterBaseReturnArray.base_output_type_callback
                         # behavior.
@@ -355,7 +356,7 @@ def _make_decorator_function(
                     else:
                         return func(*args, **kwargs)
 
-                    if _restore_base_array_behavior:
+                    if _restore_ProcessReturnArray:
                         out_type = GlobalSettings().output_type
                         if out_type in (None, "mirror", "input"):
                             out_type = _API_CONTEXT.output_type_override
@@ -398,7 +399,8 @@ api_base_return_array = _make_decorator_function(
     # BaseReturnArrayCM,
     process_return=True,
     get_output_type=True,
-    _restore_base_array_behavior=True,
+    _restore_ProcessEnterBaseReturnArray=True,
+    _restore_ProcessReturnArray=True,
 )
 api_return_generic = _make_decorator_function(
     # ReturnGenericCM,
@@ -408,6 +410,7 @@ api_base_return_generic = _make_decorator_function(
     # BaseReturnGenericCM,
     process_return=True,
     get_output_type=True,
+    _restore_ProcessEnterBaseReturnArray=True,
 )
 api_base_fit_transform = _make_decorator_function(
     # TODO: add tests for this decorator(
@@ -416,6 +419,8 @@ api_base_fit_transform = _make_decorator_function(
     get_output_type=True,
     set_output_type=True,
     set_n_features_in=True,
+    _restore_ProcessEnterBaseReturnArray=True,
+    _restore_ProcessReturnArray=True,
 )
 
 api_return_sparse_array = _make_decorator_function(
@@ -426,7 +431,8 @@ api_base_return_sparse_array = _make_decorator_function(
     # BaseReturnSparseArrayCM,
     process_return=True,
     get_output_type=True,
-    _restore_base_array_behavior=True,
+    _restore_ProcessEnterBaseReturnArray=True,
+    _restore_ProcessReturnArray=True,
 )
 
 api_base_return_any_skipall = api_base_return_any(
