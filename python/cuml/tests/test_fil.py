@@ -24,6 +24,7 @@ from sklearn.ensemble import (
     ExtraTreesRegressor,
 )
 from sklearn.datasets import make_classification, make_regression
+import treelite
 from cuml.internals.import_utils import has_xgboost
 from cuml.testing.utils import (
     array_equal,
@@ -777,3 +778,9 @@ def test_lightgbm(tmp_path, num_classes, n_categorical):
             fm.predict_proba(X_predict),
             atol=proba_atol[num_classes > 2],
         )
+
+
+def test_fil_dealloc():
+    model = treelite.Model.deserialize("model.treelite")
+    fm = ForestInference()
+    fm.load_from_treelite_model(model)
