@@ -34,6 +34,7 @@ dependencies:
 - ipykernel
 - ipython
 - joblib>=0.11
+- libarrow==13.*
 - libcublas-dev
 - libcufft-dev
 - libcumlprims==23.12.*
@@ -49,6 +50,7 @@ dependencies:
 - numba>=0.57
 - numpydoc
 - pip
+- pyarrow==13.0.0.*
 - pydata-sphinx-theme!=0.14.2
 - pylibraft==23.12.*
 - pynndescent==0.5.8
