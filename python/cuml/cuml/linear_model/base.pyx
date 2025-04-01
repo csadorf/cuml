@@ -95,7 +95,7 @@ class LinearPredictMixin:
         else:
             intercept_ = CumlArray.from_input(
                 self.intercept_,
-                convert_to_dtype=self.dtype if isinstance(self.intercept_, float) else False
+                convert_to_dtype=(self.dtype if isinstance(self.intercept_, float) else None)
             ).to_output('array')
 
         preds_arr = X_arr @ coef_arr.T + intercept_
