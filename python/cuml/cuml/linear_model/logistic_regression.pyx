@@ -557,7 +557,7 @@ class LogisticRegression(Base,
     @generate_docstring(X='dense_sparse',
                         return_values={'name': 'preds',
                                        'type': 'dense',
-                                       'description': 'Logaright of predicted \
+                                       'description': 'Logarithm of predicted \
                                                        class probabilities',
                                        'shape': '(n_samples, n_classes)'})
     @warn_legacy_device_interop

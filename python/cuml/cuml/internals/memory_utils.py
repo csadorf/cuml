@@ -295,7 +295,7 @@ class using_output_type:
     """
     Context manager method to set cuML's global output type inside a `with`
     statement. It gets reset to the prior value it had once the `with` code
-    block is executer.
+    block is executed.
 
     Parameters
     ----------

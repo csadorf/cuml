@@ -421,7 +421,7 @@ class HDBSCAN(UniversalBase, ClusterMixin, CMajorInputTagMixin):
     gen_single_linkage_tree_ : bool, optional (default=False)
         Whether to populate the `single_linkage_tree_` member for
         utilizing plotting tools. This requires the `hdbscan` CPU
-        Python package t be installed.
+        Python package to be installed.
 
     output_type : {'input', 'array', 'dataframe', 'series', 'df_obj', \
         'numba', 'cupy', 'numpy', 'cudf', 'pandas'}, default=None

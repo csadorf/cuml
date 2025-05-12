@@ -132,11 +132,11 @@ class KMeans(UniversalBase,
     random_state : int (default = 1)
         If you want results to be the same when you restart Python, select a
         state.
-    init : {'scalable-kmeans++', 'k-means||', 'random'} or an \
+    init : {'scalable-k-means++', 'k-means||', 'random'} or an \
             ndarray (default = 'scalable-k-means++')
 
          - ``'scalable-k-means++'`` or ``'k-means||'``: Uses fast and stable
-           scalable kmeans++ initialization.
+           scalable k-means++ initialization.
          - ``'random'``: Choose `n_cluster` observations (rows) at random
            from data for the initial centroids.
          - If an ndarray is passed, it should be of

@@ -30,7 +30,7 @@ There are 2 decorators:
     many more custom parameters that are particular to the class(es) as opposed
     to being common in the codebase. Allows to keep our documentation up to
     date and correct with minimal changes by keeping our common datatypes
-    concentrated here. NearestNeigbors is a good example of this use case.
+    concentrated here. NearestNeighbors is a good example of this use case.
 
 More data types can be added as we need them.
 
@@ -141,7 +141,7 @@ def generate_docstring(
     return_values=False,
 ):
     """
-    Decorator to generate dostrings of common functions in the codebase.
+    Decorator to generate docstrings of common functions in the codebase.
     It will auto detect what parameters and default values the function has.
     Unfortunately due to using cython, we cannot (cheaply) do detection of
     return values.
