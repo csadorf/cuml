@@ -27,11 +27,6 @@ import treelite
 from sklearn import metrics
 from sklearn.impute import SimpleImputer as skSimpleImputer
 
-import cuml
-import cuml.decomposition
-import cuml.experimental
-import cuml.metrics
-import cuml.naive_bayes
 from cuml.benchmark.bench_helper_funcs import (
     _build_cpu_skl_classifier,
     _build_fil_classifier,
@@ -221,6 +216,8 @@ def _numpy_format_hook(data):
 
 def all_algorithms():
     """Returns all defined AlgorithmPair objects"""
+    import cuml  # late import to avoid UnboundLocalError
+
     algorithms = [
         AlgorithmPair(
             sklearn.cluster.KMeans,
