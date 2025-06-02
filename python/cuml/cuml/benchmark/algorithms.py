@@ -482,10 +482,10 @@ def all_algorithms():
         ),
         AlgorithmPair(
             treelite,
-            cuml.experimental.ForestInference,
+            cuml.ForestInference,
             shared_args=dict(num_rounds=100, max_depth=10),
             cuml_args=dict(output_class=False),
-            name="FILEX",
+            name="FIL",
             accepts_labels=False,
             setup_cpu_func=_build_gtil_classifier,
             setup_cuml_func=_build_fil_classifier,
@@ -495,7 +495,7 @@ def all_algorithms():
         ),
         AlgorithmPair(
             treelite,
-            cuml.experimental.ForestInference,
+            cuml.ForestInference,
             shared_args=dict(num_rounds=100, max_depth=10),
             cuml_args=dict(
                 fil_algo="NAIVE",
@@ -505,7 +505,7 @@ def all_algorithms():
                 infer_type="default",
                 model_type="xgboost_ubj",
             ),
-            name="FILEX-Optimized",
+            name="FIL-Optimized",
             accepts_labels=False,
             setup_cpu_func=_build_gtil_classifier,
             setup_cuml_func=_build_optimized_fil_classifier,
@@ -534,10 +534,10 @@ def all_algorithms():
         ),
         AlgorithmPair(
             treelite,
-            cuml.experimental.ForestInference,
+            cuml.ForestInference,
             shared_args=dict(n_estimators=100, max_leaf_nodes=2**10),
             cuml_args=dict(output_class=False),
-            name="Sparse-FILEX-SKL",
+            name="Sparse-FIL-SKL",
             accepts_labels=False,
             setup_cpu_func=_build_cpu_skl_classifier,
             setup_cuml_func=_build_fil_skl_classifier,
@@ -546,7 +546,7 @@ def all_algorithms():
         ),
         AlgorithmPair(
             treelite,
-            cuml.experimental.ForestInference,
+            cuml.ForestInference,
             shared_args=dict(
                 num_rounds=100, max_depth=10, infer_type="per_tree"
             ),
@@ -556,7 +556,7 @@ def all_algorithms():
                 output_class=False,
                 precision="float32",
             ),
-            name="FILEX-PerTree",
+            name="FIL-PerTree",
             accepts_labels=False,
             setup_cpu_func=_build_gtil_classifier,
             setup_cuml_func=_build_optimized_fil_classifier,

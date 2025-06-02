@@ -155,16 +155,11 @@ def _build_fil_classifier(m, data, args, tmpdir):
 
 
 class OptimizedFilWrapper:
-    """Helper class to make use of optimized parameters in both FIL and
-    experimental FIL through a uniform interface"""
+    """Obsolete helper class"""
 
-    def __init__(
-        self, fil_model, optimal_chunk_size, experimental, infer_type="default"
-    ):
+    def __init__(self, fil_model, optimal_chunk_size, infer_type="default"):
         self.fil_model = fil_model
-        self.predict_kwargs = {}
-        if experimental:
-            self.predict_kwargs["chunk_size"] = optimal_chunk_size
+        self.predict_kwargs = {"chunk_size": optimal_chunk_size}
         self.infer_type = infer_type
 
     def predict(self, X):
@@ -217,13 +212,8 @@ def _build_optimized_fil_classifier(m, data, args, tmpdir):
         )
         if input_name in args
     }
-    experimental = m is cuml.experimental.ForestInference
-    if experimental:
-        allowed_storage_types = ["sparse"]
-    else:
-        allowed_storage_types = ["sparse", "sparse8"]
-        if args["storage_type"] == "dense":
-            allowed_storage_types.append("dense")
+
+    allowed_storage_types = ["sparse"]
     infer_type = args.get("infer_type", "default")
 
     optimal_storage_type = "sparse"
@@ -235,22 +225,14 @@ def _build_optimized_fil_classifier(m, data, args, tmpdir):
     for storage_type in allowed_storage_types:
         fil_kwargs["storage_type"] = storage_type
         allowed_algo_types = ["NAIVE"]
-        if not experimental and storage_type == "dense":
-            allowed_algo_types.extend(("TREE_REORG", "BATCH_TREE_REORG"))
-        allowed_layout_types = ["breadth_first"]
-        if experimental:
-            allowed_layout_types.append("depth_first")
-            allowed_layout_types.append("layered")
+        allowed_layout_types = ["breadth_first", "depth_first", "layered"]
         for algo in allowed_algo_types:
             fil_kwargs["algo"] = algo
             for layout in allowed_layout_types:
-                if experimental:
-                    fil_kwargs["layout"] = layout
+                fil_kwargs["layout"] = layout
                 for chunk_size in allowed_chunk_sizes:
                     fil_kwargs["threads_per_tree"] = chunk_size
-                    call_args = {}
-                    if experimental:
-                        call_args = {"chunk_size": chunk_size}
+                    call_args = {"chunk_size": chunk_size}
                     fil_model = m.load(model_path, **fil_kwargs)
                     if infer_type == "per_tree":
                         fil_model.predict_per_tree(train_data, **call_args)
@@ -274,13 +256,11 @@ def _build_optimized_fil_classifier(m, data, args, tmpdir):
         fil_kwargs["storage_type"] = optimal_storage_type
         fil_kwargs["algo"] = optimal_algo
         fil_kwargs["threads_per_tree"] = optimal_chunk_size
-        if experimental:
-            fil_kwargs["layout"] = optimal_layout
+        fil_kwargs["layout"] = optimal_layout
 
         return OptimizedFilWrapper(
             m.load(model_path, **fil_kwargs),
             optimal_chunk_size,
-            experimental,
             infer_type=infer_type,
         )
 
