@@ -194,7 +194,7 @@ void class_probs(const raft::handle_t& handle,
                  const float* weights = nullptr)
 {
   for (std::size_t i = 0; i < y.size(); i++) {
-    cudaStream_t stream = handle.get_next_usable_stream();
+    cudaStream_t stream = handle.get_next_usable_stream(i);
 
     int n_unique_labels = n_unique[i];
     size_t cur_size     = n_query_rows * n_unique_labels;
@@ -345,11 +345,14 @@ void knn_regress(const raft::handle_t& handle,
                  int k,
                  const float* weights = nullptr)
 {
+  // Ensure proper stream synchronization to avoid deadlocks in MGPU scenarios
+  raft::stream_syncer _(handle);
+
   /**
    * Vote average regression value
    */
   for (std::size_t i = 0; i < y.size(); i++) {
-    cudaStream_t stream = handle.get_next_usable_stream();
+    cudaStream_t stream = handle.get_next_usable_stream(i);
 
     regress_avg_kernel<ValType, precomp_lbls>
       <<<raft::ceildiv(n_query_rows, static_cast<std::size_t>(TPB_X)), TPB_X, 0, stream>>>(
