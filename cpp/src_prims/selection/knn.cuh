@@ -269,6 +269,9 @@ void knn_classify(const raft::handle_t& handle,
                   std::vector<int>& n_unique,
                   const float* weights = nullptr)
 {
+  // Ensure proper stream synchronization to avoid deadlocks in MGPU scenarios
+  raft::stream_syncer _(handle);
+
   std::vector<float*> probs;
   std::vector<rmm::device_uvector<float>> tmp_probs;
 
