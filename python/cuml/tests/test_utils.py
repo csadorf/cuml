@@ -13,7 +13,49 @@ from hypothesis.extra.numpy import (
     integer_dtypes,
 )
 
-from cuml.testing.utils import array_equal, assert_array_equal
+from cuml.testing.utils import (
+    array_difference,
+    array_equal,
+    assert_array_equal,
+)
+
+
+@pytest.mark.parametrize(
+    "dtype,min_value",
+    [
+        (np.int8, -128),
+        (np.int16, -32768),
+        (np.int32, -2147483648),
+        (np.int64, -9223372036854775808),
+    ],
+)
+@pytest.mark.parametrize("with_sign", [True, False])
+def test_array_equal_integer_overflow(dtype, min_value, with_sign):
+    """Test that array comparison handles integer overflow in abs() correctly.
+
+    When taking abs() of the minimum value of a signed integer type,
+    overflow occurs because the positive value cannot be represented.
+    For example: np.abs(np.int8(-128)) -> -128 (overflow).
+
+    This test ensures the comparison logic handles this edge case correctly
+    by casting to float64 before taking absolute values.
+    """
+    # Create arrays with the minimum value that causes overflow
+    a = np.array([[0, 0], [0, 0]], dtype=dtype)
+    b = np.array([[min_value, 0], [1, -1]], dtype=dtype)
+
+    # These should not raise an error and should compute differences correctly
+    equal = array_equal(a, b, unit_tol=1.0, with_sign=with_sign)
+    difference = array_difference(a, b, with_sign=with_sign)
+
+    # Arrays are clearly different, so equal should be False
+    assert not equal
+    # Difference should be non-zero
+    assert difference != 0
+    # For with_sign=False, difference should be positive and finite
+    if not with_sign:
+        assert difference > 0
+        assert np.isfinite(difference)
 
 
 @example(array=np.array([1, 2, 3]), tol=1e-4)

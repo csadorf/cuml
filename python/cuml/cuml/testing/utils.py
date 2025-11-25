@@ -33,6 +33,13 @@ def array_difference(a, b, with_sign=True):
     if len(a) == 0 and len(b) == 0:
         return 0
 
+    # Cast to float64 to avoid integer overflow in arithmetic operations
+    # (e.g., np.int8(0) - np.int8(-128) = 128 which overflows to -128)
+    if np.issubdtype(a.dtype, np.signedinteger):
+        a = a.astype(np.float64)
+    if np.issubdtype(b.dtype, np.signedinteger):
+        b = b.astype(np.float64)
+
     if not with_sign:
         a, b = np.abs(a), np.abs(b)
     return np.sum(np.abs(a - b))
@@ -62,10 +69,17 @@ class array_equal:
         if len(self.a) == len(self.b) == 0:
             return True
 
-        if self.with_sign:
-            a, b = self.a, self.b
-        else:
-            a, b = np.abs(self.a), np.abs(self.b)
+        # Cast to float64 to avoid integer overflow in arithmetic operations
+        # (e.g., np.int8(0) - np.int8(-128) = 128 which overflows to -128)
+        a = self.a
+        b = self.b
+        if np.issubdtype(a.dtype, np.signedinteger):
+            a = a.astype(np.float64)
+        if np.issubdtype(b.dtype, np.signedinteger):
+            b = b.astype(np.float64)
+
+        if not self.with_sign:
+            a, b = np.abs(a), np.abs(b)
 
         res = (np.sum(np.abs(a - b) > self.unit_tol)) / a.size < self.total_tol
         return bool(res)
@@ -616,8 +630,8 @@ def compare_svm(
             df1 = svm1.decision_function(X)
             df2 = svm2.decision_function(X)
             # For classification, the class is determined by
-            # sign(decision function). We should not expect tight match for
-            # the actual value of the function, therefore we set large tolerance
+            # sign(decision function). We should not expect tight match
+            # for the actual value, therefore we set large tolerance
             assert svm_array_equal(
                 df1, df2, tol=1e-1, relative_diff=True, report_summary=True
             )
