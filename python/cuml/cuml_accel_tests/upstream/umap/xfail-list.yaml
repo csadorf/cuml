@@ -1,4 +1,4 @@
-- reason: Test fails with cuml.accel
+- reason: Currently fails with cuml.accel; root cause not yet isolated
   marker: cuml_accel_bugs
   tests:
   - "umap.tests.test_composite_models::test_composite_trustworthiness"
@@ -33,7 +33,7 @@
   - "umap.tests.test_umap_validation_params::test_umap_non_integer_n_components"
   - "umap.tests.test_umap_validation_params::test_umap_too_large_op"
   - "umap.tests.test_umap_validation_params::test_umap_too_many_neighbors_warns"
-- reason: Tests are flaky
+- reason: Intermittently fails with cuml.accel; root cause not yet isolated
   marker: cuml_accel_flaky
   strict: false
   tests:
@@ -47,7 +47,7 @@
   - "umap.tests.test_aligned_umap::test_aligned_update"
   - "umap.tests.test_aligned_umap::test_aligned_update_params"
   - "umap.tests.test_aligned_umap::test_neighbor_local_neighbor_accuracy"
-- reason: Test fails with newer sklearn
+- reason: Currently fails with newer scikit-learn; root cause not yet isolated
   marker: cuml_accel_sklearn_pin
   condition: umap-learn<=0.5.8 and scikit-learn>=1.6
   tests:

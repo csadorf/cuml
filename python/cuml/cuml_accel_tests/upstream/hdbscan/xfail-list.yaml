@@ -1,4 +1,4 @@
-- reason: These tests always fail, and leave some lingering state that causes downstream tests to fail.
+- reason: Currently fails with cuml.accel and leaves lingering state that causes downstream failures.
   marker: cuml_accel_bad_failures
   run: false
   tests:
@@ -8,7 +8,7 @@
   - "hdbscan.tests.test_hdbscan::test_hdbscan_no_clusters"
   - "hdbscan.tests.test_hdbscan::test_min_span_tree_plot"
   - "hdbscan.tests.test_hdbscan::test_missing_data"
-- reason: Test fails with cuml.accel
+- reason: Currently fails with cuml.accel; root cause not yet isolated
   marker: cuml_accel_bugs
   tests:
   - "hdbscan.tests.test_flat::test_flat_base_default"

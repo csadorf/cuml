@@ -26,12 +26,248 @@
   - "sklearn.metrics._plot.tests.test_roc_curve_display::test_roc_curve_from_cv_results_legend_label[None-curve_kwargs1]"
   - "sklearn.metrics._plot.tests.test_roc_curve_display::test_roc_curve_from_cv_results_legend_label[single-None]"
   - "sklearn.metrics._plot.tests.test_roc_curve_display::test_roc_curve_from_cv_results_legend_label[single-curve_kwargs1]"
-- reason: Search CV sample weight equivalence differs with cuml.accel in sklearn 1.7.2
+- reason: Currently fails with cuml.accel on scikit-learn 1.5+; root cause not yet isolated
   marker: cuml_accel_bugs
-  condition: scikit-learn>=1.7.2
+  condition: scikit-learn >= 1.5.0
   tests:
-  - "sklearn.model_selection.tests.test_search::test_search_cv_sample_weight_equivalence[estimator0]"
-- reason: Test should fail with cuml.accel
+  - "sklearn.decomposition.tests.test_pca::test_pca_dtype_preservation[42-arpack]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_dtype_preservation[42-auto]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_dtype_preservation[42-covariance_eigh]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_dtype_preservation[42-full]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_dtype_preservation[42-randomized]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_solver_equivalence[42-float64-False-True-tall-arpack]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_solver_equivalence[42-float64-False-True-tall-covariance_eigh]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_solver_equivalence[42-float64-True-True-tall-arpack]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_solver_equivalence[42-float64-True-True-tall-covariance_eigh]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_array-1-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_array-1-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_array-1-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_array-10-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_array-10-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_array-10-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_array-2-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_array-2-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_array-2-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_matrix-1-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_matrix-1-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_matrix-1-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_matrix-10-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_matrix-10-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_matrix-10-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_matrix-2-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_matrix-2-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_matrix-2-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_array-1-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_array-1-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_array-1-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_array-10-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_array-10-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_array-10-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_array-2-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_array-2-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_array-2-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_matrix-1-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_matrix-1-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_matrix-1-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_matrix-10-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_matrix-10-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_matrix-10-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_matrix-2-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_matrix-2-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_matrix-2-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_array-1-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_array-1-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_array-1-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_array-10-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_array-10-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_array-10-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_array-2-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_array-2-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_array-2-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_matrix-1-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_matrix-1-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_matrix-1-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_matrix-10-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_matrix-10-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_matrix-10-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_matrix-2-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_matrix-2-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_matrix-2-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_array-1-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_array-1-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_array-1-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_array-10-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_array-10-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_array-10-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_array-2-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_array-2-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_array-2-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_matrix-1-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_matrix-1-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_matrix-1-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_matrix-10-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_matrix-10-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_matrix-10-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_matrix-2-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_matrix-2-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_matrix-2-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_array-1-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_array-1-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_array-1-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_array-10-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_array-10-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_array-10-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_array-2-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_array-2-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_array-2-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_matrix-1-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_matrix-1-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_matrix-1-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_matrix-10-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_matrix-10-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_matrix-10-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_matrix-2-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_matrix-2-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_matrix-2-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_array-1-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_array-1-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_array-1-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_array-10-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_array-10-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_array-10-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_array-2-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_array-2-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_array-2-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_matrix-1-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_matrix-1-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_matrix-1-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_matrix-10-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_matrix-10-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_matrix-10-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_matrix-2-0.01]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_matrix-2-0.1]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_matrix-2-0.3]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_svd_solver_auto[10-50-5-full]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_svd_solver_auto[1000-50-50-covariance_eigh]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_svd_solver_auto[1000-500-0.5-full]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_svd_solver_auto[1000-500-10-randomized]"
+  - "sklearn.decomposition.tests.test_pca::test_pca_svd_solver_auto[1000-500-400-full]"
+  - "sklearn.linear_model.tests.test_sag::test_binary_classifier_class_weight[csr_array]"
+  - "sklearn.linear_model.tests.test_sag::test_binary_classifier_class_weight[csr_matrix]"
+  - "sklearn.linear_model.tests.test_sag::test_classifier_single_class"
+  - "sklearn.linear_model.tests.test_sag::test_sag_classifier_computed_correctly[csr_array]"
+  - "sklearn.linear_model.tests.test_sag::test_sag_classifier_computed_correctly[csr_matrix]"
+  - "sklearn.linear_model.tests.test_sag::test_sag_multiclass_computed_correctly[csr_array]"
+  - "sklearn.linear_model.tests.test_sag::test_sag_multiclass_computed_correctly[csr_matrix]"
+  - "sklearn.manifold.tests.test_t_sne::test_max_iter_used"
+  - "sklearn.model_selection.tests.test_classification_threshold::test_fit_and_score_over_thresholds_sample_weight"
+  - "sklearn.model_selection.tests.test_classification_threshold::test_tuned_threshold_classifier_cv_zeros_sample_weights_equivalence"
+  - "sklearn.model_selection.tests.test_validation::test_cross_val_predict_class_subset"
+  - "sklearn.tests.test_calibration::test_calibrated_classifier_cv_double_sample_weights_equivalence[False-isotonic]"
+  - "sklearn.tests.test_calibration::test_calibrated_classifier_cv_double_sample_weights_equivalence[False-sigmoid]"
+  - "sklearn.tests.test_calibration::test_calibrated_classifier_cv_double_sample_weights_equivalence[True-isotonic]"
+  - "sklearn.tests.test_calibration::test_calibrated_classifier_cv_double_sample_weights_equivalence[True-sigmoid]"
+  - "sklearn.tests.test_common::test_estimators[LogisticRegression()-check_class_weight_classifiers]"
+  - "sklearn.tests.test_common::test_estimators[LogisticRegression()-check_sparsify_coefficients]"
+  - "sklearn.tests.test_multioutput::test_multiclass_multioutput_estimator_predict_proba"
+- reason: Currently fails with cuml.accel on scikit-learn 1.5; root cause not yet isolated
+  marker: cuml_accel_bugs
+  condition: scikit-learn<1.6
+  tests:
+  - "sklearn.tests.test_calibration::test_calibrated_classifier_cv_zeros_sample_weights_equivalence[False-isotonic]"
+  - "sklearn.tests.test_calibration::test_calibrated_classifier_cv_zeros_sample_weights_equivalence[False-sigmoid]"
+  - "sklearn.tests.test_calibration::test_calibrated_classifier_cv_zeros_sample_weights_equivalence[True-isotonic]"
+  - "sklearn.tests.test_calibration::test_calibrated_classifier_cv_zeros_sample_weights_equivalence[True-sigmoid]"
+  - "sklearn.tests.test_common::test_estimators[BernoulliRBM()-check_methods_sample_order_invariance]"
+  - "sklearn.tests.test_common::test_estimators[BernoulliRBM()-check_methods_subset_invariance]"
+  - "sklearn.tests.test_common::test_estimators[BisectingKMeans()-check_sample_weights_invariance(kind=zeros)]"
+  - "sklearn.tests.test_common::test_estimators[CalibratedClassifierCV(estimator=LogisticRegression(C=1))-check_sample_weights_invariance(kind=zeros)]"
+  - "sklearn.tests.test_common::test_estimators[DummyClassifier()-check_methods_sample_order_invariance]"
+  - "sklearn.tests.test_common::test_estimators[DummyClassifier()-check_methods_subset_invariance]"
+  - "sklearn.tests.test_common::test_estimators[ElasticNetCV()-check_sample_weights_invariance(kind=zeros)]"
+  - "sklearn.tests.test_common::test_estimators[IsolationForest()-check_sample_weights_invariance(kind=zeros)]"
+  - "sklearn.tests.test_common::test_estimators[LassoCV()-check_sample_weights_invariance(kind=zeros)]"
+  - "sklearn.tests.test_common::test_estimators[LinearSVR()-check_sample_weights_invariance(kind=zeros)]"
+  - "sklearn.tests.test_common::test_estimators[LogisticRegression()-check_sample_weights_invariance(kind=zeros)]"
+  - "sklearn.tests.test_common::test_estimators[LogisticRegressionCV()-check_sample_weights_invariance(kind=zeros)]"
+  - "sklearn.tests.test_common::test_estimators[MiniBatchKMeans()-check_sample_weights_invariance(kind=zeros)]"
+  - "sklearn.tests.test_common::test_estimators[NuSVC()-check_sample_weights_invariance(kind=zeros)]"
+  - "sklearn.tests.test_common::test_estimators[NuSVR()-check_sample_weights_invariance(kind=zeros)]"
+  - "sklearn.tests.test_common::test_estimators[OneClassSVM()-check_sample_weights_invariance(kind=zeros)]"
+  - "sklearn.tests.test_common::test_estimators[SGDClassifier()-check_sample_weights_invariance(kind=zeros)]"
+  - "sklearn.tests.test_common::test_estimators[SGDOneClassSVM()-check_sample_weights_invariance(kind=zeros)]"
+  - "sklearn.tests.test_common::test_estimators[SGDRegressor()-check_sample_weights_invariance(kind=zeros)]"
+  - "sklearn.tests.test_common::test_estimators[SVC()-check_sample_weights_invariance(kind=zeros)]"
+  - "sklearn.tests.test_common::test_estimators[SVR()-check_sample_weights_invariance(kind=zeros)]"
+  - "sklearn.tests.test_common::test_estimators[SpectralBiclustering()-check_estimators_dtypes]"
+  - "sklearn.tests.test_common::test_estimators[SpectralBiclustering()-check_fit2d_1feature]"
+  - "sklearn.tests.test_common::test_estimators[SpectralBiclustering()-check_fit2d_1sample]"
+  - "sklearn.tests.test_common::test_estimators[SpectralCoclustering()-check_dont_overwrite_parameters]"
+  - "sklearn.tests.test_common::test_estimators[SpectralCoclustering()-check_estimators_dtypes]"
+  - "sklearn.tests.test_common::test_estimators[SpectralCoclustering()-check_fit2d_1feature]"
+  - "sklearn.tests.test_common::test_estimators[SpectralCoclustering()-check_fit2d_1sample]"
+  - "sklearn.tests.test_common::test_estimators[SpectralCoclustering()-check_methods_subset_invariance]"
+  - "sklearn.tests.test_common::test_search_cv[GridSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('logisticregression',LogisticRegression())]),param_grid={'logisticregression__C':[0.1,1.0]})-check_fit2d_1feature]"
+  - "sklearn.tests.test_common::test_search_cv[GridSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),param_grid={'ridge__alpha':[0.1,1.0]})-check_fit2d_1feature]"
+  - "sklearn.tests.test_common::test_search_cv[GridSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),param_grid={'ridge__alpha':[0.1,1.0]})-check_supervised_y_2d]"
+  - "sklearn.tests.test_common::test_search_cv[GridSearchCV(cv=2,estimator=Ridge(),param_grid={'alpha':[0.1,1.0]})-check_supervised_y_2d]"
+  - "sklearn.tests.test_common::test_search_cv[HalvingGridSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('logisticregression',LogisticRegression())]),min_resources='smallest',param_grid={'logisticregression__C':[0.1,1.0]},random_state=0)-check_fit2d_1feature]"
+  - "sklearn.tests.test_common::test_search_cv[HalvingGridSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),min_resources='smallest',param_grid={'ridge__alpha':[0.1,1.0]},random_state=0)-check_estimators_fit_returns_self(readonly_memmap=True)]"
+  - "sklearn.tests.test_common::test_search_cv[HalvingGridSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),min_resources='smallest',param_grid={'ridge__alpha':[0.1,1.0]},random_state=0)-check_estimators_fit_returns_self]"
+  - "sklearn.tests.test_common::test_search_cv[HalvingGridSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),min_resources='smallest',param_grid={'ridge__alpha':[0.1,1.0]},random_state=0)-check_estimators_overwrite_params]"
+  - "sklearn.tests.test_common::test_search_cv[HalvingGridSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),min_resources='smallest',param_grid={'ridge__alpha':[0.1,1.0]},random_state=0)-check_fit2d_1feature]"
+  - "sklearn.tests.test_common::test_search_cv[HalvingGridSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),min_resources='smallest',param_grid={'ridge__alpha':[0.1,1.0]},random_state=0)-check_fit2d_1sample]"
+  - "sklearn.tests.test_common::test_search_cv[HalvingGridSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),min_resources='smallest',param_grid={'ridge__alpha':[0.1,1.0]},random_state=0)-check_supervised_y_2d]"
+  - "sklearn.tests.test_common::test_search_cv[HalvingGridSearchCV(cv=2,estimator=Ridge(),min_resources='smallest',param_grid={'alpha':[0.1,1.0]},random_state=0)-check_fit2d_1sample0]"
+  - "sklearn.tests.test_common::test_search_cv[HalvingGridSearchCV(cv=2,estimator=Ridge(),min_resources='smallest',param_grid={'alpha':[0.1,1.0]},random_state=0)-check_fit2d_1sample1]"
+  - "sklearn.tests.test_common::test_search_cv[HalvingGridSearchCV(cv=2,estimator=Ridge(),min_resources='smallest',param_grid={'alpha':[0.1,1.0]},random_state=0)-check_supervised_y_2d0]"
+  - "sklearn.tests.test_common::test_search_cv[HalvingGridSearchCV(cv=2,estimator=Ridge(),min_resources='smallest',param_grid={'alpha':[0.1,1.0]},random_state=0)-check_supervised_y_2d1]"
+  - "sklearn.tests.test_common::test_search_cv[HalvingRandomSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('logisticregression',LogisticRegression())]),param_distributions={'logisticregression__C':[0.1,1.0]},random_state=0)-check_fit2d_1feature]"
+  - "sklearn.tests.test_common::test_search_cv[HalvingRandomSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('logisticregression',LogisticRegression())]),param_distributions={'logisticregression__C':[0.1,1.0]},random_state=0)-check_fit2d_1sample]"
+  - "sklearn.tests.test_common::test_search_cv[HalvingRandomSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),param_distributions={'ridge__alpha':[0.1,1.0]},random_state=0)-check_estimators_fit_returns_self(readonly_memmap=True)]"
+  - "sklearn.tests.test_common::test_search_cv[HalvingRandomSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),param_distributions={'ridge__alpha':[0.1,1.0]},random_state=0)-check_estimators_fit_returns_self]"
+  - "sklearn.tests.test_common::test_search_cv[HalvingRandomSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),param_distributions={'ridge__alpha':[0.1,1.0]},random_state=0)-check_estimators_overwrite_params]"
+  - "sklearn.tests.test_common::test_search_cv[HalvingRandomSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),param_distributions={'ridge__alpha':[0.1,1.0]},random_state=0)-check_fit2d_1feature]"
+  - "sklearn.tests.test_common::test_search_cv[HalvingRandomSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),param_distributions={'ridge__alpha':[0.1,1.0]},random_state=0)-check_fit2d_1sample]"
+  - "sklearn.tests.test_common::test_search_cv[HalvingRandomSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),param_distributions={'ridge__alpha':[0.1,1.0]},random_state=0)-check_supervised_y_2d]"
+  - "sklearn.tests.test_common::test_search_cv[RandomizedSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('logisticregression',LogisticRegression())]),param_distributions={'logisticregression__C':[0.1,1.0]},random_state=0)-check_fit2d_1feature]"
+  - "sklearn.tests.test_common::test_search_cv[RandomizedSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('logisticregression',LogisticRegression())]),param_distributions={'logisticregression__C':[0.1,1.0]},random_state=0)-check_supervised_y_2d]"
+  - "sklearn.tests.test_common::test_search_cv[RandomizedSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),param_distributions={'ridge__alpha':[0.1,1.0]},random_state=0)-check_fit2d_1feature]"
+  - "sklearn.tests.test_common::test_search_cv[RandomizedSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),param_distributions={'ridge__alpha':[0.1,1.0]},random_state=0)-check_supervised_y_2d]"
+  - "sklearn.tests.test_common::test_search_cv[RandomizedSearchCV(cv=2,estimator=Ridge(),param_distributions={'alpha':[0.1,1.0]},random_state=0)-check_supervised_y_2d]"
+- reason: Currently fails with cuml.accel on scikit-learn 1.5; root cause not yet isolated
+  marker: cuml_accel_bugs
+  condition: scikit-learn==1.5
+  tests:
+  - "sklearn.tests.test_common::test_estimators[SpectralCoclustering()-check_estimator_sparse_array]"
+  - "sklearn.tests.test_common::test_estimators[SpectralCoclustering()-check_estimator_sparse_matrix]"
+  - "sklearn.tests.test_common::test_estimators[TunedThresholdClassifierCV(estimator=LogisticRegression(C=1))-check_classifiers_train(readonly_memmap=True)]"
+  - "sklearn.tests.test_common::test_estimators[TunedThresholdClassifierCV(estimator=LogisticRegression(C=1))-check_classifiers_train(readonly_memmap=True,X_dtype=float32)]"
+  - "sklearn.tests.test_common::test_estimators[TunedThresholdClassifierCV(estimator=LogisticRegression(C=1))-check_classifiers_train]"
+- reason: Currently fails with cuml.accel on scikit-learn 1.6+; root cause not yet isolated
+  marker: cuml_accel_bugs
+  condition: scikit-learn>=1.6
+  tests:
+  - "sklearn.linear_model.tests.test_ridge::test_ridge_regression_unpenalized[42-wide-True-svd]"
+  - "sklearn.linear_model.tests.test_ridge::test_ridge_regression_unpenalized_hstacked_X[42-wide-True-svd]"
+  - "sklearn.linear_model.tests.test_ridge::test_ridge_regression_unpenalized_vstacked_X[42-wide-True-cholesky]"
+  - "sklearn.linear_model.tests.test_ridge::test_ridge_regression_unpenalized_vstacked_X[42-wide-True-lsqr]"
+  - "sklearn.linear_model.tests.test_ridge::test_ridge_regression_unpenalized_vstacked_X[42-wide-True-sag]"
+  - "sklearn.linear_model.tests.test_ridge::test_ridge_regression_unpenalized_vstacked_X[42-wide-True-saga]"
+  - "sklearn.linear_model.tests.test_ridge::test_ridge_regression_unpenalized_vstacked_X[42-wide-True-sparse_cg]"
+  - "sklearn.linear_model.tests.test_ridge::test_ridge_regression_unpenalized_vstacked_X[42-wide-True-svd]"
+  - "sklearn.tests.test_common::test_estimators[ElasticNet()-check_sample_weight_equivalence_on_sparse_data]"
+  - "sklearn.tests.test_common::test_estimators[Lasso()-check_sample_weight_equivalence_on_sparse_data]"
+  - "sklearn.tests.test_common::test_estimators[LogisticRegression()-check_sample_weight_equivalence_on_dense_data]"
+  - "sklearn.tests.test_common::test_estimators[LogisticRegression()-check_sample_weight_equivalence_on_sparse_data]"
+  - "sklearn.tests.test_common::test_estimators[Ridge()-check_non_transformer_estimators_n_iter]"
+- reason: Currently fails with cuml.accel on scikit-learn <1.7; root cause not yet isolated
+  marker: cuml_accel_bugs
+  condition: scikit-learn<1.7,>=1.5.0
+  tests:
+  - "sklearn.manifold.tests.test_t_sne::test_tnse_n_iter_deprecated"
+  - "sklearn.manifold.tests.test_t_sne::test_tnse_n_iter_max_iter_both_set"
+- reason: Currently fails with cuml.accel on scikit-learn <1.8; root cause not yet isolated
   marker: cuml_accel_bugs
   condition: scikit-learn<1.8
   tests:
@@ -41,11 +277,17 @@
   - "sklearn.linear_model.tests.test_sparse_coordinate_descent::test_sparse_enet_coordinate_descent[csc_matrix]"
   - "sklearn.manifold.tests.test_t_sne::test_pca_initialization_not_compatible_with_sparse_input[csr_array]"
   - "sklearn.manifold.tests.test_t_sne::test_pca_initialization_not_compatible_with_sparse_input[csr_matrix]"
-- reason: Test should fail with cuml.accel
+  - "sklearn.svm.tests.test_bounds::test_l1_min_c[no-intercept-multi-class-log-array]"
+  - "sklearn.svm.tests.test_bounds::test_l1_min_c[no-intercept-multi-class-log-csr_array]"
+  - "sklearn.svm.tests.test_bounds::test_l1_min_c[no-intercept-multi-class-log-csr_matrix]"
+- reason: Currently fails with cuml.accel on scikit-learn <1.9; root cause not yet isolated
   marker: cuml_accel_bugs
   condition: scikit-learn<1.9
   tests:
   - "sklearn.ensemble.tests.test_forest::test_class_weights[RandomForestClassifier]"
+  - "sklearn.ensemble.tests.test_voting::test_predict_on_toy_problem[42]"
+  - "sklearn.ensemble.tests.test_voting::test_sample_weight[42]"
+  - "sklearn.ensemble.tests.test_voting::test_set_estimator_drop"
   - "sklearn.linear_model.tests.test_base::test_linear_regression_pd_sparse_dataframe_warning"
   - "sklearn.linear_model.tests.test_coordinate_descent::test_enet_sample_weight_consistency[42-csr_array-False-0.01-False]"
   - "sklearn.linear_model.tests.test_coordinate_descent::test_enet_sample_weight_consistency[42-csr_array-False-0.01-True]"
@@ -79,7 +321,7 @@
   - "sklearn.linear_model.tests.test_sparse_coordinate_descent::test_sparse_dense_equality[csc_matrix-True-6-24-True-Lasso]"
   - "sklearn.utils.tests.test_estimator_checks::test_check_estimator"
   - "sklearn.utils.tests.test_estimator_checks::test_check_estimator_clones"
-- reason: Test should fail with cuml.accel
+- reason: Currently fails with cuml.accel; root cause not yet isolated
   marker: cuml_accel_bugs
   tests:
   - "sklearn.cross_decomposition.tests.test_pls::test_pls_regression_fit_1d_y"
@@ -421,261 +663,11 @@
   - "sklearn.utils.tests.test_estimator_checks::test_check_estimator_pairwise"
   - "sklearn.utils.tests.test_validation::test_check_array_links_to_imputer_doc_only_for_X[asarray-X]"
   - "sklearn.utils.tests.test_validation::test_check_array_links_to_imputer_doc_only_for_X[csr_matrix-X]"
-- reason: Test should fail with cuml.accel (scikit-learn 1.5)
+- reason: Search CV sample weight equivalence differs with cuml.accel in sklearn 1.7.2
   marker: cuml_accel_bugs
-  condition: scikit-learn<1.6
+  condition: scikit-learn>=1.7.2
   tests:
-  - "sklearn.tests.test_calibration::test_calibrated_classifier_cv_zeros_sample_weights_equivalence[False-isotonic]"
-  - "sklearn.tests.test_calibration::test_calibrated_classifier_cv_zeros_sample_weights_equivalence[False-sigmoid]"
-  - "sklearn.tests.test_calibration::test_calibrated_classifier_cv_zeros_sample_weights_equivalence[True-isotonic]"
-  - "sklearn.tests.test_calibration::test_calibrated_classifier_cv_zeros_sample_weights_equivalence[True-sigmoid]"
-  - "sklearn.tests.test_common::test_estimators[BernoulliRBM()-check_methods_sample_order_invariance]"
-  - "sklearn.tests.test_common::test_estimators[BernoulliRBM()-check_methods_subset_invariance]"
-  - "sklearn.tests.test_common::test_estimators[BisectingKMeans()-check_sample_weights_invariance(kind=zeros)]"
-  - "sklearn.tests.test_common::test_estimators[CalibratedClassifierCV(estimator=LogisticRegression(C=1))-check_sample_weights_invariance(kind=zeros)]"
-  - "sklearn.tests.test_common::test_estimators[DummyClassifier()-check_methods_sample_order_invariance]"
-  - "sklearn.tests.test_common::test_estimators[DummyClassifier()-check_methods_subset_invariance]"
-  - "sklearn.tests.test_common::test_estimators[ElasticNetCV()-check_sample_weights_invariance(kind=zeros)]"
-  - "sklearn.tests.test_common::test_estimators[IsolationForest()-check_sample_weights_invariance(kind=zeros)]"
-  - "sklearn.tests.test_common::test_estimators[LassoCV()-check_sample_weights_invariance(kind=zeros)]"
-  - "sklearn.tests.test_common::test_estimators[LinearSVR()-check_sample_weights_invariance(kind=zeros)]"
-  - "sklearn.tests.test_common::test_estimators[LogisticRegression()-check_sample_weights_invariance(kind=zeros)]"
-  - "sklearn.tests.test_common::test_estimators[LogisticRegressionCV()-check_sample_weights_invariance(kind=zeros)]"
-  - "sklearn.tests.test_common::test_estimators[MiniBatchKMeans()-check_sample_weights_invariance(kind=zeros)]"
-  - "sklearn.tests.test_common::test_estimators[NuSVC()-check_sample_weights_invariance(kind=zeros)]"
-  - "sklearn.tests.test_common::test_estimators[NuSVR()-check_sample_weights_invariance(kind=zeros)]"
-  - "sklearn.tests.test_common::test_estimators[OneClassSVM()-check_sample_weights_invariance(kind=zeros)]"
-  - "sklearn.tests.test_common::test_estimators[SGDClassifier()-check_sample_weights_invariance(kind=zeros)]"
-  - "sklearn.tests.test_common::test_estimators[SGDOneClassSVM()-check_sample_weights_invariance(kind=zeros)]"
-  - "sklearn.tests.test_common::test_estimators[SGDRegressor()-check_sample_weights_invariance(kind=zeros)]"
-  - "sklearn.tests.test_common::test_estimators[SVC()-check_sample_weights_invariance(kind=zeros)]"
-  - "sklearn.tests.test_common::test_estimators[SVR()-check_sample_weights_invariance(kind=zeros)]"
-  - "sklearn.tests.test_common::test_estimators[SpectralBiclustering()-check_estimators_dtypes]"
-  - "sklearn.tests.test_common::test_estimators[SpectralBiclustering()-check_fit2d_1feature]"
-  - "sklearn.tests.test_common::test_estimators[SpectralBiclustering()-check_fit2d_1sample]"
-  - "sklearn.tests.test_common::test_estimators[SpectralCoclustering()-check_dont_overwrite_parameters]"
-  - "sklearn.tests.test_common::test_estimators[SpectralCoclustering()-check_estimators_dtypes]"
-  - "sklearn.tests.test_common::test_estimators[SpectralCoclustering()-check_fit2d_1feature]"
-  - "sklearn.tests.test_common::test_estimators[SpectralCoclustering()-check_fit2d_1sample]"
-  - "sklearn.tests.test_common::test_estimators[SpectralCoclustering()-check_methods_subset_invariance]"
-  - "sklearn.tests.test_common::test_search_cv[GridSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('logisticregression',LogisticRegression())]),param_grid={'logisticregression__C':[0.1,1.0]})-check_fit2d_1feature]"
-  - "sklearn.tests.test_common::test_search_cv[GridSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),param_grid={'ridge__alpha':[0.1,1.0]})-check_fit2d_1feature]"
-  - "sklearn.tests.test_common::test_search_cv[GridSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),param_grid={'ridge__alpha':[0.1,1.0]})-check_supervised_y_2d]"
-  - "sklearn.tests.test_common::test_search_cv[GridSearchCV(cv=2,estimator=Ridge(),param_grid={'alpha':[0.1,1.0]})-check_supervised_y_2d]"
-  - "sklearn.tests.test_common::test_search_cv[HalvingGridSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('logisticregression',LogisticRegression())]),min_resources='smallest',param_grid={'logisticregression__C':[0.1,1.0]},random_state=0)-check_fit2d_1feature]"
-  - "sklearn.tests.test_common::test_search_cv[HalvingGridSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),min_resources='smallest',param_grid={'ridge__alpha':[0.1,1.0]},random_state=0)-check_estimators_fit_returns_self(readonly_memmap=True)]"
-  - "sklearn.tests.test_common::test_search_cv[HalvingGridSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),min_resources='smallest',param_grid={'ridge__alpha':[0.1,1.0]},random_state=0)-check_estimators_fit_returns_self]"
-  - "sklearn.tests.test_common::test_search_cv[HalvingGridSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),min_resources='smallest',param_grid={'ridge__alpha':[0.1,1.0]},random_state=0)-check_estimators_overwrite_params]"
-  - "sklearn.tests.test_common::test_search_cv[HalvingGridSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),min_resources='smallest',param_grid={'ridge__alpha':[0.1,1.0]},random_state=0)-check_fit2d_1feature]"
-  - "sklearn.tests.test_common::test_search_cv[HalvingGridSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),min_resources='smallest',param_grid={'ridge__alpha':[0.1,1.0]},random_state=0)-check_fit2d_1sample]"
-  - "sklearn.tests.test_common::test_search_cv[HalvingGridSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),min_resources='smallest',param_grid={'ridge__alpha':[0.1,1.0]},random_state=0)-check_supervised_y_2d]"
-  - "sklearn.tests.test_common::test_search_cv[HalvingGridSearchCV(cv=2,estimator=Ridge(),min_resources='smallest',param_grid={'alpha':[0.1,1.0]},random_state=0)-check_fit2d_1sample0]"
-  - "sklearn.tests.test_common::test_search_cv[HalvingGridSearchCV(cv=2,estimator=Ridge(),min_resources='smallest',param_grid={'alpha':[0.1,1.0]},random_state=0)-check_fit2d_1sample1]"
-  - "sklearn.tests.test_common::test_search_cv[HalvingGridSearchCV(cv=2,estimator=Ridge(),min_resources='smallest',param_grid={'alpha':[0.1,1.0]},random_state=0)-check_supervised_y_2d0]"
-  - "sklearn.tests.test_common::test_search_cv[HalvingGridSearchCV(cv=2,estimator=Ridge(),min_resources='smallest',param_grid={'alpha':[0.1,1.0]},random_state=0)-check_supervised_y_2d1]"
-  - "sklearn.tests.test_common::test_search_cv[HalvingRandomSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('logisticregression',LogisticRegression())]),param_distributions={'logisticregression__C':[0.1,1.0]},random_state=0)-check_fit2d_1feature]"
-  - "sklearn.tests.test_common::test_search_cv[HalvingRandomSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('logisticregression',LogisticRegression())]),param_distributions={'logisticregression__C':[0.1,1.0]},random_state=0)-check_fit2d_1sample]"
-  - "sklearn.tests.test_common::test_search_cv[HalvingRandomSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),param_distributions={'ridge__alpha':[0.1,1.0]},random_state=0)-check_estimators_fit_returns_self(readonly_memmap=True)]"
-  - "sklearn.tests.test_common::test_search_cv[HalvingRandomSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),param_distributions={'ridge__alpha':[0.1,1.0]},random_state=0)-check_estimators_fit_returns_self]"
-  - "sklearn.tests.test_common::test_search_cv[HalvingRandomSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),param_distributions={'ridge__alpha':[0.1,1.0]},random_state=0)-check_estimators_overwrite_params]"
-  - "sklearn.tests.test_common::test_search_cv[HalvingRandomSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),param_distributions={'ridge__alpha':[0.1,1.0]},random_state=0)-check_fit2d_1feature]"
-  - "sklearn.tests.test_common::test_search_cv[HalvingRandomSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),param_distributions={'ridge__alpha':[0.1,1.0]},random_state=0)-check_fit2d_1sample]"
-  - "sklearn.tests.test_common::test_search_cv[HalvingRandomSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),param_distributions={'ridge__alpha':[0.1,1.0]},random_state=0)-check_supervised_y_2d]"
-  - "sklearn.tests.test_common::test_search_cv[RandomizedSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('logisticregression',LogisticRegression())]),param_distributions={'logisticregression__C':[0.1,1.0]},random_state=0)-check_fit2d_1feature]"
-  - "sklearn.tests.test_common::test_search_cv[RandomizedSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('logisticregression',LogisticRegression())]),param_distributions={'logisticregression__C':[0.1,1.0]},random_state=0)-check_supervised_y_2d]"
-  - "sklearn.tests.test_common::test_search_cv[RandomizedSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),param_distributions={'ridge__alpha':[0.1,1.0]},random_state=0)-check_fit2d_1feature]"
-  - "sklearn.tests.test_common::test_search_cv[RandomizedSearchCV(cv=2,error_score='raise',estimator=Pipeline(steps=[('pca',PCA()),('ridge',Ridge())]),param_distributions={'ridge__alpha':[0.1,1.0]},random_state=0)-check_supervised_y_2d]"
-  - "sklearn.tests.test_common::test_search_cv[RandomizedSearchCV(cv=2,estimator=Ridge(),param_distributions={'alpha':[0.1,1.0]},random_state=0)-check_supervised_y_2d]"
-- reason: Test should fail with cuml.accel (scikit-learn 1.5)
-  marker: cuml_accel_bugs
-  condition: scikit-learn==1.5
-  tests:
-  - "sklearn.tests.test_common::test_estimators[SpectralCoclustering()-check_estimator_sparse_array]"
-  - "sklearn.tests.test_common::test_estimators[SpectralCoclustering()-check_estimator_sparse_matrix]"
-  - "sklearn.tests.test_common::test_estimators[TunedThresholdClassifierCV(estimator=LogisticRegression(C=1))-check_classifiers_train(readonly_memmap=True)]"
-  - "sklearn.tests.test_common::test_estimators[TunedThresholdClassifierCV(estimator=LogisticRegression(C=1))-check_classifiers_train(readonly_memmap=True,X_dtype=float32)]"
-  - "sklearn.tests.test_common::test_estimators[TunedThresholdClassifierCV(estimator=LogisticRegression(C=1))-check_classifiers_train]"
-- reason: Test should fail with cuml.accel (scikit-learn 1.5+)
-  marker: cuml_accel_bugs
-  condition: scikit-learn >= 1.5.0
-  tests:
-  - "sklearn.decomposition.tests.test_pca::test_pca_dtype_preservation[42-arpack]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_dtype_preservation[42-auto]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_dtype_preservation[42-covariance_eigh]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_dtype_preservation[42-full]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_dtype_preservation[42-randomized]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_solver_equivalence[42-float64-False-True-tall-arpack]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_solver_equivalence[42-float64-False-True-tall-covariance_eigh]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_solver_equivalence[42-float64-True-True-tall-arpack]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_solver_equivalence[42-float64-True-True-tall-covariance_eigh]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_array-1-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_array-1-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_array-1-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_array-10-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_array-10-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_array-10-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_array-2-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_array-2-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_array-2-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_matrix-1-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_matrix-1-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_matrix-1-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_matrix-10-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_matrix-10-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_matrix-10-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_matrix-2-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_matrix-2-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csc_matrix-2-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_array-1-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_array-1-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_array-1-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_array-10-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_array-10-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_array-10-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_array-2-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_array-2-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_array-2-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_matrix-1-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_matrix-1-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_matrix-1-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_matrix-10-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_matrix-10-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_matrix-10-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_matrix-2-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_matrix-2-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-1-covariance_eigh-csr_matrix-2-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_array-1-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_array-1-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_array-1-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_array-10-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_array-10-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_array-10-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_array-2-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_array-2-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_array-2-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_matrix-1-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_matrix-1-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_matrix-1-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_matrix-10-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_matrix-10-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_matrix-10-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_matrix-2-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_matrix-2-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csc_matrix-2-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_array-1-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_array-1-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_array-1-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_array-10-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_array-10-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_array-10-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_array-2-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_array-2-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_array-2-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_matrix-1-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_matrix-1-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_matrix-1-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_matrix-10-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_matrix-10-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_matrix-10-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_matrix-2-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_matrix-2-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-10-covariance_eigh-csr_matrix-2-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_array-1-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_array-1-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_array-1-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_array-10-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_array-10-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_array-10-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_array-2-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_array-2-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_array-2-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_matrix-1-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_matrix-1-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_matrix-1-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_matrix-10-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_matrix-10-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_matrix-10-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_matrix-2-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_matrix-2-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csc_matrix-2-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_array-1-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_array-1-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_array-1-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_array-10-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_array-10-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_array-10-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_array-2-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_array-2-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_array-2-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_matrix-1-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_matrix-1-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_matrix-1-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_matrix-10-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_matrix-10-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_matrix-10-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_matrix-2-0.01]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_matrix-2-0.1]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_sparse[42-100-covariance_eigh-csr_matrix-2-0.3]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_svd_solver_auto[10-50-5-full]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_svd_solver_auto[1000-50-50-covariance_eigh]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_svd_solver_auto[1000-500-0.5-full]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_svd_solver_auto[1000-500-10-randomized]"
-  - "sklearn.decomposition.tests.test_pca::test_pca_svd_solver_auto[1000-500-400-full]"
-  - "sklearn.linear_model.tests.test_sag::test_binary_classifier_class_weight[csr_array]"
-  - "sklearn.linear_model.tests.test_sag::test_binary_classifier_class_weight[csr_matrix]"
-  - "sklearn.linear_model.tests.test_sag::test_classifier_single_class"
-  - "sklearn.linear_model.tests.test_sag::test_sag_classifier_computed_correctly[csr_array]"
-  - "sklearn.linear_model.tests.test_sag::test_sag_classifier_computed_correctly[csr_matrix]"
-  - "sklearn.linear_model.tests.test_sag::test_sag_multiclass_computed_correctly[csr_array]"
-  - "sklearn.linear_model.tests.test_sag::test_sag_multiclass_computed_correctly[csr_matrix]"
-  - "sklearn.manifold.tests.test_t_sne::test_max_iter_used"
-  - "sklearn.model_selection.tests.test_classification_threshold::test_fit_and_score_over_thresholds_sample_weight"
-  - "sklearn.model_selection.tests.test_classification_threshold::test_tuned_threshold_classifier_cv_zeros_sample_weights_equivalence"
-  - "sklearn.model_selection.tests.test_validation::test_cross_val_predict_class_subset"
-  - "sklearn.tests.test_calibration::test_calibrated_classifier_cv_double_sample_weights_equivalence[False-isotonic]"
-  - "sklearn.tests.test_calibration::test_calibrated_classifier_cv_double_sample_weights_equivalence[False-sigmoid]"
-  - "sklearn.tests.test_calibration::test_calibrated_classifier_cv_double_sample_weights_equivalence[True-isotonic]"
-  - "sklearn.tests.test_calibration::test_calibrated_classifier_cv_double_sample_weights_equivalence[True-sigmoid]"
-  - "sklearn.tests.test_common::test_estimators[LogisticRegression()-check_class_weight_classifiers]"
-  - "sklearn.tests.test_common::test_estimators[LogisticRegression()-check_sparsify_coefficients]"
-  - "sklearn.tests.test_multioutput::test_multiclass_multioutput_estimator_predict_proba"
-- reason: Test should fail with cuml.accel (scikit-learn 1.6+)
-  marker: cuml_accel_bugs
-  condition: scikit-learn>=1.6
-  tests:
-  - "sklearn.linear_model.tests.test_ridge::test_ridge_regression_unpenalized[42-wide-True-svd]"
-  - "sklearn.linear_model.tests.test_ridge::test_ridge_regression_unpenalized_hstacked_X[42-wide-True-svd]"
-  - "sklearn.linear_model.tests.test_ridge::test_ridge_regression_unpenalized_vstacked_X[42-wide-True-cholesky]"
-  - "sklearn.linear_model.tests.test_ridge::test_ridge_regression_unpenalized_vstacked_X[42-wide-True-lsqr]"
-  - "sklearn.linear_model.tests.test_ridge::test_ridge_regression_unpenalized_vstacked_X[42-wide-True-sag]"
-  - "sklearn.linear_model.tests.test_ridge::test_ridge_regression_unpenalized_vstacked_X[42-wide-True-saga]"
-  - "sklearn.linear_model.tests.test_ridge::test_ridge_regression_unpenalized_vstacked_X[42-wide-True-sparse_cg]"
-  - "sklearn.linear_model.tests.test_ridge::test_ridge_regression_unpenalized_vstacked_X[42-wide-True-svd]"
-  - "sklearn.tests.test_common::test_estimators[ElasticNet()-check_sample_weight_equivalence_on_sparse_data]"
-  - "sklearn.tests.test_common::test_estimators[Lasso()-check_sample_weight_equivalence_on_sparse_data]"
-  - "sklearn.tests.test_common::test_estimators[LogisticRegression()-check_sample_weight_equivalence_on_dense_data]"
-  - "sklearn.tests.test_common::test_estimators[LogisticRegression()-check_sample_weight_equivalence_on_sparse_data]"
-  - "sklearn.tests.test_common::test_estimators[Ridge()-check_non_transformer_estimators_n_iter]"
-- reason: Test should fail with cuml.accel (scikit-learn <1.8)
-  marker: cuml_accel_bugs
-  condition: scikit-learn<1.8
-  tests:
-  - "sklearn.svm.tests.test_bounds::test_l1_min_c[no-intercept-multi-class-log-array]"
-  - "sklearn.svm.tests.test_bounds::test_l1_min_c[no-intercept-multi-class-log-csr_array]"
-  - "sklearn.svm.tests.test_bounds::test_l1_min_c[no-intercept-multi-class-log-csr_matrix]"
-- reason: Test should fail with cuml.accel (scikit-learn <1.9)
-  marker: cuml_accel_bugs
-  condition: scikit-learn<1.9
-  tests:
-  - "sklearn.ensemble.tests.test_voting::test_predict_on_toy_problem[42]"
-  - "sklearn.ensemble.tests.test_voting::test_sample_weight[42]"
-  - "sklearn.ensemble.tests.test_voting::test_set_estimator_drop"
-- reason: Test should fail with cuml.accel (scikit-learn<1.7)
-  marker: cuml_accel_bugs
-  condition: scikit-learn<1.7,>=1.5.0
-  tests:
-  - "sklearn.manifold.tests.test_t_sne::test_tnse_n_iter_deprecated"
-  - "sklearn.manifold.tests.test_t_sne::test_tnse_n_iter_max_iter_both_set"
+  - "sklearn.model_selection.tests.test_search::test_search_cv_sample_weight_equivalence[estimator0]"
 - reason: cuML TargetEncoder uses different CV fold assignment algorithm (interleaved vs sklearn's sequential)
   marker: cuml_accel_bugs
   tests:
@@ -715,14 +707,14 @@
   condition: scikit-learn>=1.6,<1.7
   tests:
   - "sklearn.tests.test_common::test_estimators[StandardScaler()-check_sample_weight_equivalence_on_sparse_data]"
-- reason: Test is flaky with cuml.accel
+- reason: Intermittently fails with cuml.accel; root cause not yet isolated
   marker: cuml_accel_flaky
   condition: scikit-learn<1.7
   strict: false
   tests:
   - "sklearn.mixture.tests.test_gaussian_mixture::test_gaussian_mixture_precisions_init_diag"
   - "sklearn.utils.tests.test_estimator_html_repr::test_show_arrow_pipeline"
-- reason: Test is flaky with cuml.accel
+- reason: Intermittently fails with cuml.accel; root cause not yet isolated
   marker: cuml_accel_flaky
   condition: scikit-learn<1.8
   strict: false
@@ -731,19 +723,26 @@
   - "sklearn.manifold.tests.test_t_sne::test_fit_transform_csr_matrix[csr_array-exact]"
   - "sklearn.manifold.tests.test_t_sne::test_fit_transform_csr_matrix[csr_matrix-barnes_hut]"
   - "sklearn.manifold.tests.test_t_sne::test_fit_transform_csr_matrix[csr_matrix-exact]"
-- reason: Test is flaky with cuml.accel
+- reason: Intermittently fails with cuml.accel; root cause not yet isolated
+  marker: cuml_accel_flaky
+  condition: scikit-learn<1.9
+  strict: false
+  tests:
+  - "sklearn.ensemble.tests.test_voting::test_parallel_fit[42]"
+  - "sklearn.ensemble.tests.test_voting::test_tie_situation"
+- reason: Intermittently fails with cuml.accel; root cause not yet isolated
   marker: cuml_accel_flaky
   condition: scikit-learn>=1.6
   strict: false
   tests:
   - "sklearn.tests.test_common::test_estimators[SpectralEmbedding()-check_f_contiguous_array_estimator]"
-- reason: Test is flaky with cuml.accel
+- reason: Intermittently fails with cuml.accel; root cause not yet isolated
   marker: cuml_accel_flaky
   condition: scikit-learn>=1.7
   strict: false
   tests:
   - "sklearn.mixture.tests.test_gaussian_mixture::test_gaussian_mixture_precisions_init_diag[float64]"
-- reason: Test is flaky with cuml.accel
+- reason: Intermittently fails with cuml.accel; root cause not yet isolated
   marker: cuml_accel_flaky
   strict: false
   tests:
@@ -778,13 +777,6 @@
   - "sklearn.tests.test_common::test_estimators[SVR()-check_regressor_data_not_an_array]"
   - "sklearn.tests.test_multioutput::test_base_chain_fit_and_predict_with_sparse_data_and_cv[csr_array]"
   - "sklearn.tests.test_multioutput::test_classifier_chain_fit_and_predict_with_sparse_data[csr_array]"
-- reason: Test is flaky with cuml.accel (scikit-learn <1.9)
-  marker: cuml_accel_flaky
-  condition: scikit-learn<1.9
-  strict: false
-  tests:
-  - "sklearn.ensemble.tests.test_voting::test_parallel_fit[42]"
-  - "sklearn.ensemble.tests.test_voting::test_tie_situation"
 - reason: Tests that fail due to poking at sklearn internals, failures don't indicate bugs in cuml.accel
   marker: cuml_accel_invalid_sklearn_tests
   tests:
@@ -815,7 +807,7 @@
   - "sklearn.cluster.tests.test_k_means::test_dense_sparse[42-KMeans-X_csr0]"
   - "sklearn.cluster.tests.test_k_means::test_dense_sparse[42-KMeans-X_csr1]"
   - "sklearn.cluster.tests.test_k_means::test_weighted_vs_repeated[42]"
-- reason: cuml.accel deviates in KMeans empty cluster reloacation (number of labels)
+- reason: cuml.accel deviates in KMeans empty cluster relocation (number of labels)
   marker: cuml_accel_kmeans_empty_clusters_num_labels
   tests:
   - "sklearn.cluster.tests.test_k_means::test_kmeans_empty_cluster_relocated[dense]"
@@ -948,17 +940,7 @@
   tests:
   - "sklearn.tests.test_common::test_estimators[SVR()-check_sample_weight_equivalence_on_dense_data]"
   - "sklearn.tests.test_common::test_estimators[SVR()-check_sample_weight_equivalence_on_sparse_data]"
-- reason: test_estimators checks fail
-  marker: cuml_accel_test_estimators
-  condition: scikit-learn>=1.6
-  tests:
-  - "sklearn.tests.test_common::test_estimators[KMeans()-check_sample_weight_equivalence_on_dense_data]"
-  - "sklearn.tests.test_common::test_estimators[KMeans()-check_sample_weight_equivalence_on_sparse_data]"
-  - "sklearn.tests.test_common::test_estimators[RandomForestClassifier()-check_sample_weight_equivalence_on_dense_data]"
-  - "sklearn.tests.test_common::test_estimators[RandomForestClassifier()-check_sample_weight_equivalence_on_sparse_data]"
-  - "sklearn.tests.test_common::test_estimators[RandomForestRegressor()-check_sample_weight_equivalence_on_dense_data]"
-  - "sklearn.tests.test_common::test_estimators[RandomForestRegressor()-check_sample_weight_equivalence_on_sparse_data]"
-- reason: test_estimators checks fail
+- reason: Estimator input validation and output-format checks fail with cuml.accel
   marker: cuml_accel_test_estimators
   tests:
   - "sklearn.tests.test_common::test_estimators[KNeighborsRegressor()-check_supervised_y_no_nan]"
@@ -968,19 +950,29 @@
   - "sklearn.tests.test_common::test_estimators[RandomForestRegressor()-check_regressor_data_not_an_array]"
   - "sklearn.tests.test_common::test_estimators[TruncatedSVD()-check_fit2d_1feature]"
   - "sklearn.tests.test_common::test_estimators[TruncatedSVD()-check_fit2d_1sample]"
-- reason: test_estimators checks fail
+- reason: Estimator sample-weight equivalence checks differ with cuml.accel
+  marker: cuml_accel_test_estimators
+  condition: scikit-learn>=1.6
+  tests:
+  - "sklearn.tests.test_common::test_estimators[KMeans()-check_sample_weight_equivalence_on_dense_data]"
+  - "sklearn.tests.test_common::test_estimators[KMeans()-check_sample_weight_equivalence_on_sparse_data]"
+  - "sklearn.tests.test_common::test_estimators[RandomForestClassifier()-check_sample_weight_equivalence_on_dense_data]"
+  - "sklearn.tests.test_common::test_estimators[RandomForestClassifier()-check_sample_weight_equivalence_on_sparse_data]"
+  - "sklearn.tests.test_common::test_estimators[RandomForestRegressor()-check_sample_weight_equivalence_on_dense_data]"
+  - "sklearn.tests.test_common::test_estimators[RandomForestRegressor()-check_sample_weight_equivalence_on_sparse_data]"
+- reason: SpectralEmbedding estimator state checks fail with cuml.accel
   marker: cuml_accel_test_estimators
   strict: false
   tests:
   - "sklearn.tests.test_common::test_estimators[SpectralEmbedding()-check_estimators_fit_returns_self]"
   - "sklearn.tests.test_common::test_estimators[SpectralEmbedding()-check_estimators_overwrite_params]"
-- reason: test_estimators checks fail (1.5)
+- reason: SpectralEmbedding readonly memmap estimator check fails with cuml.accel on scikit-learn 1.5
   marker: cuml_accel_test_estimators
   condition: scikit-learn==1.5
   strict: false
   tests:
   - "sklearn.tests.test_common::test_estimators[SpectralEmbedding()-check_estimators_fit_returns_self(readonly_memmap=True)]"
-- reason: test_estimators checks fail (1.7.2+)
+- reason: SpectralEmbedding readonly memmap estimator check fails with cuml.accel on scikit-learn 1.7.2+
   marker: cuml_accel_test_estimators
   condition: scikit-learn>=1.7.2
   strict: false
@@ -1005,11 +997,11 @@
   tests:
   - "sklearn.tests.test_calibration::test_calibrated_classifier_cv_double_sample_weights_equivalence[False-temperature]"
   - "sklearn.tests.test_calibration::test_calibrated_classifier_cv_double_sample_weights_equivalence[True-temperature]"
-- reason: ElasticNet sample_weight handling is a bit off
+- reason: ElasticNet sample_weight alpha_max calculation differs from sklearn
   condition: scikit-learn>=1.6,<1.8
   tests:
   - "sklearn.linear_model.tests.test_coordinate_descent::test_enet_alpha_max_sample_weight[sample_weight0-False-True]"
-- reason: ElasticNet sample_weight handling is a bit off
+- reason: ElasticNet sample_weight alpha_max calculation differs from sklearn
   condition: scikit-learn>=1.8,<1.9
   tests:
   - "sklearn.linear_model.tests.test_coordinate_descent::test_enet_alpha_max[sample_weight0-False-True]"
@@ -1017,7 +1009,7 @@
   condition: scikit-learn>=1.8
   tests:
   - "sklearn.linear_model.tests.test_logistic::test_scores_attribute_layout_elasticnet"
-- reason: Flaky deviations in values in cuml.accel
+- reason: Intermittently differs in KMeans values with cuml.accel; root cause not yet isolated
   strict: false
   tests:
   - "sklearn.cluster.tests.test_k_means::test_kmeans_elkan_results[42-1e-100-dense-blobs]"
@@ -1039,7 +1031,12 @@
   - "sklearn.svm.tests.test_svm::test_linearsvc_parameters[42-False-l2-hinge]"
   - "sklearn.svm.tests.test_svm::test_linearsvc_parameters[42-True-l1-hinge]"
   - "sklearn.svm.tests.test_svm::test_linearsvc_parameters[42-True-l1-squared_hinge]"
-- reason: LinearSVM
+- reason: LinearSVM calibration behavior intermittently differs with cuml.accel
+  strict: false
+  tests:
+  - "sklearn.tests.test_calibration::test_calibration_multiclass[1-False-isotonic]"
+  - "sklearn.tests.test_calibration::test_calibration_multiclass[1-False-sigmoid]"
+- reason: LinearSVM liblinear validation and convergence behavior differs with cuml.accel
   condition: scikit-learn<1.8
   tests:
   - "sklearn.svm.tests.test_bounds::test_l1_min_c[no-intercept-multi-class-squared_hinge-array]"
@@ -1050,14 +1047,14 @@
   - "sklearn.svm.tests.test_svm::test_linearsvc_parameters[False-l2-hinge]"
   - "sklearn.svm.tests.test_svm::test_linearsvc_parameters[True-l1-hinge]"
   - "sklearn.svm.tests.test_svm::test_linearsvc_parameters[True-l1-squared_hinge]"
-- reason: LinearSVM
+- reason: LinearSVM sample-weight equivalence differs with cuml.accel
   condition: scikit-learn>=1.6
   tests:
   - "sklearn.tests.test_common::test_estimators[LinearSVC()-check_sample_weight_equivalence_on_dense_data]"
   - "sklearn.tests.test_common::test_estimators[LinearSVC()-check_sample_weight_equivalence_on_sparse_data]"
   - "sklearn.tests.test_common::test_estimators[LinearSVR()-check_sample_weight_equivalence_on_dense_data]"
   - "sklearn.tests.test_common::test_estimators[LinearSVR()-check_sample_weight_equivalence_on_sparse_data]"
-- reason: LinearSVM
+- reason: LinearSVM sparse/intercept, calibration, and RFE behavior differs with cuml.accel
   tests:
   - "sklearn.feature_selection.tests.test_rfe::test_rfe_wrapped_estimator[RFECV-4-importance_getter0]"
   - "sklearn.feature_selection.tests.test_rfe::test_rfe_wrapped_estimator[RFECV-4-regressor_.coef_]"
@@ -1069,11 +1066,6 @@
   - "sklearn.svm.tests.test_svm::test_dense_liblinear_intercept_handling"
   - "sklearn.tests.test_calibration::test_calibration_multiclass[1-True-sigmoid]"
   - "sklearn.tests.test_common::test_estimators[LinearSVC()-check_sparsify_coefficients]"
-- reason: LinearSVM
-  strict: false
-  tests:
-  - "sklearn.tests.test_calibration::test_calibration_multiclass[1-False-isotonic]"
-  - "sklearn.tests.test_calibration::test_calibration_multiclass[1-False-sigmoid]"
 - reason: LinearSVM test expects exact results on small data, which isn't guaranteed
   condition: scikit-learn<1.8
   tests:
