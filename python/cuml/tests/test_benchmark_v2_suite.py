@@ -15,6 +15,7 @@ from cuml.benchmark.suite import (
     SuiteError,
     load_suite,
     load_suite_reference,
+    suite_profile_names,
 )
 
 SUITES = Path(__file__).resolve().parents[1] / "cuml" / "benchmark" / "suites"
@@ -62,6 +63,20 @@ def test_builtin_suites_are_packaged_resources():
         # The optional suffix is accepted as a convenience, while explicit
         # paths remain custom manifests.
         assert load_suite_reference(f"{name}.yaml").name == suite.name
+
+
+def test_suite_profile_names_supports_builtins_and_custom_paths(tmp_path):
+    assert suite_profile_names("cuml_accel") == ("smoke", "standard")
+    custom = _write(tmp_path)
+    assert suite_profile_names(custom) == ("smoke", "standard")
+
+
+def test_unknown_profile_reports_available_profiles():
+    with pytest.raises(
+        SuiteError,
+        match=("unknown profile 'quick'; available profiles: smoke, standard"),
+    ):
+        load_suite_reference("cuml_sg", "quick")
 
 
 def test_accel_registry_exactly_matches_override_exports():

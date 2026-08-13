@@ -9,10 +9,17 @@ import argparse
 import os
 import sys
 
-from .suite import BUILTIN_SUITES, SuiteError, load_suite_reference
+from .suite import (
+    BUILTIN_SUITES,
+    SuiteError,
+    load_suite_reference,
+    suite_profile_names,
+)
 
 
-def _parser() -> argparse.ArgumentParser:
+def _parser(
+    profile_names: tuple[str, ...] | None = None,
+) -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="python -m cuml.benchmark")
     parser.add_argument(
         "--suite",
@@ -25,8 +32,29 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--output", required=True, help="neutral-v2 JSON artifact path"
     )
-    parser.add_argument("--profile", help="suite profile (default: standard)")
+    profile_metavar = (
+        "{" + ",".join(profile_names) + "}" if profile_names else "PROFILE"
+    )
+    parser.add_argument(
+        "--profile",
+        metavar=profile_metavar,
+        help="profile defined by the selected suite (default: standard)",
+    )
     return parser
+
+
+def _suite_aware_parser(argv: list[str]) -> argparse.ArgumentParser:
+    probe = argparse.ArgumentParser(add_help=False)
+    probe.add_argument("--suite")
+    probed, _ = probe.parse_known_args(argv)
+    if probed.suite is not None:
+        try:
+            return _parser(suite_profile_names(probed.suite))
+        except SuiteError:
+            # Full parsing and suite loading below will report the actionable
+            # manifest error. Generic help should remain available meanwhile.
+            pass
+    return _parser()
 
 
 def _accel_active() -> bool:
@@ -72,7 +100,9 @@ def _bootstrap_accel_process(suite) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
-    args = _parser().parse_args(argv)
+    argument_values = sys.argv[1:] if argv is None else argv
+    parser = _suite_aware_parser(argument_values)
+    args = parser.parse_args(argument_values)
     try:
         suite = load_suite_reference(args.suite, args.profile)
         _bootstrap_accel_process(suite)
@@ -86,7 +116,7 @@ def main(argv: list[str] | None = None) -> int:
             [sys.executable, "-m", "cuml.benchmark", *(argv or sys.argv[1:])],
         )
     except SuiteError as exc:
-        _parser().error(str(exc))
+        parser.error(str(exc))
     return int(
         any(
             result["outcome"]["status"] == "failed"

@@ -8,6 +8,7 @@ from __future__ import annotations
 import hashlib
 import importlib.resources
 import json
+from contextlib import contextmanager
 from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any
@@ -124,7 +125,10 @@ def load_suite(path: str | Path, profile: str | None = None) -> Suite:
     profiles = _mapping(raw["profiles"], "profiles")
     profile_name = profile or "standard"
     if profile_name not in profiles:
-        raise SuiteError(f"unknown profile {profile_name!r}")
+        available = ", ".join(sorted(profiles))
+        raise SuiteError(
+            f"unknown profile {profile_name!r}; available profiles: {available}"
+        )
     profile_data = _mapping(
         profiles[profile_name], f"profile {profile_name!r}"
     )
@@ -226,10 +230,8 @@ def load_suite(path: str | Path, profile: str | None = None) -> Suite:
     )
 
 
-def load_suite_reference(
-    reference: str | Path, profile: str | None = None
-) -> Suite:
-    """Load a packaged built-in suite by name or a custom suite by path."""
+@contextmanager
+def _suite_reference_path(reference: str | Path):
     reference_text = str(reference)
     builtin_name = reference_text.removesuffix(".yaml")
     if builtin_name in BUILTIN_SUITES and Path(reference_text).parent == Path(
@@ -239,6 +241,33 @@ def load_suite_reference(
             f"{builtin_name}.yaml"
         )
         with importlib.resources.as_file(resource) as resource_path:
-            suite = load_suite(resource_path, profile)
+            yield resource_path, builtin_name
+    else:
+        yield Path(reference).resolve(), None
+
+
+def suite_profile_names(reference: str | Path) -> tuple[str, ...]:
+    """Return sorted profile names without resolving or executing cases."""
+    with _suite_reference_path(reference) as (suite_path, _):
+        try:
+            raw = yaml.safe_load(suite_path.read_text(encoding="utf-8"))
+        except (OSError, yaml.YAMLError) as exc:
+            raise SuiteError(
+                f"unable to load suite {suite_path}: {exc}"
+            ) from exc
+    raw = _mapping(raw, "suite")
+    profiles = _mapping(raw.get("profiles"), "profiles")
+    if not profiles:
+        raise SuiteError("profiles must be a non-empty mapping")
+    return tuple(sorted(profiles))
+
+
+def load_suite_reference(
+    reference: str | Path, profile: str | None = None
+) -> Suite:
+    """Load a packaged built-in suite by name or a custom suite by path."""
+    with _suite_reference_path(reference) as (suite_path, builtin_name):
+        suite = load_suite(suite_path, profile)
+    if builtin_name is not None:
         return replace(suite, path=f"builtin:{builtin_name}")
-    return load_suite(reference, profile)
+    return suite
