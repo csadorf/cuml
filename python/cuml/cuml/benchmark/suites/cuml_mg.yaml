@@ -1,0 +1,27 @@
+version: 2
+name: cuml-multi-gpu
+implementation: cuml.dask
+profiles:
+  standard: {warmups: 1, repetitions: 3, size_scale: 1.0}
+  smoke: {warmups: 1, repetitions: 1, size_scale: 0.1}
+cases:
+  - {estimator: KMeans, dataset: blobs, operation: fit_predict, shape: {rows: 2000, features: 32}, parameters: {n_clusters: 5}}
+  - {estimator: DBSCAN, dataset: blobs, operation: fit_predict, shape: {rows: 2000, features: 32}, parameters: {eps: 2.0, min_samples: 5}}
+  - {estimator: PCA, dataset: matrix, operation: fit_transform, shape: {rows: 2000, features: 32}, parameters: {n_components: 8}}
+  - {estimator: TruncatedSVD, dataset: matrix, operation: fit_transform, shape: {rows: 2000, features: 32}, parameters: {n_components: 8}}
+  - {estimator: NearestNeighbors, dataset: matrix, operation: kneighbors, shape: {rows: 2000, features: 32}, parameters: {n_neighbors: 5}}
+  - {estimator: KNeighborsClassifier, dataset: classification, operation: predict, shape: {rows: 2000, features: 32}, parameters: {n_neighbors: 5}}
+  - {estimator: KNeighborsRegressor, dataset: regression, operation: predict, shape: {rows: 2000, features: 32}, parameters: {n_neighbors: 5}}
+  - {estimator: LinearRegression, dataset: regression, operation: predict, shape: {rows: 2000, features: 32}, parameters: {}}
+  - {estimator: LogisticRegression, dataset: classification, operation: predict, shape: {rows: 2000, features: 32}, parameters: {max_iter: 200}}
+  - {estimator: ElasticNet, dataset: regression, operation: predict, shape: {rows: 2000, features: 32}, parameters: {alpha: 0.1}}
+  - {estimator: Lasso, dataset: regression, operation: predict, shape: {rows: 2000, features: 32}, parameters: {alpha: 0.1}}
+  - {estimator: Ridge, dataset: regression, operation: predict, shape: {rows: 2000, features: 32}, parameters: {alpha: 1.0}}
+  - {estimator: RandomForestClassifier, dataset: classification, operation: predict, shape: {rows: 2000, features: 32}, parameters: {n_estimators: 10, max_depth: 8, random_state: 42}}
+  - {estimator: RandomForestRegressor, dataset: regression, operation: predict, shape: {rows: 2000, features: 32}, parameters: {n_estimators: 10, max_depth: 8, random_state: 42}}
+  - {estimator: UMAP, dataset: blobs, operation: fit_transform, shape: {rows: 2000, features: 32}, parameters: {n_neighbors: 10, n_components: 2, random_state: 42}}
+  - {estimator: MultinomialNB, dataset: positive, operation: predict, shape: {rows: 2000, features: 32}, parameters: {}}
+  - {estimator: OneHotEncoder, dataset: categorical, operation: fit_transform, shape: {rows: 2000, features: 8}, parameters: {}}
+  - {estimator: OrdinalEncoder, dataset: categorical, operation: fit_transform, shape: {rows: 2000, features: 8}, parameters: {}}
+  - {estimator: LabelEncoder, dataset: categorical, operation: fit_transform, shape: {rows: 2000, features: 8}, parameters: {}}
+  - {estimator: LabelBinarizer, dataset: categorical, operation: fit_transform, shape: {rows: 2000, features: 8}, parameters: {}}

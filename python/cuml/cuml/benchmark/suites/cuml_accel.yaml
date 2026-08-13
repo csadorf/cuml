@@ -1,0 +1,42 @@
+version: 2
+name: cuml-accel
+implementation: cuml.accel
+profiles:
+  standard: {warmups: 1, repetitions: 3, size_scale: 1.0, verify_accel_dispatch: false}
+  smoke: {warmups: 1, repetitions: 1, size_scale: 0.1, verify_accel_dispatch: true}
+cases:
+  - {estimator: KMeans, dataset: blobs, operation: fit_predict, shape: {rows: 1000, features: 32}, parameters: {n_clusters: 5}}
+  - {estimator: DBSCAN, dataset: blobs, operation: fit_predict, shape: {rows: 1000, features: 32}, parameters: {eps: 2.0, min_samples: 5}}
+  - {estimator: SpectralClustering, dataset: blobs, operation: fit_predict, shape: {rows: 1000, features: 32}, parameters: {n_clusters: 5}}
+  - {estimator: EmpiricalCovariance, dataset: matrix, operation: fit, shape: {rows: 1000, features: 32}, parameters: {}}
+  - {estimator: LedoitWolf, dataset: matrix, operation: fit, shape: {rows: 1000, features: 32}, parameters: {}}
+  - {estimator: PCA, dataset: matrix, operation: fit_transform, shape: {rows: 1000, features: 32}, parameters: {n_components: 8}}
+  - {estimator: IncrementalPCA, dataset: matrix, operation: fit_transform, shape: {rows: 1000, features: 32}, parameters: {n_components: 8, batch_size: 128}}
+  - {estimator: TruncatedSVD, dataset: matrix, operation: fit_transform, shape: {rows: 1000, features: 32}, parameters: {n_components: 8}}
+  - {estimator: NearestNeighbors, dataset: matrix, operation: kneighbors, shape: {rows: 1000, features: 32}, parameters: {n_neighbors: 5}}
+  - {estimator: KNeighborsClassifier, dataset: classification, operation: predict, shape: {rows: 1000, features: 32}, parameters: {n_neighbors: 5}}
+  - {estimator: KNeighborsRegressor, dataset: regression, operation: predict, shape: {rows: 1000, features: 32}, parameters: {n_neighbors: 5}}
+  - {estimator: KernelDensity, dataset: matrix, operation: score_samples, shape: {rows: 1000, features: 32}, parameters: {bandwidth: 1.0}}
+  - {estimator: LinearRegression, dataset: regression, operation: predict, shape: {rows: 1000, features: 32}, parameters: {}}
+  - {estimator: LogisticRegression, dataset: classification, operation: predict, shape: {rows: 1000, features: 32}, parameters: {max_iter: 200}}
+  - {estimator: ElasticNet, dataset: regression, operation: predict, shape: {rows: 1000, features: 32}, parameters: {alpha: 0.1}}
+  - {estimator: Ridge, dataset: regression, operation: predict, shape: {rows: 1000, features: 32}, parameters: {alpha: 1.0}}
+  - {estimator: Lasso, dataset: regression, operation: predict, shape: {rows: 1000, features: 32}, parameters: {alpha: 0.1}}
+  - {estimator: KernelRidge, dataset: regression, operation: predict, shape: {rows: 1000, features: 32}, parameters: {alpha: 1.0}}
+  - {estimator: RandomForestClassifier, dataset: classification, operation: predict, shape: {rows: 1000, features: 32}, parameters: {n_estimators: 10, max_depth: 8, random_state: 42}}
+  - {estimator: RandomForestRegressor, dataset: regression, operation: predict, shape: {rows: 1000, features: 32}, parameters: {n_estimators: 10, max_depth: 8, random_state: 42}}
+  - {estimator: TSNE, dataset: blobs, operation: fit_transform, shape: {rows: 1000, features: 32}, parameters: {n_components: 2, perplexity: 10.0, random_state: 42}}
+  - {estimator: SpectralEmbedding, dataset: blobs, operation: fit_transform, shape: {rows: 1000, features: 32}, parameters: {n_components: 2, n_neighbors: 10, random_state: 42}}
+  - {estimator: SVC, dataset: classification, operation: predict, shape: {rows: 1000, features: 32}, parameters: {C: 1.0}}
+  - {estimator: SVR, dataset: regression, operation: predict, shape: {rows: 1000, features: 32}, parameters: {C: 1.0}}
+  - {estimator: LinearSVC, dataset: classification, operation: predict, shape: {rows: 1000, features: 32}, parameters: {C: 1.0}}
+  - {estimator: LinearSVR, dataset: regression, operation: predict, shape: {rows: 1000, features: 32}, parameters: {C: 1.0}}
+  - {estimator: StandardScaler, dataset: matrix, operation: fit_transform, shape: {rows: 1000, features: 32}, parameters: {}}
+  - {estimator: MinMaxScaler, dataset: matrix, operation: fit_transform, shape: {rows: 1000, features: 32}, parameters: {}}
+  - {estimator: MaxAbsScaler, dataset: matrix, operation: fit_transform, shape: {rows: 1000, features: 32}, parameters: {}}
+  - {estimator: PolynomialFeatures, dataset: matrix, operation: fit_transform, shape: {rows: 1000, features: 16}, parameters: {degree: 2}}
+  - {estimator: LabelEncoder, dataset: categorical, operation: fit_transform, shape: {rows: 1000, features: 8}, parameters: {}}
+  - {estimator: LabelBinarizer, dataset: categorical, operation: fit_transform, shape: {rows: 1000, features: 8}, parameters: {}}
+  - {estimator: TargetEncoder, dataset: categorical, operation: fit_transform, shape: {rows: 1000, features: 8}, parameters: {}}
+  - {estimator: UMAP, dataset: blobs, operation: fit_transform, shape: {rows: 1000, features: 32}, parameters: {n_neighbors: 10, n_components: 2, random_state: 42}}
+  - {estimator: HDBSCAN, dataset: blobs, operation: fit_predict, shape: {rows: 1000, features: 32}, parameters: {min_cluster_size: 5}}
