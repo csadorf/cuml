@@ -9,13 +9,18 @@ import argparse
 import os
 import sys
 
-from .suite import SuiteError, load_suite
+from .suite import BUILTIN_SUITES, SuiteError, load_suite_reference
 
 
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="python -m cuml.benchmark")
     parser.add_argument(
-        "--suite", required=True, help="strict YAML suite manifest"
+        "--suite",
+        required=True,
+        help=(
+            "built-in suite name or strict YAML manifest path; built-ins: "
+            + ", ".join(sorted(BUILTIN_SUITES))
+        ),
     )
     parser.add_argument(
         "--output", required=True, help="neutral-v2 JSON artifact path"
@@ -69,7 +74,7 @@ def _bootstrap_accel_process(suite) -> None:
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     try:
-        suite = load_suite(args.suite, args.profile)
+        suite = load_suite_reference(args.suite, args.profile)
         _bootstrap_accel_process(suite)
         _prepare_implementation(suite.implementation)
         # Import only after accelerator bootstrap/isolation validation.

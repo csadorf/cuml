@@ -6,8 +6,9 @@
 from __future__ import annotations
 
 import hashlib
+import importlib.resources
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any
 
@@ -42,6 +43,7 @@ OPERATIONS = frozenset(
     }
 )
 IMPLEMENTATIONS = frozenset(REGISTRIES)
+BUILTIN_SUITES = frozenset({"cuml_sg", "cuml_mg", "cuml_accel", "sklearn_cpu"})
 
 
 def _unknown(
@@ -91,7 +93,7 @@ class ResolvedCase:
 
 @dataclass(frozen=True)
 class Suite:
-    path: Path
+    path: str | Path
     name: str
     implementation: str
     profile_name: str
@@ -222,3 +224,21 @@ def load_suite(path: str | Path, profile: str | None = None) -> Suite:
         verify,
         tuple(resolved),
     )
+
+
+def load_suite_reference(
+    reference: str | Path, profile: str | None = None
+) -> Suite:
+    """Load a packaged built-in suite by name or a custom suite by path."""
+    reference_text = str(reference)
+    builtin_name = reference_text.removesuffix(".yaml")
+    if builtin_name in BUILTIN_SUITES and Path(reference_text).parent == Path(
+        "."
+    ):
+        resource = importlib.resources.files("cuml.benchmark.suites").joinpath(
+            f"{builtin_name}.yaml"
+        )
+        with importlib.resources.as_file(resource) as resource_path:
+            suite = load_suite(resource_path, profile)
+        return replace(suite, path=f"builtin:{builtin_name}")
+    return load_suite(reference, profile)

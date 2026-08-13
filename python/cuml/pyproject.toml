@@ -98,6 +98,7 @@ dependencies = [
     "nvidia-nvjitlink>=13.3,<14",
     "packaging",
     "pylibraft==26.10.*,>=0.0.0a0",
+    "pyyaml",
     "rich",
     "rmm==26.10.*,>=0.0.0a0",
     "scikit-learn>=1.6",

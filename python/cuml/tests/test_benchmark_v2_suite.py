@@ -10,7 +10,12 @@ import pytest
 import yaml
 
 from cuml.benchmark.registry import ACCEL_ESTIMATORS, REGISTRIES
-from cuml.benchmark.suite import SuiteError, load_suite
+from cuml.benchmark.suite import (
+    BUILTIN_SUITES,
+    SuiteError,
+    load_suite,
+    load_suite_reference,
+)
 
 SUITES = Path(__file__).resolve().parents[1] / "cuml" / "benchmark" / "suites"
 
@@ -39,6 +44,24 @@ def test_checked_in_suites_are_strict_and_cover_registries():
         assert [c.id for c in standard.cases] == [
             c.id for c in load_suite(SUITES / filename).cases
         ]
+
+
+def test_builtin_suites_are_packaged_resources():
+    assert BUILTIN_SUITES == {
+        "cuml_sg",
+        "cuml_mg",
+        "cuml_accel",
+        "sklearn_cpu",
+    }
+    for name in BUILTIN_SUITES:
+        suite = load_suite_reference(name, "smoke")
+        assert suite.path == f"builtin:{name}"
+        assert suite.profile_name == "smoke"
+        assert suite.cases
+
+        # The optional suffix is accepted as a convenience, while explicit
+        # paths remain custom manifests.
+        assert load_suite_reference(f"{name}.yaml").name == suite.name
 
 
 def test_accel_registry_exactly_matches_override_exports():

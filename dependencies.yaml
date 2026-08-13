@@ -361,6 +361,7 @@ dependencies:
           - &numpy numpy>=2.0,<3.0
           - scipy>=1.14.0
           - packaging
+          - pyyaml
           - rich
           - &scikit_learn scikit-learn>=1.6
           - *treelite
