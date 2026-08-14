@@ -193,6 +193,23 @@ def test_case_exception_is_schema_shaped_failure(monkeypatch):
     assert result["observations"][0]["outcome"]["status"] == "failed"
 
 
+def test_verbose_case_progress_reports_each_repetition(monkeypatch):
+    _patch_case(monkeypatch)
+    suite = _suite(warmups=1, repetitions=2)
+    messages = []
+    result = harness.run_case(
+        suite,
+        suite.cases[0],
+        progress=messages.append,
+        verbose=True,
+    )
+    assert result["outcome"]["status"] == "success"
+    assert len(messages) == 3
+    assert messages[0].startswith("  warmup 1/1 completed in ")
+    assert messages[1].startswith("  measurement 1/2 completed in ")
+    assert messages[2].startswith("  measurement 2/2 completed in ")
+
+
 def test_atomic_checkpoint_after_every_case_and_continue_failures(monkeypatch):
     cases = [
         ResolvedCase("PCA", "matrix", "fit", 32, 4, {}, 1, 1),
@@ -209,7 +226,7 @@ def test_atomic_checkpoint_after_every_case_and_continue_failures(monkeypatch):
     monkeypatch.setattr(
         harness,
         "run_case",
-        lambda suite, case, client=None: {
+        lambda suite, case, client=None, **kwargs: {
             "outcome": {"status": next(statuses)}
         },
     )
@@ -221,9 +238,21 @@ def test_atomic_checkpoint_after_every_case_and_continue_failures(monkeypatch):
             (len(artifact["results"]), "completed_at" in artifact["run"])
         ),
     )
-    artifact = harness.run_suite(suite, "artifact.json", ["benchmark"])
+    messages = []
+    artifact = harness.run_suite(
+        suite, "artifact.json", ["benchmark"], progress=messages.append
+    )
     assert [r["outcome"]["status"] for r in artifact["results"]] == [
         "failed",
         "success",
     ]
     assert writes == [(0, False), (1, False), (2, False), (2, True)]
+    assert messages[0] == "Running suite 'test', profile 'standard' (2 cases)"
+    assert messages[1] == "[1/2] PCA.fit (32x4): starting"
+    assert messages[2].startswith("[1/2] PCA.fit (32x4): failed in ")
+    assert messages[3] == "[2/2] PCA.fit (64x4): starting"
+    assert messages[4].startswith("[2/2] PCA.fit (64x4): success in ")
+    assert messages[5].startswith(
+        "Completed suite 'test': 1 passed, 1 failed in "
+    )
+    assert "; artifact: " in messages[5]

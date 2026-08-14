@@ -18,6 +18,7 @@ def test_help_is_suite_aware(capsys):
     output = capsys.readouterr().out
     assert "--profile {smoke,standard}" in output
     assert "profile defined by the selected suite" in output
+    assert "-v, --verbose" in output
 
 
 def test_generic_help_uses_default_suite_profiles(capsys):
@@ -74,7 +75,7 @@ def test_missing_output_generates_and_reports_path(
     monkeypatch.chdir(tmp_path)
     captured = {}
 
-    def fake_run_suite(suite, output, argv):
+    def fake_run_suite(suite, output, argv, **kwargs):
         captured["output"] = Path(output)
         return {"results": []}
 
@@ -84,13 +85,15 @@ def test_missing_output_generates_and_reports_path(
     assert output.parent == tmp_path
     assert output.name.startswith("sklearn_cpu-smoke-")
     assert output.suffix == ".json"
-    assert f"Writing benchmark artifact to {output}" in capsys.readouterr().out
+    captured_output = capsys.readouterr()
+    assert f"Writing benchmark artifact to {output}" in captured_output.err
+    assert captured_output.out == ""
 
 
 def test_explicit_output_is_preserved(monkeypatch, tmp_path):
     captured = {}
 
-    def fake_run_suite(suite, output, argv):
+    def fake_run_suite(suite, output, argv, **kwargs):
         captured["output"] = Path(output)
         return {"results": []}
 
@@ -103,7 +106,7 @@ def test_explicit_output_is_preserved(monkeypatch, tmp_path):
 def test_default_suite_is_forwarded(monkeypatch, tmp_path):
     captured = {}
 
-    def fake_run_suite(suite, output, argv):
+    def fake_run_suite(suite, output, argv, **kwargs):
         captured["suite"] = suite
         return {"results": []}
 
@@ -111,3 +114,19 @@ def test_default_suite_is_forwarded(monkeypatch, tmp_path):
     destination = tmp_path / "artifact.json"
     assert main(["--output", str(destination)]) == 0
     assert captured["suite"].path == "builtin:cuml_sg"
+
+
+def test_verbose_is_forwarded(monkeypatch, tmp_path):
+    captured = {}
+
+    def fake_run_suite(suite, output, argv, **kwargs):
+        captured.update(kwargs)
+        return {"results": []}
+
+    monkeypatch.setattr("cuml.benchmark.harness.run_suite", fake_run_suite)
+    destination = tmp_path / "artifact.json"
+    assert (
+        main(["--suite", "cuml_sg", "-v", "--output", str(destination)]) == 0
+    )
+    assert captured["verbose"] is True
+    assert callable(captured["progress"])

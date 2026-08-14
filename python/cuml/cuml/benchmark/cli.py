@@ -50,6 +50,12 @@ def _parser(
         metavar=profile_metavar,
         help="profile defined by the selected suite (default: standard)",
     )
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        help="report every warmup and measurement repetition",
+    )
     return parser
 
 
@@ -92,6 +98,10 @@ def _suite_aware_parser(argv: list[str]) -> argparse.ArgumentParser:
         # manifest error. Generic help should remain available meanwhile.
         pass
     return _parser()
+
+
+def _progress(message: str) -> None:
+    print(message, file=sys.stderr, flush=True)
 
 
 def _accel_active() -> bool:
@@ -150,7 +160,7 @@ def main(argv: list[str] | None = None) -> int:
             else default_output_path(suite)
         )
         if args.output is None:
-            print(f"Writing benchmark artifact to {output}", flush=True)
+            _progress(f"Writing benchmark artifact to {output}")
         # Import only after accelerator bootstrap/isolation validation.
         from .harness import run_suite
 
@@ -158,6 +168,8 @@ def main(argv: list[str] | None = None) -> int:
             suite,
             output,
             [sys.executable, "-m", "cuml.benchmark", *(argv or sys.argv[1:])],
+            progress=_progress,
+            verbose=args.verbose,
         )
     except SuiteError as exc:
         parser.error(str(exc))

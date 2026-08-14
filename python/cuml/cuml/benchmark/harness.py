@@ -21,7 +21,7 @@ import time
 import traceback
 import uuid
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 import numpy as np
 
@@ -31,6 +31,7 @@ from .suite import ResolvedCase, Suite, SuiteError
 METHODOLOGY = "cuml-benchmark-observations-v2"
 EXTENSION = "com.nvidia.cuml.benchmark"
 ACCEL_EXTENSION = "com.nvidia.cuml.accel"
+ProgressCallback = Callable[[str], None]
 
 
 def _now() -> str:
@@ -422,7 +423,12 @@ def _base_result(
 
 
 def run_case(
-    suite: Suite, case: ResolvedCase, client: Any = None
+    suite: Suite,
+    case: ResolvedCase,
+    client: Any = None,
+    *,
+    progress: ProgressCallback | None = None,
+    verbose: bool = False,
 ) -> dict[str, Any]:
     spec = estimator_spec(suite.implementation, case.estimator)
     result = _base_result(suite, case, spec.package, _version(spec.package))
@@ -499,6 +505,11 @@ def run_case(
                             },
                         }
                         observations.append(observation)
+                        if verbose and progress is not None:
+                            progress(
+                                f"  {role} {repetition + 1}/{count} failed "
+                                f"in {elapsed:.3f}s"
+                            )
                         result["outcome"] = {
                             "status": "failed",
                             "last_phase": "dispatch_verification",
@@ -509,6 +520,11 @@ def run_case(
                         }
                         return result
                 observations.append(observation)
+                if verbose and progress is not None:
+                    progress(
+                        f"  {role} {repetition + 1}/{count} completed "
+                        f"in {elapsed:.3f}s"
+                    )
         result["outcome"] = {"status": "success"}
         return result
     except Exception as exc:
@@ -525,6 +541,8 @@ def run_case(
                 },
             }
         )
+        if verbose and progress is not None:
+            progress(f"  {role} failed: {type(exc).__name__}: {exc}")
         result["outcome"] = error
         return result
 
@@ -548,7 +566,12 @@ def _runtime(suite: Suite):
 
 
 def run_suite(
-    suite: Suite, output: str | Path, argv: list[str] | None = None
+    suite: Suite,
+    output: str | Path,
+    argv: list[str] | None = None,
+    *,
+    progress: ProgressCallback | None = None,
+    verbose: bool = False,
 ) -> dict[str, Any]:
     artifact = {
         "schema_version": 2,
@@ -556,10 +579,30 @@ def run_suite(
         "results": [],
     }
     atomic_write(output, artifact)
+    suite_started = time.perf_counter()
+    total = len(suite.cases)
+    if progress is not None:
+        progress(
+            f"Running suite {suite.name!r}, profile {suite.profile_name!r} "
+            f"({total} cases)"
+        )
     with _runtime(suite) as client:
-        for case in suite.cases:
+        for index, case in enumerate(suite.cases, start=1):
+            label = (
+                f"{case.estimator}.{case.operation} "
+                f"({case.rows}x{case.features})"
+            )
+            if progress is not None:
+                progress(f"[{index}/{total}] {label}: starting")
+            case_started = time.perf_counter()
             try:
-                result = run_case(suite, case, client)
+                result = run_case(
+                    suite,
+                    case,
+                    client,
+                    progress=progress,
+                    verbose=verbose,
+                )
             except KeyboardInterrupt as exc:
                 spec = estimator_spec(suite.implementation, case.estimator)
                 result = _base_result(
@@ -579,9 +622,31 @@ def run_suite(
                 artifact["results"].append(result)
                 artifact["run"]["completed_at"] = _now()
                 atomic_write(output, artifact)
+                if progress is not None:
+                    progress(
+                        f"[{index}/{total}] {label}: interrupted after "
+                        f"{time.perf_counter() - case_started:.3f}s"
+                    )
                 raise
             artifact["results"].append(result)
             atomic_write(output, artifact)
+            if progress is not None:
+                progress(
+                    f"[{index}/{total}] {label}: "
+                    f"{result['outcome']['status']} in "
+                    f"{time.perf_counter() - case_started:.3f}s"
+                )
     artifact["run"]["completed_at"] = _now()
     atomic_write(output, artifact)
+    if progress is not None:
+        passed = sum(
+            result["outcome"]["status"] == "success"
+            for result in artifact["results"]
+        )
+        failed = len(artifact["results"]) - passed
+        progress(
+            f"Completed suite {suite.name!r}: {passed} passed, "
+            f"{failed} failed in {time.perf_counter() - suite_started:.3f}s; "
+            f"artifact: {Path(output).resolve()}"
+        )
     return artifact
