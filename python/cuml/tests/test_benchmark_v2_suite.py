@@ -106,8 +106,9 @@ def test_accel_registry_exactly_matches_override_exports():
     assert _case_names(SUITES / "cuml_accel.yaml") == exported
 
 
-def test_cpu_coverage_is_comparable_native_accel_union_and_ids_align():
+def test_comparable_cases_align_across_all_builtin_suites():
     native = load_suite(SUITES / "cuml_sg.yaml")
+    dask = load_suite(SUITES / "cuml_mg.yaml")
     accel = load_suite(SUITES / "cuml_accel.yaml")
     cpu = load_suite(SUITES / "sklearn_cpu.yaml")
     comparable = (
@@ -115,10 +116,15 @@ def test_cpu_coverage_is_comparable_native_accel_union_and_ids_align():
     ) & set(REGISTRIES["scikit-learn"])
     assert {c.estimator for c in cpu.cases} == comparable
     by_suite = [
-        {c.estimator: c for c in suite.cases} for suite in (native, accel, cpu)
+        {c.estimator: c for c in suite.cases}
+        for suite in (native, dask, accel, cpu)
     ]
-    for estimator in set(by_suite[0]) & set(by_suite[1]) & set(by_suite[2]):
-        cases = [mapping[estimator] for mapping in by_suite]
+    for estimator in set().union(*by_suite):
+        cases = [
+            mapping[estimator] for mapping in by_suite if estimator in mapping
+        ]
+        if len(cases) < 2:
+            continue
         assert len({c.id for c in cases}) == 1
         assert (
             len(
@@ -129,6 +135,43 @@ def test_cpu_coverage_is_comparable_native_accel_union_and_ids_align():
             )
             == 1
         )
+
+
+def test_standard_shapes_follow_established_benchmark_workloads():
+    cases = {
+        case.estimator: case
+        for case in load_suite(SUITES / "cuml_sg.yaml").cases
+    }
+    assert (
+        cases["LogisticRegression"].rows,
+        cases["LogisticRegression"].features,
+    ) == (
+        10_500_000,
+        128,
+    )
+    assert (cases["KernelRidge"].rows, cases["KernelRidge"].features) == (
+        1_000,
+        64,
+    )
+    assert (
+        cases["StandardScaler"].rows,
+        cases["StandardScaler"].features,
+    ) == (
+        52_000,
+        512,
+    )
+    assert (cases["UMAP"].rows, cases["UMAP"].features) == (10_000, 100)
+
+
+def test_smoke_profiles_scale_standard_rows_without_changing_features():
+    for name in BUILTIN_SUITES:
+        standard = load_suite_reference(name)
+        smoke = load_suite_reference(name, "smoke")
+        standard_cases = {case.estimator: case for case in standard.cases}
+        for case in smoke.cases:
+            reference = standard_cases[case.estimator]
+            assert case.rows == max(32, round(reference.rows * 0.01))
+            assert case.features == reference.features
 
 
 def _write(tmp_path: Path, transform=lambda value: value) -> Path:
