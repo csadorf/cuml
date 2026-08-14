@@ -20,10 +20,12 @@ def test_help_is_suite_aware(capsys):
     assert "profile defined by the selected suite" in output
 
 
-def test_generic_help_does_not_assume_profiles(capsys):
+def test_generic_help_uses_default_suite_profiles(capsys):
     with pytest.raises(SystemExit, match="0"):
         main(["--help"])
-    assert "--profile PROFILE" in capsys.readouterr().out
+    output = capsys.readouterr().out
+    assert "--profile {smoke,standard}" in output
+    assert "default: cuml_sg" in output
 
 
 def test_unknown_profile_error_lists_suite_profiles(capsys, tmp_path):
@@ -96,3 +98,16 @@ def test_explicit_output_is_preserved(monkeypatch, tmp_path):
     destination = tmp_path / "chosen.json"
     assert main(["--suite", "sklearn_cpu", "--output", str(destination)]) == 0
     assert captured["output"] == destination.resolve()
+
+
+def test_default_suite_is_forwarded(monkeypatch, tmp_path):
+    captured = {}
+
+    def fake_run_suite(suite, output, argv):
+        captured["suite"] = suite
+        return {"results": []}
+
+    monkeypatch.setattr("cuml.benchmark.harness.run_suite", fake_run_suite)
+    destination = tmp_path / "artifact.json"
+    assert main(["--output", str(destination)]) == 0
+    assert captured["suite"].path == "builtin:cuml_sg"

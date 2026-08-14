@@ -4,5 +4,6 @@
 #
 """Suite-driven cuML benchmark harness.
 
-Run benchmarks with ``python -m cuml.benchmark --suite PATH --output PATH``.
+Run benchmarks with ``python -m cuml.benchmark``. The default suite is
+``cuml_sg``; use ``--suite`` to select another built-in suite or manifest.
 """

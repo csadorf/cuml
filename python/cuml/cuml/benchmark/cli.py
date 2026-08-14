@@ -19,6 +19,8 @@ from .suite import (
     suite_profile_names,
 )
 
+DEFAULT_SUITE = "cuml_sg"
+
 
 def _parser(
     profile_names: tuple[str, ...] | None = None,
@@ -26,10 +28,11 @@ def _parser(
     parser = argparse.ArgumentParser(prog="python -m cuml.benchmark")
     parser.add_argument(
         "--suite",
-        required=True,
+        default=DEFAULT_SUITE,
         help=(
             "built-in suite name or strict YAML manifest path; built-ins: "
             + ", ".join(sorted(BUILTIN_SUITES))
+            + f" (default: {DEFAULT_SUITE})"
         ),
     )
     parser.add_argument(
@@ -80,15 +83,14 @@ def default_output_path(suite, now: dt.datetime | None = None) -> Path:
 
 def _suite_aware_parser(argv: list[str]) -> argparse.ArgumentParser:
     probe = argparse.ArgumentParser(add_help=False)
-    probe.add_argument("--suite")
+    probe.add_argument("--suite", default=DEFAULT_SUITE)
     probed, _ = probe.parse_known_args(argv)
-    if probed.suite is not None:
-        try:
-            return _parser(suite_profile_names(probed.suite))
-        except SuiteError:
-            # Full parsing and suite loading below will report the actionable
-            # manifest error. Generic help should remain available meanwhile.
-            pass
+    try:
+        return _parser(suite_profile_names(probed.suite))
+    except SuiteError:
+        # Full parsing and suite loading below will report the actionable
+        # manifest error. Generic help should remain available meanwhile.
+        pass
     return _parser()
 
 
