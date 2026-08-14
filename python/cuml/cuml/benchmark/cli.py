@@ -6,8 +6,11 @@
 from __future__ import annotations
 
 import argparse
+import datetime as dt
 import os
+import re
 import sys
+from pathlib import Path
 
 from .suite import (
     BUILTIN_SUITES,
@@ -30,7 +33,11 @@ def _parser(
         ),
     )
     parser.add_argument(
-        "--output", required=True, help="neutral-v2 JSON artifact path"
+        "--output",
+        help=(
+            "neutral-v2 JSON artifact path; defaults to a timestamped file "
+            "in the current directory"
+        ),
     )
     profile_metavar = (
         "{" + ",".join(profile_names) + "}" if profile_names else "PROFILE"
@@ -41,6 +48,34 @@ def _parser(
         help="profile defined by the selected suite (default: standard)",
     )
     return parser
+
+
+def _output_suite_name(suite) -> str:
+    path = str(suite.path)
+    name = (
+        path.removeprefix("builtin:")
+        if path.startswith("builtin:")
+        else suite.name
+    )
+    slug = re.sub(r"[^a-zA-Z0-9_-]+", "-", name).strip("-_").lower()
+    return slug or "benchmark"
+
+
+def default_output_path(suite, now: dt.datetime | None = None) -> Path:
+    """Return a non-overwriting timestamped artifact path in the current directory."""
+    timestamp = (now or dt.datetime.now(dt.timezone.utc)).astimezone(
+        dt.timezone.utc
+    )
+    stem = (
+        f"{_output_suite_name(suite)}-{suite.profile_name}-"
+        f"{timestamp.strftime('%Y%m%dT%H%M%SZ')}"
+    )
+    candidate = Path.cwd() / f"{stem}.json"
+    suffix = 2
+    while candidate.exists():
+        candidate = Path.cwd() / f"{stem}-{suffix}.json"
+        suffix += 1
+    return candidate
 
 
 def _suite_aware_parser(argv: list[str]) -> argparse.ArgumentParser:
@@ -107,12 +142,19 @@ def main(argv: list[str] | None = None) -> int:
         suite = load_suite_reference(args.suite, args.profile)
         _bootstrap_accel_process(suite)
         _prepare_implementation(suite.implementation)
+        output = (
+            Path(args.output).resolve()
+            if args.output
+            else default_output_path(suite)
+        )
+        if args.output is None:
+            print(f"Writing benchmark artifact to {output}", flush=True)
         # Import only after accelerator bootstrap/isolation validation.
         from .harness import run_suite
 
         artifact = run_suite(
             suite,
-            args.output,
+            output,
             [sys.executable, "-m", "cuml.benchmark", *(argv or sys.argv[1:])],
         )
     except SuiteError as exc:
