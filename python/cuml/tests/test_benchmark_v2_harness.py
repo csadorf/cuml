@@ -4,10 +4,12 @@
 from __future__ import annotations
 
 import contextlib
+import copy
 from pathlib import Path
 from types import SimpleNamespace
 
 import numpy as np
+import pytest
 
 from cuml.benchmark import harness
 from cuml.benchmark.registry import EstimatorSpec
@@ -102,6 +104,23 @@ def test_standard_accel_never_imports_or_enters_profiler(monkeypatch):
     assert Estimator.calls == 4
     assert len(syncs) == 8
     assert result["parameters"]["effective"]["effective_default"] == 1
+    assert result["case_label"] == _suite().cases[0].id
+    assert result["id"].startswith("sha256:")
+    assert result["dataset"] == {
+        "name": "matrix",
+        "kind": "generated",
+        "parameters": {},
+        "generator": harness.DATA_GENERATOR,
+        "fingerprint": None,
+        "random_seed": 42,
+        "legacy_identity": None,
+    }
+    assert result["operation"] == {"name": "fit", "lifecycle": "fit"}
+    assert result["input"]["selection"] == ["X"]
+    assert all(
+        set(("timings", "metrics", "extensions")) <= observation.keys()
+        for observation in result["observations"]
+    )
 
 
 class Profile:
@@ -191,6 +210,20 @@ def test_case_exception_is_schema_shaped_failure(monkeypatch):
         "message": "boom",
     }
     assert result["observations"][0]["outcome"]["status"] == "failed"
+    assert result["observations"][0]["timings"] == []
+    assert result["observations"][0]["metrics"] == []
+
+
+def test_empty_exception_message_gets_diagnostic(monkeypatch):
+    _patch_case(monkeypatch)
+    monkeypatch.setattr(
+        Estimator,
+        "fit",
+        lambda self, X: (_ for _ in ()).throw(RuntimeError()),
+    )
+    suite = _suite()
+    result = harness.run_case(suite, suite.cases[0])
+    assert result["outcome"]["error"]["message"]
 
 
 def test_verbose_case_progress_reports_each_repetition(monkeypatch):
@@ -256,3 +289,33 @@ def test_atomic_checkpoint_after_every_case_and_continue_failures(monkeypatch):
         "Completed suite 'test': 1 passed, 1 failed in "
     )
     assert "; artifact: " in messages[5]
+
+
+def test_interruption_observation_has_complete_schema_shape(monkeypatch):
+    suite = _suite()
+    monkeypatch.setattr(
+        harness, "_run_record", lambda suite, argv: {"created_at": "now"}
+    )
+    monkeypatch.setattr(
+        harness, "_runtime", lambda suite: contextlib.nullcontext()
+    )
+    monkeypatch.setattr(
+        harness,
+        "run_case",
+        lambda *args, **kwargs: (_ for _ in ()).throw(KeyboardInterrupt()),
+    )
+    writes = []
+    monkeypatch.setattr(
+        harness,
+        "atomic_write",
+        lambda path, artifact: writes.append(copy.deepcopy(artifact)),
+    )
+    monkeypatch.setattr(harness, "_version", lambda package: "1.2.3")
+    monkeypatch.setattr(harness, "_source", lambda: None)
+    with pytest.raises(KeyboardInterrupt):
+        harness.run_suite(suite, "artifact.json", ["benchmark"])
+    observation = writes[-1]["results"][0]["observations"][0]
+    assert observation["outcome"]["error"]["message"]
+    assert observation["timings"] == []
+    assert observation["metrics"] == []
+    assert observation["extensions"] == {}

@@ -25,12 +25,15 @@ from typing import Any, Callable
 
 import numpy as np
 
+from .identity import result_id
 from .registry import estimator_spec
 from .suite import ResolvedCase, Suite, SuiteError
 
 METHODOLOGY = "cuml-benchmark-observations-v2"
 EXTENSION = "com.nvidia.cuml.benchmark"
 ACCEL_EXTENSION = "com.nvidia.cuml.accel"
+DATA_GENERATOR = "com.nvidia.cuml.benchmark.generate-data-v1"
+DATA_SEED = 42
 ProgressCallback = Callable[[str], None]
 
 
@@ -214,7 +217,7 @@ def _generate_data(case: ResolvedCase, implementation: str):
     # Importing sklearn is deliberately delayed until the CLI has bootstrapped
     # cuml.accel (or verified isolation for a non-accel suite).
     datasets = importlib.import_module("sklearn.datasets")
-    seed = 42
+    seed = DATA_SEED
     if case.dataset == "classification":
         informative = max(2, min(case.features, case.features // 2 + 1))
         X, y = datasets.make_classification(
@@ -378,27 +381,67 @@ def _dispatch_evidence(profile_result) -> dict[str, Any]:
 
 
 def _failure(exc: BaseException, phase: str) -> dict[str, Any]:
+    message = str(exc) or f"{type(exc).__name__} raised without a message"
     return {
         "status": "failed",
         "last_phase": phase,
-        "error": {"type": type(exc).__name__, "message": str(exc)},
+        "error": {"type": type(exc).__name__, "message": message},
     }
+
+
+def _dataset_descriptor(case: ResolvedCase) -> dict[str, Any]:
+    parameters: dict[str, Any] = {}
+    if case.dataset == "classification":
+        parameters.update(
+            n_informative=max(2, min(case.features, case.features // 2 + 1)),
+            n_redundant=0,
+        )
+    elif case.dataset == "blobs":
+        parameters["centers"] = 5
+    return {
+        "name": case.dataset,
+        "kind": "generated",
+        "parameters": parameters,
+        "generator": DATA_GENERATOR,
+        "fingerprint": None,
+        "random_seed": DATA_SEED,
+        "legacy_identity": None,
+    }
+
+
+def _operation_descriptor(case: ResolvedCase) -> dict[str, str]:
+    return {
+        "name": case.operation,
+        "lifecycle": (
+            "fit" if case.operation.startswith("fit") else "inference"
+        ),
+    }
+
+
+def _input_selection(case: ResolvedCase, supervised: bool) -> list[str]:
+    if case.estimator in {"LabelEncoder", "LabelBinarizer"}:
+        return ["y"]
+    if case.operation.startswith("fit") and supervised:
+        return ["X", "y"]
+    return ["X"]
 
 
 def _base_result(
     suite: Suite, case: ResolvedCase, package: str, version: str
 ) -> dict[str, Any]:
-    return {
-        "id": case.id,
+    spec = estimator_spec(suite.implementation, case.estimator)
+    result = {
+        "case_label": case.id,
         "algorithm": case.estimator,
-        "dataset": case.dataset,
-        "operation": case.operation,
+        "dataset": _dataset_descriptor(case),
+        "operation": _operation_descriptor(case),
         "input": {
             "dimensions": [
                 {"name": "rows", "size": case.rows},
                 {"name": "features", "size": case.features},
             ],
             "data_type": "float32",
+            "selection": _input_selection(case, spec.supervised),
             "attributes": {},
         },
         "parameters": {
@@ -420,6 +463,8 @@ def _base_result(
             }
         },
     }
+    result["id"] = result_id(result)
+    return result
 
 
 def run_case(
@@ -482,13 +527,13 @@ def run_case(
                     "timings": [
                         {"name": "wall_time", "value": elapsed, "unit": "s"}
                     ],
+                    "metrics": [],
                     "extensions": {},
                 }
                 sequence += 1
                 if role == "measurement":
                     metrics = _metric(estimator, case, X, y, output)
-                    if metrics:
-                        observation["metrics"] = metrics
+                    observation["metrics"] = metrics
                 if profile_result is not None:
                     evidence = _dispatch_evidence(profile_result)
                     observation["extensions"][ACCEL_EXTENSION] = evidence
@@ -536,6 +581,8 @@ def run_case(
                 "sequence": len(result["observations"]),
                 "role": role,
                 "outcome": error,
+                "timings": [],
+                "metrics": [],
                 "extensions": {
                     EXTENSION: {"traceback": traceback.format_exc()}
                 },
@@ -616,6 +663,8 @@ def run_suite(
                         "sequence": 0,
                         "role": "measurement",
                         "outcome": error,
+                        "timings": [],
+                        "metrics": [],
                         "extensions": {},
                     }
                 ]

@@ -9,6 +9,7 @@ from pathlib import Path
 import pytest
 import yaml
 
+from cuml.benchmark.harness import _base_result
 from cuml.benchmark.registry import ACCEL_ESTIMATORS, REGISTRIES
 from cuml.benchmark.suite import (
     BUILTIN_SUITES,
@@ -126,6 +127,15 @@ def test_comparable_cases_align_across_all_builtin_suites():
         if len(cases) < 2:
             continue
         assert len({c.id for c in cases}) == 1
+        assert len(
+            {
+                _base_result(suite, mapping[estimator], "test", "1")["id"]
+                for suite, mapping in zip(
+                    (native, dask, accel, cpu), by_suite, strict=True
+                )
+                if estimator in mapping
+            }
+        ) == 1
         assert (
             len(
                 {
@@ -172,6 +182,16 @@ def test_smoke_profiles_scale_standard_rows_without_changing_features():
             reference = standard_cases[case.estimator]
             assert case.rows == max(32, round(reference.rows * 0.01))
             assert case.features == reference.features
+
+
+def test_scaled_workloads_have_distinct_result_ids():
+    standard = load_suite_reference("cuml_sg")
+    smoke = load_suite_reference("cuml_sg", "smoke")
+    standard_case = standard.cases[0]
+    smoke_case = smoke.cases[0]
+    assert _base_result(standard, standard_case, "cuml", "1")["id"] != (
+        _base_result(smoke, smoke_case, "cuml", "1")["id"]
+    )
 
 
 def _write(tmp_path: Path, transform=lambda value: value) -> Path:
