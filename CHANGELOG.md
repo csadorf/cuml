@@ -1,4 +1,6 @@
-# cuml 26.08.00 (5 Aug 2026)
+# Release notes
+
+## cuml 26.08.00 (5 Aug 2026)
 
 ### 🚨 Breaking Changes
 * Switch RandomForest max_depth default to None by @csadorf in https://github.com/NVIDIA/cuml/pull/8200
@@ -134,7 +136,7 @@
 * Empty commit to trigger a build by @bdice in https://github.com/NVIDIA/cuml/pull/8399
 * [FEA] Skip Device Concat for KmeansMG by @tarang-jain in https://github.com/NVIDIA/cuml/pull/8084
 
-## New Contributors
+### New Contributors
 * @Federicorao made their first contribution in https://github.com/NVIDIA/cuml/pull/8273
 * @nethum529 made their first contribution in https://github.com/NVIDIA/cuml/pull/8316
 * @Husnain987 made their first contribution in https://github.com/NVIDIA/cuml/pull/8292
@@ -142,7 +144,7 @@
 
 **Full Changelog**: https://github.com/NVIDIA/cuml/compare/v26.08.00a...release/26.08
 
-# cuml 26.06.00 (3 Jun 2026)
+## cuml 26.06.00 (3 Jun 2026)
 
 ### 🚨 Breaking Changes
 * Migrate RMM usage to CCCL MR design by @bdice in https://github.com/NVIDIA/cuml/pull/7951
@@ -269,13 +271,13 @@
 * Handle sklearn example OpenML network failures by @csadorf in https://github.com/NVIDIA/cuml/pull/8205
 * Handle sklearn example OpenML dataset lookup failures by @csadorf in https://github.com/NVIDIA/cuml/pull/8216
 
-## New Contributors
+### New Contributors
 * @mgrauer made their first contribution in https://github.com/NVIDIA/cuml/pull/8017
 * @Nzouh made their first contribution in https://github.com/NVIDIA/cuml/pull/7958
 
 **Full Changelog**: https://github.com/NVIDIA/cuml/compare/v26.06.00a...release/26.06
 
-# cuml 26.04.00 (8 Apr 2026)
+## cuml 26.04.00 (8 Apr 2026)
 
 ### 🚨 Breaking Changes
 * FIX Raise `TypeError` when sparse input is not supported by @betatim in https://github.com/NVIDIA/cuml/pull/7728
@@ -383,12 +385,12 @@
 * Disable SciPy intersphinx by @jcrist in https://github.com/NVIDIA/cuml/pull/7935
 * Support unlimited_depth for the random forest estimators by @csadorf in https://github.com/NVIDIA/cuml/pull/7895
 
-## New Contributors
+### New Contributors
 * @silasmue made their first contribution in https://github.com/NVIDIA/cuml/pull/7632
 
 **Full Changelog**: https://github.com/NVIDIA/cuml/compare/v26.04.00a...release/26.04
 
-# cuml 26.02.00 (4 Feb 2026)
+## cuml 26.02.00 (4 Feb 2026)
 
 ### 🚨 Breaking Changes
 * Simplify type reflection implementation by @jcrist in https://github.com/NVIDIA/cuml/pull/7539
@@ -494,7 +496,7 @@
 * Add precomputed kernel support in SVM by @viclafargue in https://github.com/NVIDIA/cuml/pull/7616
 * Document support for and limitations of TargetEncoder in cuml.accel. by @csadorf in https://github.com/NVIDIA/cuml/pull/7741
 
-## New Contributors
+### New Contributors
 * @virchan made their first contribution in https://github.com/NVIDIA/cuml/pull/7218
 * @mani-builds made their first contribution in https://github.com/NVIDIA/cuml/pull/7556
 * @will-hill made their first contribution in https://github.com/NVIDIA/cuml/pull/7548
@@ -502,7 +504,7 @@
 
 **Full Changelog**: https://github.com/NVIDIA/cuml/compare/v26.02.00a...release/26.02
 
-# cuml 25.12.00 (10 Dec 2025)
+## cuml 25.12.00 (10 Dec 2025)
 
 ### 🚨 Breaking Changes
 * Make `dask` an optional dependency by @jcrist in https://github.com/NVIDIA/cuml/pull/7303
@@ -641,15 +643,15 @@
 * Add minimal support for sklearn 1.8.0rc1 by @jcrist in https://github.com/NVIDIA/cuml/pull/7546
 * Bump SciPy lower bound to 1.11 by @jcrist in https://github.com/NVIDIA/cuml/pull/7551
 
-## New Contributors
+### New Contributors
 * @rockhowse made their first contribution in https://github.com/NVIDIA/cuml/pull/7455
 * @zhuxr11 made their first contribution in https://github.com/NVIDIA/cuml/pull/7331
 
 **Full Changelog**: https://github.com/NVIDIA/cuml/compare/v25.12.00a...release/25.12
 
-# cuml 25.10.00 (8 Oct 2025)
+## cuml 25.10.00 (8 Oct 2025)
 
-## 🚨 Breaking Changes
+### 🚨 Breaking Changes
 
 - Deprecate `convert_to_*` methods in favor of `as_*` methods in `cuml.ensemble` ([#7254](https://github.com/NVIDIA/cuml/pull/7254)) [@jcrist](https://github.com/jcrist)
 - `KernelDensity.score_samples` output type &amp; dtype fixes ([#7240](https://github.com/NVIDIA/cuml/pull/7240)) [@jcrist](https://github.com/jcrist)
@@ -661,7 +663,7 @@
 - Remove deprecation warning and `data_on_host` option for UMAP ([#7099](https://github.com/NVIDIA/cuml/pull/7099)) [@jinsolp](https://github.com/jinsolp)
 - Fix UMAP graph thresholding ([#6595](https://github.com/NVIDIA/cuml/pull/6595)) [@viclafargue](https://github.com/viclafargue)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Set NCCL rpath for `cu13` wheels ([#7304](https://github.com/NVIDIA/cuml/pull/7304)) [@divyegala](https://github.com/divyegala)
 - Add NCCL library path to CMakeLists.txt for libcuml ([#7281](https://github.com/NVIDIA/cuml/pull/7281)) [@csadorf](https://github.com/csadorf)
@@ -690,18 +692,18 @@
 - Add fix for devices that do not have memory resources ([#6823](https://github.com/NVIDIA/cuml/pull/6823)) [@viclafargue](https://github.com/viclafargue)
 - Fix UMAP graph thresholding ([#6595](https://github.com/NVIDIA/cuml/pull/6595)) [@viclafargue](https://github.com/viclafargue)
 
-## 📖 Documentation
+### 📖 Documentation
 
 - Add warning on subprocesses in cuml.accel profilers ([#7290](https://github.com/NVIDIA/cuml/pull/7290)) [@jcrist](https://github.com/jcrist)
 - Revise the cuML docs for 25.10 ([#7228](https://github.com/NVIDIA/cuml/pull/7228)) [@csadorf](https://github.com/csadorf)
 - Provide GitHub issue template to report CI failures. ([#7178](https://github.com/NVIDIA/cuml/pull/7178)) [@csadorf](https://github.com/csadorf)
 - Fix cuml-accel docs redirects ([#7139](https://github.com/NVIDIA/cuml/pull/7139)) [@jcrist](https://github.com/jcrist)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - Update cufft defines to CUDA 13 types ([#7094](https://github.com/NVIDIA/cuml/pull/7094)) [@robertmaynard](https://github.com/robertmaynard)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Fix missed deps in update-version.sh ([#7285](https://github.com/NVIDIA/cuml/pull/7285)) [@AyodeAwe](https://github.com/AyodeAwe)
 - Empty commit to trigger a build ([#7264](https://github.com/NVIDIA/cuml/pull/7264)) [@msarahan](https://github.com/msarahan)
@@ -781,9 +783,9 @@
 - Add capability to use different allocators in cuML Python benchmarks ([#6903](https://github.com/NVIDIA/cuml/pull/6903)) [@dantegd](https://github.com/dantegd)
 - Reorganize tests and modify pytest invocation to support pytest 8 ([#6876](https://github.com/NVIDIA/cuml/pull/6876)) [@vyasr](https://github.com/vyasr)
 
-# cuml 25.08.00 (6 Aug 2025)
+## cuml 25.08.00 (6 Aug 2025)
 
-## 🚨 Breaking Changes
+### 🚨 Breaking Changes
 
 - Deprecating `data_on_host` parameter for UMAP ([#6953](https://github.com/NVIDIA/cuml/pull/6953)) [@jinsolp](https://github.com/jinsolp)
 - Deprecate hdbscan prediction functions in `cuml.cluster` namespace ([#6943](https://github.com/NVIDIA/cuml/pull/6943)) [@jcrist](https://github.com/jcrist)
@@ -800,7 +802,7 @@
 - Remove legacy FIL from libcuml ([#6844](https://github.com/NVIDIA/cuml/pull/6844)) [@hcho3](https://github.com/hcho3)
 - stop uploading packages to downloads.rapids.ai ([#6803](https://github.com/NVIDIA/cuml/pull/6803)) [@jameslamb](https://github.com/jameslamb)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Fix network failure in loading mnist dataset during spectral embedding testing ([#7077](https://github.com/NVIDIA/cuml/pull/7077)) [@aamijar](https://github.com/aamijar)
 - Relaxing unit tolerance for `test_tsne_distance_metrics_on_sparse_input` ([#7033](https://github.com/NVIDIA/cuml/pull/7033)) [@jinsolp](https://github.com/jinsolp)
@@ -820,7 +822,7 @@
 - Fix RandomForestRegressor default `max_features` ([#6862](https://github.com/NVIDIA/cuml/pull/6862)) [@jcrist](https://github.com/jcrist)
 - Increase tolerance in Dask logistic regression test ([#6848](https://github.com/NVIDIA/cuml/pull/6848)) [@csadorf](https://github.com/csadorf)
 
-## 📖 Documentation
+### 📖 Documentation
 
 - Document supported versions. ([#7040](https://github.com/NVIDIA/cuml/pull/7040)) [@csadorf](https://github.com/csadorf)
 - Update title of `cuml.accel` documentation to &quot;Zero Code Change Acceleration&quot; ([#7030](https://github.com/NVIDIA/cuml/pull/7030)) [@csadorf](https://github.com/csadorf)
@@ -833,11 +835,11 @@
 - Fixup rst formatting of 0cc limitations doc ([#6945](https://github.com/NVIDIA/cuml/pull/6945)) [@jcrist](https://github.com/jcrist)
 - Documentation Updates for cuML Python Developer Guide ([#6843](https://github.com/NVIDIA/cuml/pull/6843)) [@csadorf](https://github.com/csadorf)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - Spectral Embedding ([#6581](https://github.com/NVIDIA/cuml/pull/6581)) [@aamijar](https://github.com/aamijar)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Add profilers to `cuml.accel` ([#7021](https://github.com/NVIDIA/cuml/pull/7021)) [@jcrist](https://github.com/jcrist)
 - use versioned CI image tags ([#7016](https://github.com/NVIDIA/cuml/pull/7016)) [@jameslamb](https://github.com/jameslamb)
@@ -924,9 +926,9 @@
 - Forward-merge branch-25.06 into branch-25.08 ([#6647](https://github.com/NVIDIA/cuml/pull/6647)) [@gforsyth](https://github.com/gforsyth)
 - [FEA] HDBSCAN to Migrate to cuVS cluster prims from raft::cluster ([#6560](https://github.com/NVIDIA/cuml/pull/6560)) [@tarang-jain](https://github.com/tarang-jain)
 
-# cuml 25.06.00 (5 Jun 2025)
+## cuml 25.06.00 (5 Jun 2025)
 
-## 🚨 Breaking Changes
+### 🚨 Breaking Changes
 
 - Deprecate device selection ([#6784](https://github.com/NVIDIA/cuml/pull/6784)) [@jcrist](https://github.com/jcrist)
 - Remove use of legacy FIL from Python cuML ([#6728](https://github.com/NVIDIA/cuml/pull/6728)) [@hcho3](https://github.com/hcho3)
@@ -936,7 +938,7 @@
 - Disable building and uploading cuml-cpu in CI ([#6529](https://github.com/NVIDIA/cuml/pull/6529)) [@dantegd](https://github.com/dantegd)
 - FIX Propagate random state to numpy rng in `make_classification` ([#6518](https://github.com/NVIDIA/cuml/pull/6518)) [@betatim](https://github.com/betatim)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - UMAP batch nnd test hotfix ([#6826](https://github.com/NVIDIA/cuml/pull/6826)) [@jinsolp](https://github.com/jinsolp)
 - Update forest_inference_demo.ipynb for new FIL API changes ([#6824](https://github.com/NVIDIA/cuml/pull/6824)) [@dantegd](https://github.com/dantegd)
@@ -976,7 +978,7 @@
 - Inspect KNN graph during smooth KNN generation and fail if necessary ([#6491](https://github.com/NVIDIA/cuml/pull/6491)) [@viclafargue](https://github.com/viclafargue)
 - More permanently disable BATCH_TREE_REORG ([#6374](https://github.com/NVIDIA/cuml/pull/6374)) [@wphicks](https://github.com/wphicks)
 
-## 📖 Documentation
+### 📖 Documentation
 
 - Move FIL docs to user docs ([#6762](https://github.com/NVIDIA/cuml/pull/6762)) [@dantegd](https://github.com/dantegd)
 - Document `cuml.accel` doesn&#39;t support `set_output` ([#6717](https://github.com/NVIDIA/cuml/pull/6717)) [@jcrist](https://github.com/jcrist)
@@ -986,13 +988,13 @@
 - Future-proof SVC documentation ([#6481](https://github.com/NVIDIA/cuml/pull/6481)) [@viclafargue](https://github.com/viclafargue)
 - DOC Add developer documentation about deprecation policy ([#6476](https://github.com/NVIDIA/cuml/pull/6476)) [@betatim](https://github.com/betatim)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - Multi-gpu KNN build for UMAP using all-neighbors API ([#6654](https://github.com/NVIDIA/cuml/pull/6654)) [@jinsolp](https://github.com/jinsolp)
 - Add caching and object size metrics to `conda` CI builds ([#6573](https://github.com/NVIDIA/cuml/pull/6573)) [@divyegala](https://github.com/divyegala)
 - Use Gram kernel from cuVS instead of Raft ([#6538](https://github.com/NVIDIA/cuml/pull/6538)) [@lowener](https://github.com/lowener)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Migrate cuml.experimental.fil -&gt; cuml.fil ([#6799](https://github.com/NVIDIA/cuml/pull/6799)) [@hcho3](https://github.com/hcho3)
 - Mark `test_uniform_grid` as flaky in sklearn tests ([#6791](https://github.com/NVIDIA/cuml/pull/6791)) [@jcrist](https://github.com/jcrist)
@@ -1078,15 +1080,15 @@
 - Add minimal import check to CI ([#6484](https://github.com/NVIDIA/cuml/pull/6484)) [@jcrist](https://github.com/jcrist)
 - Moving wheel builds to specified location and uploading build artifacts to Github ([#6472](https://github.com/NVIDIA/cuml/pull/6472)) [@VenkateshJaya](https://github.com/VenkateshJaya)
 
-# cuml 25.04.00 (9 Apr 2025)
+## cuml 25.04.00 (9 Apr 2025)
 
-## 🚨 Breaking Changes
+### 🚨 Breaking Changes
 
 - Promote experimental FIL to stable ([#6464](https://github.com/NVIDIA/cuml/pull/6464)) [@wphicks](https://github.com/wphicks)
 - Support non-trivial `classes_` in `LogisticRegression` ([#6346](https://github.com/NVIDIA/cuml/pull/6346)) [@jcrist](https://github.com/jcrist)
 - Use new rapids-logger library ([#6289](https://github.com/NVIDIA/cuml/pull/6289)) [@vyasr](https://github.com/vyasr)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Unblock CI for 25.04 ([#6519](https://github.com/NVIDIA/cuml/pull/6519)) [@csadorf](https://github.com/csadorf)
 - Skip test_rf_classification_seed for cudf.pandas tests. ([#6500](https://github.com/NVIDIA/cuml/pull/6500)) [@csadorf](https://github.com/csadorf)
@@ -1137,19 +1139,19 @@
 - Compute `noise_variance_` in PCA implementation ([#6234](https://github.com/NVIDIA/cuml/pull/6234)) [@jcrist](https://github.com/jcrist)
 - Multiple CPU interop fixes for serialization and cloning ([#6223](https://github.com/NVIDIA/cuml/pull/6223)) [@dantegd](https://github.com/dantegd)
 
-## 📖 Documentation
+### 📖 Documentation
 
 - Clarify support in docs ([#6452](https://github.com/NVIDIA/cuml/pull/6452)) [@bdice](https://github.com/bdice)
 - Provide docs for cuml.accel command line feature ([#6322](https://github.com/NVIDIA/cuml/pull/6322)) [@wphicks](https://github.com/wphicks)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - Promote experimental FIL to stable ([#6464](https://github.com/NVIDIA/cuml/pull/6464)) [@wphicks](https://github.com/wphicks)
 - UMAP 32bits dispatch mechanism ([#6314](https://github.com/NVIDIA/cuml/pull/6314)) [@viclafargue](https://github.com/viclafargue)
 - Add aarch64 conda environments ([#6226](https://github.com/NVIDIA/cuml/pull/6226)) [@jcrist](https://github.com/jcrist)
 - SVM cpu/gpu interop ([#6089](https://github.com/NVIDIA/cuml/pull/6089)) [@viclafargue](https://github.com/viclafargue)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Don&#39;t use private APIs in FIL notebook ([#6488](https://github.com/NVIDIA/cuml/pull/6488)) [@jcrist](https://github.com/jcrist)
 - Only use released versions of dask ([#6485](https://github.com/NVIDIA/cuml/pull/6485)) [@jcrist](https://github.com/jcrist)
@@ -1213,13 +1215,13 @@
 - Add shellcheck to pre-commit and fix warnings ([#6246](https://github.com/NVIDIA/cuml/pull/6246)) [@gforsyth](https://github.com/gforsyth)
 - Prepare for n_init=auto in KMeans ([#6142](https://github.com/NVIDIA/cuml/pull/6142)) [@betatim](https://github.com/betatim)
 
-# cuml 25.02.00 (13 Feb 2025)
+## cuml 25.02.00 (13 Feb 2025)
 
-## 🚨 Breaking Changes
+### 🚨 Breaking Changes
 
 - update pip devcontainers to UCX 1.18 ([#6249](https://github.com/NVIDIA/cuml/pull/6249)) [@jameslamb](https://github.com/jameslamb)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Fix dask logistic regression segfault/hang due to wrongly typed variable ([#6281](https://github.com/NVIDIA/cuml/pull/6281)) [@dantegd](https://github.com/dantegd)
 - Log UMAP arrays at trace verbosity level. ([#6274](https://github.com/NVIDIA/cuml/pull/6274)) [@csadorf](https://github.com/csadorf)
@@ -1237,18 +1239,18 @@
 - cuML dask fixes to unblock CI ([#6170](https://github.com/NVIDIA/cuml/pull/6170)) [@dantegd](https://github.com/dantegd)
 - Remap BATCH_TREE_REORG to TREE_REORG in FIL ([#6161](https://github.com/NVIDIA/cuml/pull/6161)) [@wphicks](https://github.com/wphicks)
 
-## 📖 Documentation
+### 📖 Documentation
 
 - Fixes github link from pyx files ([#6202](https://github.com/NVIDIA/cuml/pull/6202)) [@thomasjpfan](https://github.com/thomasjpfan)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - Allow CUDA ODR violations in 25.02 ([#6264](https://github.com/NVIDIA/cuml/pull/6264)) [@robertmaynard](https://github.com/robertmaynard)
 - Define block size for sm_120 ([#6250](https://github.com/NVIDIA/cuml/pull/6250)) [@robertmaynard](https://github.com/robertmaynard)
 - Support `alpha=0` in `Ridge` ([#6236](https://github.com/NVIDIA/cuml/pull/6236)) [@jcrist](https://github.com/jcrist)
 - Add `as_sklearn` and `from_sklearn` APIs to serialize to CPU sklearn-estimators for supported models ([#6102](https://github.com/NVIDIA/cuml/pull/6102)) [@dantegd](https://github.com/dantegd)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Use `rapids-pip-retry` in CI jobs that might need retries ([#6293](https://github.com/NVIDIA/cuml/pull/6293)) [@gforsyth](https://github.com/gforsyth)
 - Avoid large device allocation in UMAP with nndescent ([#6292](https://github.com/NVIDIA/cuml/pull/6292)) [@jcrist](https://github.com/jcrist)
@@ -1287,13 +1289,13 @@
 - Add breaking change workflow trigger ([#6130](https://github.com/NVIDIA/cuml/pull/6130)) [@AyodeAwe](https://github.com/AyodeAwe)
 - Switch to native traceback in `cuml` ([#6078](https://github.com/NVIDIA/cuml/pull/6078)) [@galipremsagar](https://github.com/galipremsagar)
 
-# cuml 24.12.00 (11 Dec 2024)
+## cuml 24.12.00 (11 Dec 2024)
 
-## 🚨 Breaking Changes
+### 🚨 Breaking Changes
 
 - Forward merge Branch 24.10 into 24.12 ([#6106](https://github.com/NVIDIA/cuml/pull/6106)) [@divyegala](https://github.com/divyegala)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Fix `scikit-learn` version specifier ([#6158](https://github.com/NVIDIA/cuml/pull/6158)) [@trxcllnt](https://github.com/trxcllnt)
 - Correctly handle missing categorical data in experimental FIL ([#6132](https://github.com/NVIDIA/cuml/pull/6132)) [@wphicks](https://github.com/wphicks)
@@ -1304,11 +1306,11 @@
 - Forward merge Branch 24.10 into 24.12 ([#6106](https://github.com/NVIDIA/cuml/pull/6106)) [@divyegala](https://github.com/divyegala)
 - Fix Dask estimators serialization prior to training ([#6065](https://github.com/NVIDIA/cuml/pull/6065)) [@viclafargue](https://github.com/viclafargue)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - Enable HDBSCAN `gpu` training and `cpu` inference ([#6108](https://github.com/NVIDIA/cuml/pull/6108)) [@divyegala](https://github.com/divyegala)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Update FIL tests to use XGBoost UBJSON instead of binary ([#6153](https://github.com/NVIDIA/cuml/pull/6153)) [@hcho3](https://github.com/hcho3)
 - Use sparse knn / distances from cuvs ([#6143](https://github.com/NVIDIA/cuml/pull/6143)) [@benfred](https://github.com/benfred)
@@ -1328,13 +1330,13 @@
 - Update all rmm imports to use pylibrmm/librmm ([#6084](https://github.com/NVIDIA/cuml/pull/6084)) [@Matt711](https://github.com/Matt711)
 - Merge branch 24.10 into branch 24.12 ([#6083](https://github.com/NVIDIA/cuml/pull/6083)) [@jameslamb](https://github.com/jameslamb)
 
-# cuml 24.10.00 (9 Oct 2024)
+## cuml 24.10.00 (9 Oct 2024)
 
-## 🚨 Breaking Changes
+### 🚨 Breaking Changes
 
 - Remove old dask-glm based logistic regression ([#6028](https://github.com/NVIDIA/cuml/pull/6028)) [@dantegd](https://github.com/dantegd)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Fix train_test_split for string columns ([#6088](https://github.com/NVIDIA/cuml/pull/6088)) [@dantegd](https://github.com/dantegd)
 - Stop shadowing free function ([#6076](https://github.com/NVIDIA/cuml/pull/6076)) [@vyasr](https://github.com/vyasr)
@@ -1348,18 +1350,18 @@
 - Avoid cudf column APIs after cudf.Series disallows column inputs ([#6019](https://github.com/NVIDIA/cuml/pull/6019)) [@mroeschke](https://github.com/mroeschke)
 - Use HDBSCAN package pin to `0.8.38` ([#5906](https://github.com/NVIDIA/cuml/pull/5906)) [@divyegala](https://github.com/divyegala)
 
-## 📖 Documentation
+### 📖 Documentation
 
 - Update UMAP doc ([#6064](https://github.com/NVIDIA/cuml/pull/6064)) [@viclafargue](https://github.com/viclafargue)
 - Update README in experimental FIL ([#6052](https://github.com/NVIDIA/cuml/pull/6052)) [@hcho3](https://github.com/hcho3)
 - add docs for simplicial_set ([#6042](https://github.com/NVIDIA/cuml/pull/6042)) [@Intron7](https://github.com/Intron7)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - TSNE CPU/GPU Interop ([#6063](https://github.com/NVIDIA/cuml/pull/6063)) [@divyegala](https://github.com/divyegala)
 - Enable GPU `fit` and CPU `transform` in UMAP ([#6032](https://github.com/NVIDIA/cuml/pull/6032)) [@divyegala](https://github.com/divyegala)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Migrate to use cuVS for vector search ([#6085](https://github.com/NVIDIA/cuml/pull/6085)) [@benfred](https://github.com/benfred)
 - Support all-zeroes feature vectors for MG sparse logistic regression ([#6082](https://github.com/NVIDIA/cuml/pull/6082)) [@lijinf2](https://github.com/lijinf2)
@@ -1383,9 +1385,9 @@
 - Merge branch-24.08 into branch-24.10 ([#5981](https://github.com/NVIDIA/cuml/pull/5981)) [@jameslamb](https://github.com/jameslamb)
 - Use CUDA math wheels ([#5966](https://github.com/NVIDIA/cuml/pull/5966)) [@KyleFromNVIDIA](https://github.com/KyleFromNVIDIA)
 
-# cuml 24.08.00 (7 Aug 2024)
+## cuml 24.08.00 (7 Aug 2024)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Fixes for encoders/transformers for cudf.pandas ([#5990](https://github.com/NVIDIA/cuml/pull/5990)) [@dantegd](https://github.com/dantegd)
 - BUG: remove sample parameter from pca call to mean ([#5980](https://github.com/NVIDIA/cuml/pull/5980)) [@mfoerste4](https://github.com/mfoerste4)
@@ -1402,12 +1404,12 @@
 - Fix `cudf.pandas` failure on  `test_convert_matrix_order_cuml_array` ([#5882](https://github.com/NVIDIA/cuml/pull/5882)) [@dantegd](https://github.com/dantegd)
 - Simplify cuml array ([#5166](https://github.com/NVIDIA/cuml/pull/5166)) [@wence-](https://github.com/wence-)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - [FEA] Enable UMAP to build knn graph using NN Descent ([#5910](https://github.com/NVIDIA/cuml/pull/5910)) [@jinsolp](https://github.com/jinsolp)
 - Allow estimators to accept any dtype ([#5888](https://github.com/NVIDIA/cuml/pull/5888)) [@dantegd](https://github.com/dantegd)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Add support for XGBoost UBJSON in FIL ([#6009](https://github.com/NVIDIA/cuml/pull/6009)) [@hcho3](https://github.com/hcho3)
 - split up CUDA-suffixed dependencies in dependencies.yaml ([#5974](https://github.com/NVIDIA/cuml/pull/5974)) [@jameslamb](https://github.com/jameslamb)
@@ -1430,9 +1432,9 @@
 - [FEA] PCA Initialization for TSNE ([#5897](https://github.com/NVIDIA/cuml/pull/5897)) [@aamijar](https://github.com/aamijar)
 - Use rapids-build-backend ([#5804](https://github.com/NVIDIA/cuml/pull/5804)) [@KyleFromNVIDIA](https://github.com/KyleFromNVIDIA)
 
-# cuml 24.06.00 (5 Jun 2024)
+## cuml 24.06.00 (5 Jun 2024)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - [HOTFIX] Fix import of sklearn by using cpu_only_import ([#5914](https://github.com/NVIDIA/cuml/pull/5914)) [@dantegd](https://github.com/dantegd)
 - Fix label binarize for binary class ([#5900](https://github.com/NVIDIA/cuml/pull/5900)) [@jinsolp](https://github.com/jinsolp)
@@ -1444,15 +1446,15 @@
 - Mark all kernels with internal linkage ([#5764](https://github.com/NVIDIA/cuml/pull/5764)) [@robertmaynard](https://github.com/robertmaynard)
 - Fix build.sh clean command ([#5730](https://github.com/NVIDIA/cuml/pull/5730)) [@csadorf](https://github.com/csadorf)
 
-## 📖 Documentation
+### 📖 Documentation
 
 - Update the developer&#39;s guide with new copyright hook ([#5848](https://github.com/NVIDIA/cuml/pull/5848)) [@KyleFromNVIDIA](https://github.com/KyleFromNVIDIA)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - Always use a static gtest and gbench ([#5847](https://github.com/NVIDIA/cuml/pull/5847)) [@robertmaynard](https://github.com/robertmaynard)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Support double precision in MNMG Logistic Regression ([#5898](https://github.com/NVIDIA/cuml/pull/5898)) [@lijinf2](https://github.com/lijinf2)
 - Reduce and rename cudf.pandas integrations jobs ([#5890](https://github.com/NVIDIA/cuml/pull/5890)) [@dantegd](https://github.com/dantegd)
@@ -1484,9 +1486,9 @@
 - Use pytest_cases.fixture to fix warnings. ([#5798](https://github.com/NVIDIA/cuml/pull/5798)) [@bdice](https://github.com/bdice)
 - Enable Dask tests with UCX-Py/UCXX in CI ([#5697](https://github.com/NVIDIA/cuml/pull/5697)) [@pentschev](https://github.com/pentschev)
 
-# cuML 24.04.00 (10 Apr 2024)
+## cuML 24.04.00 (10 Apr 2024)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Update pre-commit-hooks to v0.0.3 ([#5816](https://github.com/NVIDIA/cuml/pull/5816)) [@KyleFromNVIDIA](https://github.com/KyleFromNVIDIA)
 - Correct and adjust tolerances of mnmg logreg pytests ([#5812](https://github.com/NVIDIA/cuml/pull/5812)) [@dantegd](https://github.com/dantegd)
@@ -1498,11 +1500,11 @@
 - Use cudf.Index instead of cudf.GenericIndex. ([#5738](https://github.com/NVIDIA/cuml/pull/5738)) [@bdice](https://github.com/bdice)
 - update RAPIDS dependencies to 24.4, refactor dependencies.yaml ([#5726](https://github.com/NVIDIA/cuml/pull/5726)) [@jameslamb](https://github.com/jameslamb)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - Support CUDA 12.2 ([#5711](https://github.com/NVIDIA/cuml/pull/5711)) [@jameslamb](https://github.com/jameslamb)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Use `conda env create --yes` instead of `--force` ([#5822](https://github.com/NVIDIA/cuml/pull/5822)) [@bdice](https://github.com/bdice)
 - Bump Treelite to 4.1.2 ([#5814](https://github.com/NVIDIA/cuml/pull/5814)) [@hcho3](https://github.com/hcho3)
@@ -1526,14 +1528,14 @@
 - Replace local copyright check with pre-commit-hooks verify-copyright ([#5732](https://github.com/NVIDIA/cuml/pull/5732)) [@KyleFromNVIDIA](https://github.com/KyleFromNVIDIA)
 - DBSCAN utilize rbc eps_neighbors ([#5728](https://github.com/NVIDIA/cuml/pull/5728)) [@mfoerste4](https://github.com/mfoerste4)
 
-# cuML 24.02.00 (12 Feb 2024)
+## cuML 24.02.00 (12 Feb 2024)
 
-## 🚨 Breaking Changes
+### 🚨 Breaking Changes
 
 - Update to CCCL 2.2.0. ([#5702](https://github.com/NVIDIA/cuml/pull/5702)) [@bdice](https://github.com/bdice)
 - Switch to scikit-build-core ([#5693](https://github.com/NVIDIA/cuml/pull/5693)) [@vyasr](https://github.com/vyasr)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - [Hotfix] Fix FIL gtest ([#5755](https://github.com/NVIDIA/cuml/pull/5755)) [@hcho3](https://github.com/hcho3)
 - Exclude tests from builds ([#5754](https://github.com/NVIDIA/cuml/pull/5754)) [@vyasr](https://github.com/vyasr)
@@ -1543,7 +1545,7 @@
 - Fix cupy dependency in pyproject.toml ([#5705](https://github.com/NVIDIA/cuml/pull/5705)) [@vyasr](https://github.com/vyasr)
 - Only cufft offers a static_nocallback version of the library ([#5703](https://github.com/NVIDIA/cuml/pull/5703)) [@robertmaynard](https://github.com/robertmaynard)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - [Hotfix] Update GPUTreeSHAP to fix ARM build ([#5747](https://github.com/NVIDIA/cuml/pull/5747)) [@hcho3](https://github.com/hcho3)
 - Disable HistGradientBoosting support for now ([#5744](https://github.com/NVIDIA/cuml/pull/5744)) [@hcho3](https://github.com/hcho3)
@@ -1562,13 +1564,13 @@
 - Forward-merge branch-23.12 to branch-24.02 ([#5657](https://github.com/NVIDIA/cuml/pull/5657)) [@bdice](https://github.com/bdice)
 - Add cuML devcontainers ([#5568](https://github.com/NVIDIA/cuml/pull/5568)) [@trxcllnt](https://github.com/trxcllnt)
 
-# cuML 23.12.00 (6 Dec 2023)
+## cuML 23.12.00 (6 Dec 2023)
 
-## 🚨 Breaking Changes
+### 🚨 Breaking Changes
 
 - [LogisticRegressionMG] Support sparse vectors ([#5632](https://github.com/NVIDIA/cuml/pull/5632)) [@lijinf2](https://github.com/lijinf2)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Update actions/labeler to v4 ([#5686](https://github.com/NVIDIA/cuml/pull/5686)) [@raydouglass](https://github.com/raydouglass)
 - updated docs around `make_column_transformer` change from `.preprocessing` to `.compose` ([#5680](https://github.com/NVIDIA/cuml/pull/5680)) [@taureandyernv](https://github.com/taureandyernv)
@@ -1584,16 +1586,16 @@
 - Fix trying to get pointer to None in svm/linear.pyx ([#5615](https://github.com/NVIDIA/cuml/pull/5615)) [@yosider](https://github.com/yosider)
 - Reduce parallelism to avoid OOMs in wheel tests ([#5611](https://github.com/NVIDIA/cuml/pull/5611)) [@vyasr](https://github.com/vyasr)
 
-## 📖 Documentation
+### 📖 Documentation
 
 - Update interoperability docs ([#5633](https://github.com/NVIDIA/cuml/pull/5633)) [@beckernick](https://github.com/beckernick)
 - Update instructions for creating a conda build environment ([#5628](https://github.com/NVIDIA/cuml/pull/5628)) [@csadorf](https://github.com/csadorf)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - Basic implementation of `OrdinalEncoder`. ([#5646](https://github.com/NVIDIA/cuml/pull/5646)) [@trivialfis](https://github.com/trivialfis)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Build concurrency for nightly and merge triggers ([#5658](https://github.com/NVIDIA/cuml/pull/5658)) [@bdice](https://github.com/bdice)
 - [LogisticRegressionMG][FEA] Support training when dataset contains only one class ([#5655](https://github.com/NVIDIA/cuml/pull/5655)) [@lijinf2](https://github.com/lijinf2)
@@ -1611,25 +1613,25 @@
 - Build CUDA 12.0 ARM conda packages. ([#5595](https://github.com/NVIDIA/cuml/pull/5595)) [@bdice](https://github.com/bdice)
 - Enable multiclass svm for sparse input ([#5588](https://github.com/NVIDIA/cuml/pull/5588)) [@mfoerste4](https://github.com/mfoerste4)
 
-# cuML 23.10.00 (11 Oct 2023)
+## cuML 23.10.00 (11 Oct 2023)
 
-## 🚨 Breaking Changes
+### 🚨 Breaking Changes
 
 - add sample_weight parameter to dbscan.fit ([#5574](https://github.com/NVIDIA/cuml/pull/5574)) [@mfoerste4](https://github.com/mfoerste4)
 - Update to Cython 3.0.0 ([#5506](https://github.com/NVIDIA/cuml/pull/5506)) [@vyasr](https://github.com/vyasr)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Fix accidental unsafe cupy import ([#5613](https://github.com/NVIDIA/cuml/pull/5613)) [@dantegd](https://github.com/dantegd)
 - Fixes for CPU package ([#5599](https://github.com/NVIDIA/cuml/pull/5599)) [@dantegd](https://github.com/dantegd)
 - Fixes for timeouts in tests ([#5598](https://github.com/NVIDIA/cuml/pull/5598)) [@dantegd](https://github.com/dantegd)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - Enable cuml-cpu nightly ([#5585](https://github.com/NVIDIA/cuml/pull/5585)) [@dantegd](https://github.com/dantegd)
 - add sample_weight parameter to dbscan.fit ([#5574](https://github.com/NVIDIA/cuml/pull/5574)) [@mfoerste4](https://github.com/mfoerste4)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - cuml-cpu notebook, docs and cluster models ([#5597](https://github.com/NVIDIA/cuml/pull/5597)) [@dantegd](https://github.com/dantegd)
 - Pin `dask` and `distributed` for `23.10` release ([#5592](https://github.com/NVIDIA/cuml/pull/5592)) [@galipremsagar](https://github.com/galipremsagar)
@@ -1652,14 +1654,14 @@
 - Branch 23.10 merge 23.08 ([#5522](https://github.com/NVIDIA/cuml/pull/5522)) [@vyasr](https://github.com/vyasr)
 - Update to Cython 3.0.0 ([#5506](https://github.com/NVIDIA/cuml/pull/5506)) [@vyasr](https://github.com/vyasr)
 
-# cuML 23.08.00 (9 Aug 2023)
+## cuML 23.08.00 (9 Aug 2023)
 
-## 🚨 Breaking Changes
+### 🚨 Breaking Changes
 
 - Stop using setup.py in build.sh ([#5500](https://github.com/NVIDIA/cuml/pull/5500)) [@vyasr](https://github.com/vyasr)
 - Add `copy_X` parameter to `LinearRegression` ([#5495](https://github.com/NVIDIA/cuml/pull/5495)) [@viclafargue](https://github.com/viclafargue)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Update dependencies.yaml test_notebooks to include dask_ml ([#5545](https://github.com/NVIDIA/cuml/pull/5545)) [@taureandyernv](https://github.com/taureandyernv)
 - Fix cython-lint issues. ([#5536](https://github.com/NVIDIA/cuml/pull/5536)) [@bdice](https://github.com/bdice)
@@ -1670,14 +1672,14 @@
 - Use fit_predict rather than fit for KNeighborsClassifier and KNeighborsRegressor in benchmark utility ([#5460](https://github.com/NVIDIA/cuml/pull/5460)) [@beckernick](https://github.com/beckernick)
 - Modify HDBSCAN membership_vector batch_size check ([#5455](https://github.com/NVIDIA/cuml/pull/5455)) [@tarang-jain](https://github.com/tarang-jain)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - Use rapids-cmake testing to run tests in parallel ([#5487](https://github.com/NVIDIA/cuml/pull/5487)) [@robertmaynard](https://github.com/robertmaynard)
 - [FEA] Update MST Reduction Op ([#5386](https://github.com/NVIDIA/cuml/pull/5386)) [@tarang-jain](https://github.com/tarang-jain)
 - cuml: Build CUDA 12 packages ([#5318](https://github.com/NVIDIA/cuml/pull/5318)) [@vyasr](https://github.com/vyasr)
 - CI: Add custom GitHub Actions job to run clang-tidy ([#5235](https://github.com/NVIDIA/cuml/pull/5235)) [@csadorf](https://github.com/csadorf)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Pin `dask` and `distributed` for `23.08` release ([#5541](https://github.com/NVIDIA/cuml/pull/5541)) [@galipremsagar](https://github.com/galipremsagar)
 - Remove Dockerfile. ([#5534](https://github.com/NVIDIA/cuml/pull/5534)) [@bdice](https://github.com/bdice)
@@ -1710,14 +1712,14 @@
 - Fix some deprecation warnings in tests. ([#5436](https://github.com/NVIDIA/cuml/pull/5436)) [@bdice](https://github.com/bdice)
 - Update `raft::sparse::distance::pairwise_distance` to new API ([#5428](https://github.com/NVIDIA/cuml/pull/5428)) [@divyegala](https://github.com/divyegala)
 
-# cuML 23.06.00 (7 Jun 2023)
+## cuML 23.06.00 (7 Jun 2023)
 
-## 🚨 Breaking Changes
+### 🚨 Breaking Changes
 
 - Dropping Python 3.8 ([#5385](https://github.com/NVIDIA/cuml/pull/5385)) [@divyegala](https://github.com/divyegala)
 - Support sparse input for SVC and SVR ([#5273](https://github.com/NVIDIA/cuml/pull/5273)) [@mfoerste4](https://github.com/mfoerste4)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Fixes for nightly GHA runs ([#5446](https://github.com/NVIDIA/cuml/pull/5446)) [@dantegd](https://github.com/dantegd)
 - Add missing RAFT cusolver_macros import and changes for recent cuDF updates ([#5434](https://github.com/NVIDIA/cuml/pull/5434)) [@dantegd](https://github.com/dantegd)
@@ -1731,16 +1733,16 @@
 - Avoid invalid memory access in experimental FIL for large output size ([#5365](https://github.com/NVIDIA/cuml/pull/5365)) [@wphicks](https://github.com/wphicks)
 - Fix forward merge #5336 ([#5345](https://github.com/NVIDIA/cuml/pull/5345)) [@dantegd](https://github.com/dantegd)
 
-## 📖 Documentation
+### 📖 Documentation
 
 - Fix HDBSCAN docs and add membership_vector to cuml.cluster.hdbscan namespace ([#5378](https://github.com/NVIDIA/cuml/pull/5378)) [@beckernick](https://github.com/beckernick)
 - Small doc fix ([#5375](https://github.com/NVIDIA/cuml/pull/5375)) [@tarang-jain](https://github.com/tarang-jain)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - Provide method for auto-optimization of FIL parameters ([#5368](https://github.com/NVIDIA/cuml/pull/5368)) [@wphicks](https://github.com/wphicks)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Fix documentation source code links ([#5449](https://github.com/NVIDIA/cuml/pull/5449)) [@ajschmidt8](https://github.com/ajschmidt8)
 - Drop seaborn dependency. ([#5437](https://github.com/NVIDIA/cuml/pull/5437)) [@bdice](https://github.com/bdice)
@@ -1772,13 +1774,13 @@
 - Support sparse input for SVC and SVR ([#5273](https://github.com/NVIDIA/cuml/pull/5273)) [@mfoerste4](https://github.com/mfoerste4)
 - Delete outdated versions.json. ([#5229](https://github.com/NVIDIA/cuml/pull/5229)) [@bdice](https://github.com/bdice)
 
-# cuML 23.04.00 (6 Apr 2023)
+## cuML 23.04.00 (6 Apr 2023)
 
-## 🚨 Breaking Changes
+### 🚨 Breaking Changes
 
 - Pin `dask` and `distributed` for release ([#5333](https://github.com/NVIDIA/cuml/pull/5333)) [@galipremsagar](https://github.com/galipremsagar)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Skip pickle notebook during nbsphinx ([#5342](https://github.com/NVIDIA/cuml/pull/5342)) [@dantegd](https://github.com/dantegd)
 - Avoid race condition in FIL predict_per_tree ([#5334](https://github.com/NVIDIA/cuml/pull/5334)) [@wphicks](https://github.com/wphicks)
@@ -1796,20 +1798,20 @@
 - Support numeric, boolean, and string keyword arguments to class methods during CPU dispatching ([#5236](https://github.com/NVIDIA/cuml/pull/5236)) [@beckernick](https://github.com/beckernick)
 - Allowing large data in kmeans ([#5228](https://github.com/NVIDIA/cuml/pull/5228)) [@cjnolet](https://github.com/cjnolet)
 
-## 📖 Documentation
+### 📖 Documentation
 
 - Fix docs build to be `pydata-sphinx-theme=0.13.0` compatible ([#5259](https://github.com/NVIDIA/cuml/pull/5259)) [@galipremsagar](https://github.com/galipremsagar)
 - Add supported CPU/GPU operators to API docs and update docstrings ([#5239](https://github.com/NVIDIA/cuml/pull/5239)) [@beckernick](https://github.com/beckernick)
 - Fix documentation author ([#5126](https://github.com/NVIDIA/cuml/pull/5126)) [@bdice](https://github.com/bdice)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - Modify default batch size in HDBSCAN soft clustering ([#5335](https://github.com/NVIDIA/cuml/pull/5335)) [@tarang-jain](https://github.com/tarang-jain)
 - reduce memory pressure in membership vector computation ([#5268](https://github.com/NVIDIA/cuml/pull/5268)) [@tarang-jain](https://github.com/tarang-jain)
 - membership_vector for HDBSCAN ([#5247](https://github.com/NVIDIA/cuml/pull/5247)) [@tarang-jain](https://github.com/tarang-jain)
 - Provide FIL implementation for both CPU and GPU ([#4890](https://github.com/NVIDIA/cuml/pull/4890)) [@wphicks](https://github.com/wphicks)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Remove deprecated Treelite CI API from FIL ([#5348](https://github.com/NVIDIA/cuml/pull/5348)) [@hcho3](https://github.com/hcho3)
 - Updated forest inference to new dask worker api for 23.04 ([#5347](https://github.com/NVIDIA/cuml/pull/5347)) [@taureandyernv](https://github.com/taureandyernv)
@@ -1850,16 +1852,16 @@
 - Add `detail` namespace for linear models ([#5107](https://github.com/NVIDIA/cuml/pull/5107)) [@lowener](https://github.com/lowener)
 - Add pre-commit configuration ([#4983](https://github.com/NVIDIA/cuml/pull/4983)) [@csadorf](https://github.com/csadorf)
 
-# cuML 23.02.00 (9 Feb 2023)
+## cuML 23.02.00 (9 Feb 2023)
 
-## 🚨 Breaking Changes
+### 🚨 Breaking Changes
 
 - Use ivf_pq and ivf_flat from raft ([#5119](https://github.com/NVIDIA/cuml/pull/5119)) [@benfred](https://github.com/benfred)
 - Estimators adaptation toward CPU/GPU interoperability ([#4918](https://github.com/NVIDIA/cuml/pull/4918)) [@viclafargue](https://github.com/viclafargue)
 - Provide host CumlArray and associated infrastructure ([#4908](https://github.com/NVIDIA/cuml/pull/4908)) [@wphicks](https://github.com/wphicks)
 - Improvements of UMAP/TSNE precomputed KNN feature ([#4865](https://github.com/NVIDIA/cuml/pull/4865)) [@viclafargue](https://github.com/viclafargue)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Fix for creation of CUDA context at import time ([#5211](https://github.com/NVIDIA/cuml/pull/5211)) [@dantegd](https://github.com/dantegd)
 - Correct arguments to load_from_treelite_model after classmethod conversion ([#5210](https://github.com/NVIDIA/cuml/pull/5210)) [@wphicks](https://github.com/wphicks)
@@ -1883,7 +1885,7 @@
 - Add `workers` argument to dask `make_blobs` ([#5057](https://github.com/NVIDIA/cuml/pull/5057)) [@viclafargue](https://github.com/viclafargue)
 - Fix indexing type for ridge and linear models ([#4996](https://github.com/NVIDIA/cuml/pull/4996)) [@lowener](https://github.com/lowener)
 
-## 📖 Documentation
+### 📖 Documentation
 
 - Adding benchmark notebook for hdbscan soft clustering ([#5103](https://github.com/NVIDIA/cuml/pull/5103)) [@cjnolet](https://github.com/cjnolet)
 - Fix doc for solver in LogisticRegression ([#5097](https://github.com/NVIDIA/cuml/pull/5097)) [@viclafargue](https://github.com/viclafargue)
@@ -1891,7 +1893,7 @@
 - expose text, text.{CountVectorizer,HashingVectorizer,Tfidf{Transformer,Vectorizer}} from feature_extraction&#39;s public api ([#5028](https://github.com/NVIDIA/cuml/pull/5028)) [@mattf](https://github.com/mattf)
 - Add Dask LabelEncoder to the documentation ([#5023](https://github.com/NVIDIA/cuml/pull/5023)) [@beckernick](https://github.com/beckernick)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - HDBSCAN CPU/GPU Interop ([#5137](https://github.com/NVIDIA/cuml/pull/5137)) [@divyegala](https://github.com/divyegala)
 - Make all CPU/GPU only imports &quot;safe&quot; for respective package ([#5117](https://github.com/NVIDIA/cuml/pull/5117)) [@wphicks](https://github.com/wphicks)
@@ -1899,7 +1901,7 @@
 - Break up silhouette score into 3 units to improve compilation time ([#5061](https://github.com/NVIDIA/cuml/pull/5061)) [@wphicks](https://github.com/wphicks)
 - Provide host CumlArray and associated infrastructure ([#4908](https://github.com/NVIDIA/cuml/pull/4908)) [@wphicks](https://github.com/wphicks)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Pin `dask` and `distributed` for release ([#5198](https://github.com/NVIDIA/cuml/pull/5198)) [@galipremsagar](https://github.com/galipremsagar)
 - Update shared workflow branches ([#5197](https://github.com/NVIDIA/cuml/pull/5197)) [@ajschmidt8](https://github.com/ajschmidt8)
@@ -1945,15 +1947,15 @@
 - Estimators adaptation toward CPU/GPU interoperability ([#4918](https://github.com/NVIDIA/cuml/pull/4918)) [@viclafargue](https://github.com/viclafargue)
 - Improvements of UMAP/TSNE precomputed KNN feature ([#4865](https://github.com/NVIDIA/cuml/pull/4865)) [@viclafargue](https://github.com/viclafargue)
 
-# cuML 22.12.00 (8 Dec 2022)
+## cuML 22.12.00 (8 Dec 2022)
 
-## 🚨 Breaking Changes
+### 🚨 Breaking Changes
 
 - Change docs theme to `pydata-sphinx` theme ([#4985](https://github.com/NVIDIA/cuml/pull/4985)) [@galipremsagar](https://github.com/galipremsagar)
 - Remove &quot;Open In Colab&quot; link from Estimator Intro notebook. ([#4980](https://github.com/NVIDIA/cuml/pull/4980)) [@bdice](https://github.com/bdice)
 - Remove `CumlArray.copy()` ([#4958](https://github.com/NVIDIA/cuml/pull/4958)) [@madsbk](https://github.com/madsbk)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Remove cupy.cusparse custom serialization ([#5024](https://github.com/NVIDIA/cuml/pull/5024)) [@dantegd](https://github.com/dantegd)
 - Restore `LinearRegression` documentation ([#5020](https://github.com/NVIDIA/cuml/pull/5020)) [@viclafargue](https://github.com/viclafargue)
@@ -1967,20 +1969,20 @@
 - Assign python/ sub-directory to python-codeowners ([#4940](https://github.com/NVIDIA/cuml/pull/4940)) [@csadorf](https://github.com/csadorf)
 - Fix for non-contiguous strides ([#4736](https://github.com/NVIDIA/cuml/pull/4736)) [@viclafargue](https://github.com/viclafargue)
 
-## 📖 Documentation
+### 📖 Documentation
 
 - Change docs theme to `pydata-sphinx` theme ([#4985](https://github.com/NVIDIA/cuml/pull/4985)) [@galipremsagar](https://github.com/galipremsagar)
 - Remove &quot;Open In Colab&quot; link from Estimator Intro notebook. ([#4980](https://github.com/NVIDIA/cuml/pull/4980)) [@bdice](https://github.com/bdice)
 - Updating build instructions ([#4979](https://github.com/NVIDIA/cuml/pull/4979)) [@cjnolet](https://github.com/cjnolet)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - Reenable copy_prs. ([#5010](https://github.com/NVIDIA/cuml/pull/5010)) [@vyasr](https://github.com/vyasr)
 - Add wheel builds ([#5009](https://github.com/NVIDIA/cuml/pull/5009)) [@vyasr](https://github.com/vyasr)
 - LinearRegression: add support for multiple targets ([#4988](https://github.com/NVIDIA/cuml/pull/4988)) [@ahendriksen](https://github.com/ahendriksen)
 - CPU/GPU interoperability POC ([#4874](https://github.com/NVIDIA/cuml/pull/4874)) [@viclafargue](https://github.com/viclafargue)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Upgrade Treelite to 3.0.1 ([#5018](https://github.com/NVIDIA/cuml/pull/5018)) [@hcho3](https://github.com/hcho3)
 - fix addition of nan_euclidean_distances to public api ([#5015](https://github.com/NVIDIA/cuml/pull/5015)) [@mattf](https://github.com/mattf)
@@ -2004,9 +2006,9 @@
 - Update cuml raft header extensions ([#4599](https://github.com/NVIDIA/cuml/pull/4599)) [@cjnolet](https://github.com/cjnolet)
 - Reconciling primitives moved to RAFT ([#4583](https://github.com/NVIDIA/cuml/pull/4583)) [@cjnolet](https://github.com/cjnolet)
 
-# cuML 22.10.00 (12 Oct 2022)
+## cuML 22.10.00 (12 Oct 2022)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Skipping some hdbscan tests when cuda version is &lt;= 11.2. ([#4916](https://github.com/NVIDIA/cuml/pull/4916)) [@cjnolet](https://github.com/cjnolet)
 - Fix HDBSCAN python namespace ([#4895](https://github.com/NVIDIA/cuml/pull/4895)) [@cjnolet](https://github.com/cjnolet)
@@ -2019,12 +2021,12 @@
 - Fixed Large memory requirements for SimpleImputer strategy median #4794 ([#4817](https://github.com/NVIDIA/cuml/pull/4817)) [@erikrene](https://github.com/erikrene)
 - Transforms RandomForest estimators non-consecutive labels to consecutive labels where appropriate ([#4780](https://github.com/NVIDIA/cuml/pull/4780)) [@VamsiTallam95](https://github.com/VamsiTallam95)
 
-## 📖 Documentation
+### 📖 Documentation
 
 - Document that minimum required CMake version is now 3.23.1 ([#4899](https://github.com/NVIDIA/cuml/pull/4899)) [@robertmaynard](https://github.com/robertmaynard)
 - Update KMeans notebook for clarity ([#4886](https://github.com/NVIDIA/cuml/pull/4886)) [@beckernick](https://github.com/beckernick)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - Allow cupy 11 ([#4880](https://github.com/NVIDIA/cuml/pull/4880)) [@galipremsagar](https://github.com/galipremsagar)
 - Add `sample_weight` to Coordinate Descent solver (Lasso and ElasticNet) ([#4867](https://github.com/NVIDIA/cuml/pull/4867)) [@lowener](https://github.com/lowener)
@@ -2034,7 +2036,7 @@
 - Add &quot;median&quot; to TargetEncoder ([#4722](https://github.com/NVIDIA/cuml/pull/4722)) [@daxiongshu](https://github.com/daxiongshu)
 - New Feature StratifiedKFold ([#3109](https://github.com/NVIDIA/cuml/pull/3109)) [@daxiongshu](https://github.com/daxiongshu)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Updating python to use pylibraft ([#4887](https://github.com/NVIDIA/cuml/pull/4887)) [@cjnolet](https://github.com/cjnolet)
 - Upgrade Treelite to 3.0.0 ([#4885](https://github.com/NVIDIA/cuml/pull/4885)) [@hcho3](https://github.com/hcho3)
@@ -2048,14 +2050,14 @@
 - TSNE and UMAP allow several distance types ([#4779](https://github.com/NVIDIA/cuml/pull/4779)) [@tarang-jain](https://github.com/tarang-jain)
 - Convert fp32 datasets to fp64 in ARIMA and AutoARIMA + update notebook to avoid deprecation warnings with positional parameters ([#4195](https://github.com/NVIDIA/cuml/pull/4195)) [@Nyrio](https://github.com/Nyrio)
 
-# cuML 22.08.00 (17 Aug 2022)
+## cuML 22.08.00 (17 Aug 2022)
 
-## 🚨 Breaking Changes
+### 🚨 Breaking Changes
 
 - Update Python build to scikit-build ([#4818](https://github.com/NVIDIA/cuml/pull/4818)) [@dantegd](https://github.com/dantegd)
 - Bump `xgboost` to `1.6.0` from `1.5.2` ([#4777](https://github.com/NVIDIA/cuml/pull/4777)) [@galipremsagar](https://github.com/galipremsagar)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Revert &quot;Allow CuPy 11&quot; ([#4847](https://github.com/NVIDIA/cuml/pull/4847)) [@galipremsagar](https://github.com/galipremsagar)
 - Fix RAFT_NVTX option not set ([#4825](https://github.com/NVIDIA/cuml/pull/4825)) [@achirkin](https://github.com/achirkin)
@@ -2065,20 +2067,20 @@
 - Fixes exception when using predict_proba on fitted Pipeline object with a ColumnTransformer step ([#4774](https://github.com/NVIDIA/cuml/pull/4774)) [@VamsiTallam95](https://github.com/VamsiTallam95)
 - Regression errors failing with mixed data type combinations ([#4770](https://github.com/NVIDIA/cuml/pull/4770)) [@shaswat-indian](https://github.com/shaswat-indian)
 
-## 📖 Documentation
+### 📖 Documentation
 
 - Use common code in python docs and defer `js` loading ([#4852](https://github.com/NVIDIA/cuml/pull/4852)) [@galipremsagar](https://github.com/galipremsagar)
 - Centralize common css &amp; js code in docs ([#4844](https://github.com/NVIDIA/cuml/pull/4844)) [@galipremsagar](https://github.com/galipremsagar)
 - Add ComplementNB to the documentation ([#4805](https://github.com/NVIDIA/cuml/pull/4805)) [@lowener](https://github.com/lowener)
 - Fix forward-merge branch-22.06 to branch-22.08 ([#4789](https://github.com/NVIDIA/cuml/pull/4789)) [@divyegala](https://github.com/divyegala)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - Update Python build to scikit-build ([#4818](https://github.com/NVIDIA/cuml/pull/4818)) [@dantegd](https://github.com/dantegd)
 - Vectorizers to accept Pandas Series as input ([#4811](https://github.com/NVIDIA/cuml/pull/4811)) [@shaswat-indian](https://github.com/shaswat-indian)
 - Cython wrapper for v-measure ([#4785](https://github.com/NVIDIA/cuml/pull/4785)) [@shaswat-indian](https://github.com/shaswat-indian)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Pin `dask` &amp; `distributed` for release ([#4850](https://github.com/NVIDIA/cuml/pull/4850)) [@galipremsagar](https://github.com/galipremsagar)
 - Allow CuPy 11 ([#4837](https://github.com/NVIDIA/cuml/pull/4837)) [@jakirkham](https://github.com/jakirkham)
@@ -2093,9 +2095,9 @@
 - Clean up Thrust includes. ([#4675](https://github.com/NVIDIA/cuml/pull/4675)) [@bdice](https://github.com/bdice)
 - Improvements in feature sampling ([#4278](https://github.com/NVIDIA/cuml/pull/4278)) [@vinaydes](https://github.com/vinaydes)
 
-# cuML 22.06.00 (7 Jun 2022)
+## cuML 22.06.00 (7 Jun 2022)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Fix sg benchmark build. ([#4766](https://github.com/NVIDIA/cuml/pull/4766)) [@trivialfis](https://github.com/trivialfis)
 - Resolve KRR hypothesis test failure ([#4761](https://github.com/NVIDIA/cuml/pull/4761)) [@RAMitchell](https://github.com/RAMitchell)
@@ -2105,20 +2107,20 @@
 - Replace 22.04.x with 22.06.x in yaml files ([#4692](https://github.com/NVIDIA/cuml/pull/4692)) [@daxiongshu](https://github.com/daxiongshu)
 - Replace cudf.logical_not with ~ ([#4669](https://github.com/NVIDIA/cuml/pull/4669)) [@canonizer](https://github.com/canonizer)
 
-## 📖 Documentation
+### 📖 Documentation
 
 - Fix docs builds ([#4733](https://github.com/NVIDIA/cuml/pull/4733)) [@ajschmidt8](https://github.com/ajschmidt8)
 - Change &quot;principals&quot; to &quot;principles&quot; ([#4695](https://github.com/NVIDIA/cuml/pull/4695)) [@cakiki](https://github.com/cakiki)
 - Update pydoc and promote `ColumnTransformer` out of experimental ([#4509](https://github.com/NVIDIA/cuml/pull/4509)) [@viclafargue](https://github.com/viclafargue)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - float64 support in FIL functions ([#4655](https://github.com/NVIDIA/cuml/pull/4655)) [@canonizer](https://github.com/canonizer)
 - float64 support in FIL core ([#4646](https://github.com/NVIDIA/cuml/pull/4646)) [@canonizer](https://github.com/canonizer)
 - Allow &quot;LabelEncoder&quot; to accept cupy and numpy arrays as input. ([#4620](https://github.com/NVIDIA/cuml/pull/4620)) [@daxiongshu](https://github.com/daxiongshu)
 - MNMG Logistic Regression (dask-glm wrapper) ([#3512](https://github.com/NVIDIA/cuml/pull/3512)) [@daxiongshu](https://github.com/daxiongshu)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Pin `dask` &amp; `distributed` for release ([#4758](https://github.com/NVIDIA/cuml/pull/4758)) [@galipremsagar](https://github.com/galipremsagar)
 - Simplicial set functions ([#4756](https://github.com/NVIDIA/cuml/pull/4756)) [@viclafargue](https://github.com/viclafargue)
@@ -2146,14 +2148,14 @@
 - Use conda compilers ([#4577](https://github.com/NVIDIA/cuml/pull/4577)) [@Ethyling](https://github.com/Ethyling)
 - Build packages using mambabuild ([#4542](https://github.com/NVIDIA/cuml/pull/4542)) [@Ethyling](https://github.com/Ethyling)
 
-# cuML 22.04.00 (6 Apr 2022)
+## cuML 22.04.00 (6 Apr 2022)
 
-## 🚨 Breaking Changes
+### 🚨 Breaking Changes
 
 - Moving more ling prims to raft ([#4567](https://github.com/NVIDIA/cuml/pull/4567)) [@cjnolet](https://github.com/cjnolet)
 - Refactor QN solver: pass parameters via a POD struct ([#4511](https://github.com/NVIDIA/cuml/pull/4511)) [@achirkin](https://github.com/achirkin)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Fix single-GPU build by separating multi-GPU decomposition utils from single GPU ([#4645](https://github.com/NVIDIA/cuml/pull/4645)) [@dantegd](https://github.com/dantegd)
 - RF: fix stream bug causing performance regressions ([#4644](https://github.com/NVIDIA/cuml/pull/4644)) [@venkywonka](https://github.com/venkywonka)
@@ -2169,14 +2171,14 @@
 - Fix automerge #4501 ([#4502](https://github.com/NVIDIA/cuml/pull/4502)) [@dantegd](https://github.com/dantegd)
 - Remove classmethod of SimpleImputer ([#4439](https://github.com/NVIDIA/cuml/pull/4439)) [@lowener](https://github.com/lowener)
 
-## 📖 Documentation
+### 📖 Documentation
 
 - RF: Fix improper documentation in dask-RF ([#4666](https://github.com/NVIDIA/cuml/pull/4666)) [@venkywonka](https://github.com/venkywonka)
 - Add doctest ([#4618](https://github.com/NVIDIA/cuml/pull/4618)) [@lowener](https://github.com/lowener)
 - Fix document layouts in Parameters sections ([#4609](https://github.com/NVIDIA/cuml/pull/4609)) [@Yosshi999](https://github.com/Yosshi999)
 - Updates to consistency of MNMG PCA/TSVD solvers (docs + code consolidation) ([#4556](https://github.com/NVIDIA/cuml/pull/4556)) [@cjnolet](https://github.com/cjnolet)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - Add a dummy argument `deep` to `TargetEncoder.get_params()` ([#4601](https://github.com/NVIDIA/cuml/pull/4601)) [@daxiongshu](https://github.com/daxiongshu)
 - Add Complement Naive Bayes ([#4595](https://github.com/NVIDIA/cuml/pull/4595)) [@lowener](https://github.com/lowener)
@@ -2185,7 +2187,7 @@
 - Interruptible execution ([#4463](https://github.com/NVIDIA/cuml/pull/4463)) [@achirkin](https://github.com/achirkin)
 - Configurable libcuml++ per algorithm ([#4296](https://github.com/NVIDIA/cuml/pull/4296)) [@dantegd](https://github.com/dantegd)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Adding some prints when hdbscan assertion fails ([#4656](https://github.com/NVIDIA/cuml/pull/4656)) [@cjnolet](https://github.com/cjnolet)
 - Temporarily disable new `ops-bot` functionality ([#4652](https://github.com/NVIDIA/cuml/pull/4652)) [@ajschmidt8](https://github.com/ajschmidt8)
@@ -2229,13 +2231,13 @@
 - Use FAISS with RMM ([#4297](https://github.com/NVIDIA/cuml/pull/4297)) [@viclafargue](https://github.com/viclafargue)
 - Split C++ tests into separate binaries ([#4295](https://github.com/NVIDIA/cuml/pull/4295)) [@dantegd](https://github.com/dantegd)
 
-# cuML 22.02.00 (2 Feb 2022)
+## cuML 22.02.00 (2 Feb 2022)
 
-## 🚨 Breaking Changes
+### 🚨 Breaking Changes
 
 - Move NVTX range helpers to raft ([#4445](https://github.com/NVIDIA/cuml/pull/4445)) [@achirkin](https://github.com/achirkin)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Always upload libcuml ([#4530](https://github.com/NVIDIA/cuml/pull/4530)) [@raydouglass](https://github.com/raydouglass)
 - Fix RAFT pin to main branch ([#4508](https://github.com/NVIDIA/cuml/pull/4508)) [@dantegd](https://github.com/dantegd)
@@ -2245,18 +2247,18 @@
 - Support compilation with Thrust 1.15 ([#4469](https://github.com/NVIDIA/cuml/pull/4469)) [@robertmaynard](https://github.com/robertmaynard)
 - fix minor ASAN issues in UMAPAlgo::Optimize::find_params_ab() ([#4405](https://github.com/NVIDIA/cuml/pull/4405)) [@yitao-li](https://github.com/yitao-li)
 
-## 📖 Documentation
+### 📖 Documentation
 
 - Remove comment numerical warning ([#4408](https://github.com/NVIDIA/cuml/pull/4408)) [@viclafargue](https://github.com/viclafargue)
 - Fix docstring for npermutations in PermutationExplainer ([#4402](https://github.com/NVIDIA/cuml/pull/4402)) [@hcho3](https://github.com/hcho3)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - Combine and expose SVC&#39;s support vectors when fitting multi-class data ([#4454](https://github.com/NVIDIA/cuml/pull/4454)) [@NV-jpt](https://github.com/NV-jpt)
 - Accept fold index for TargetEncoder ([#4453](https://github.com/NVIDIA/cuml/pull/4453)) [@daxiongshu](https://github.com/daxiongshu)
 - Move NVTX range helpers to raft ([#4445](https://github.com/NVIDIA/cuml/pull/4445)) [@achirkin](https://github.com/achirkin)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Fix packages upload ([#4517](https://github.com/NVIDIA/cuml/pull/4517)) [@Ethyling](https://github.com/Ethyling)
 - Testing split fused l2 knn compilation units ([#4514](https://github.com/NVIDIA/cuml/pull/4514)) [@cjnolet](https://github.com/cjnolet)
@@ -2285,15 +2287,15 @@
 - RF: code re-organization to enhance build parallelism ([#4299](https://github.com/NVIDIA/cuml/pull/4299)) [@venkywonka](https://github.com/venkywonka)
 - Add option to build faiss and treelite shared libs, inherit common dependencies from raft ([#4256](https://github.com/NVIDIA/cuml/pull/4256)) [@trxcllnt](https://github.com/trxcllnt)
 
-# cuML 21.12.00 (9 Dec 2021)
+## cuML 21.12.00 (9 Dec 2021)
 
-## 🚨 Breaking Changes
+### 🚨 Breaking Changes
 
 - Fix indexing of PCA to use safer types ([#4255](https://github.com/NVIDIA/cuml/pull/4255)) [@lowener](https://github.com/lowener)
 - RF: Add Gamma and Inverse Gaussian loss criteria ([#4216](https://github.com/NVIDIA/cuml/pull/4216)) [@venkywonka](https://github.com/venkywonka)
 - update RF docs ([#4138](https://github.com/NVIDIA/cuml/pull/4138)) [@venkywonka](https://github.com/venkywonka)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Update conda recipe to have explicit libcusolver ([#4392](https://github.com/NVIDIA/cuml/pull/4392)) [@dantegd](https://github.com/dantegd)
 - Restore FIL convention of inlining code ([#4366](https://github.com/NVIDIA/cuml/pull/4366)) [@levsnv](https://github.com/levsnv)
@@ -2311,13 +2313,13 @@
 - Fix KernelExplainer returning TypeError for certain input ([#4272](https://github.com/NVIDIA/cuml/pull/4272)) [@Nanthini10](https://github.com/Nanthini10)
 - Remove most warnings from pytest suite ([#4196](https://github.com/NVIDIA/cuml/pull/4196)) [@dantegd](https://github.com/dantegd)
 
-## 📖 Documentation
+### 📖 Documentation
 
 - Add experimental GPUTreeSHAP to API doc ([#4398](https://github.com/NVIDIA/cuml/pull/4398)) [@hcho3](https://github.com/hcho3)
 - Fix GLM typo on device/host pointer ([#4320](https://github.com/NVIDIA/cuml/pull/4320)) [@lowener](https://github.com/lowener)
 - update RF docs ([#4138](https://github.com/NVIDIA/cuml/pull/4138)) [@venkywonka](https://github.com/venkywonka)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - Add GPUTreeSHAP to cuML explainer module (experimental) ([#4351](https://github.com/NVIDIA/cuml/pull/4351)) [@hcho3](https://github.com/hcho3)
 - Enable training single GPU cuML models using Dask DataFrames and Series ([#4300](https://github.com/NVIDIA/cuml/pull/4300)) [@ChrisJar](https://github.com/ChrisJar)
@@ -2326,7 +2328,7 @@
 - Use opt-in shared memory carveout for FIL ([#3759](https://github.com/NVIDIA/cuml/pull/3759)) [@levsnv](https://github.com/levsnv)
 - Symbolic Regression/Classification C/C++ ([#3638](https://github.com/NVIDIA/cuml/pull/3638)) [@vimarsh6739](https://github.com/vimarsh6739)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Fix Changelog Merge Conflicts for `branch-21.12` ([#4393](https://github.com/NVIDIA/cuml/pull/4393)) [@ajschmidt8](https://github.com/ajschmidt8)
 - Pin max `dask` and `distributed` to `2012.11.2` ([#4390](https://github.com/NVIDIA/cuml/pull/4390)) [@galipremsagar](https://github.com/galipremsagar)
@@ -2359,9 +2361,9 @@
 - Exposing KL divergence in TSNE ([#4208](https://github.com/NVIDIA/cuml/pull/4208)) [@viclafargue](https://github.com/viclafargue)
 - Unify template parameter dispatch for FIL inference and shared memory footprint estimation ([#4013](https://github.com/NVIDIA/cuml/pull/4013)) [@levsnv](https://github.com/levsnv)
 
-# cuML 21.10.00 (7 Oct 2021)
+## cuML 21.10.00 (7 Oct 2021)
 
-## 🚨 Breaking Changes
+### 🚨 Breaking Changes
 
 - RF: python api behaviour refactor ([#4207](https://github.com/NVIDIA/cuml/pull/4207)) [@venkywonka](https://github.com/venkywonka)
 - Implement vector leaf for random forest ([#4191](https://github.com/NVIDIA/cuml/pull/4191)) [@RAMitchell](https://github.com/RAMitchell)
@@ -2370,7 +2372,7 @@
 - avoid paramsSolver::{n_rows,n_cols} shadowing their base class counterparts ([#4130](https://github.com/NVIDIA/cuml/pull/4130)) [@yitao-li](https://github.com/yitao-li)
 - Apply modifications to account for RAFT changes ([#4077](https://github.com/NVIDIA/cuml/pull/4077)) [@viclafargue](https://github.com/viclafargue)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Update scikit-learn version in conda dev envs to 0.24 ([#4241](https://github.com/NVIDIA/cuml/pull/4241)) [@dantegd](https://github.com/dantegd)
 - Using pinned host memory for Random Forest and DBSCAN ([#4215](https://github.com/NVIDIA/cuml/pull/4215)) [@divyegala](https://github.com/divyegala)
@@ -2383,7 +2385,7 @@
 - avoid paramsSolver::{n_rows,n_cols} shadowing their base class counterparts ([#4130](https://github.com/NVIDIA/cuml/pull/4130)) [@yitao-li](https://github.com/yitao-li)
 - Use the new RAPIDS.cmake to fetch rapids-cmake ([#4102](https://github.com/NVIDIA/cuml/pull/4102)) [@robertmaynard](https://github.com/robertmaynard)
 
-## 📖 Documentation
+### 📖 Documentation
 
 - Expose train_test_split in API doc ([#4234](https://github.com/NVIDIA/cuml/pull/4234)) [@hcho3](https://github.com/hcho3)
 - Adding docs for `.get_feature_names()` inside `TfidfVectorizer` ([#4226](https://github.com/NVIDIA/cuml/pull/4226)) [@mayankanand007](https://github.com/mayankanand007)
@@ -2391,7 +2393,7 @@
 - updated build instructions ([#4200](https://github.com/NVIDIA/cuml/pull/4200)) [@shaneding](https://github.com/shaneding)
 - Forward-merge branch-21.08 to branch-21.10 ([#4171](https://github.com/NVIDIA/cuml/pull/4171)) [@jakirkham](https://github.com/jakirkham)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - Experimental option to build libcuml++ only with FIL ([#4225](https://github.com/NVIDIA/cuml/pull/4225)) [@dantegd](https://github.com/dantegd)
 - FIL to import categorical models from treelite ([#4173](https://github.com/NVIDIA/cuml/pull/4173)) [@levsnv](https://github.com/levsnv)
@@ -2401,7 +2403,7 @@
 - Add Gaussian Naive Bayes ([#4079](https://github.com/NVIDIA/cuml/pull/4079)) [@lowener](https://github.com/lowener)
 - ARIMA - Add support for missing observations and padding ([#4058](https://github.com/NVIDIA/cuml/pull/4058)) [@Nyrio](https://github.com/Nyrio)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Pin max `dask` and `distributed` versions to 2021.09.1 ([#4229](https://github.com/NVIDIA/cuml/pull/4229)) [@galipremsagar](https://github.com/galipremsagar)
 - Fea/umap refine ([#4228](https://github.com/NVIDIA/cuml/pull/4228)) [@AjayThorve](https://github.com/AjayThorve)
@@ -2429,9 +2431,9 @@
 - Changes to NearestNeighbors to call 2d random ball cover ([#4003](https://github.com/NVIDIA/cuml/pull/4003)) [@cjnolet](https://github.com/cjnolet)
 - support space in workspace ([#3752](https://github.com/NVIDIA/cuml/pull/3752)) [@jolorunyomi](https://github.com/jolorunyomi)
 
-# cuML 21.08.00 (4 Aug 2021)
+## cuML 21.08.00 (4 Aug 2021)
 
-## 🚨 Breaking Changes
+### 🚨 Breaking Changes
 
 - Remove deprecated target_weights in UMAP ([#4081](https://github.com/NVIDIA/cuml/pull/4081)) [@lowener](https://github.com/lowener)
 - Upgrade Treelite to 2.0.0 ([#4072](https://github.com/NVIDIA/cuml/pull/4072)) [@hcho3](https://github.com/hcho3)
@@ -2440,7 +2442,7 @@
 - Remove old RF backend ([#3868](https://github.com/NVIDIA/cuml/pull/3868)) [@RAMitchell](https://github.com/RAMitchell)
 - Enable warp-per-tree inference in FIL for regression and binary classification ([#3760](https://github.com/NVIDIA/cuml/pull/3760)) [@levsnv](https://github.com/levsnv)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Disabling umap reproducibility tests for cuda 11.4 ([#4128](https://github.com/NVIDIA/cuml/pull/4128)) [@cjnolet](https://github.com/cjnolet)
 - Fix for crash in RF when `max_leaves` parameter is specified ([#4126](https://github.com/NVIDIA/cuml/pull/4126)) [@vinaydes](https://github.com/vinaydes)
@@ -2473,14 +2475,14 @@
 - Fix for multi GPU PCA compute failing bug after transform and added error handling when n_components is not passed ([#3912](https://github.com/NVIDIA/cuml/pull/3912)) [@akaanirban](https://github.com/akaanirban)
 - Tolerate QN linesearch failures when it&#39;s harmless ([#3791](https://github.com/NVIDIA/cuml/pull/3791)) [@achirkin](https://github.com/achirkin)
 
-## 📖 Documentation
+### 📖 Documentation
 
 - Improve docstrings for silhouette score metrics. ([#4026](https://github.com/NVIDIA/cuml/pull/4026)) [@bdice](https://github.com/bdice)
 - Update CHANGELOG.md link ([#3956](https://github.com/NVIDIA/cuml/pull/3956)) [@Salonijain27](https://github.com/Salonijain27)
 - Update documentation build examples to be generator agnostic ([#3909](https://github.com/NVIDIA/cuml/pull/3909)) [@robertmaynard](https://github.com/robertmaynard)
 - Improve FIL code readability and documentation ([#3056](https://github.com/NVIDIA/cuml/pull/3056)) [@levsnv](https://github.com/levsnv)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - Add Multinomial and Bernoulli Naive Bayes variants ([#4053](https://github.com/NVIDIA/cuml/pull/4053)) [@lowener](https://github.com/lowener)
 - Add weighted K-Means sampling for SHAP ([#4051](https://github.com/NVIDIA/cuml/pull/4051)) [@Nanthini10](https://github.com/Nanthini10)
@@ -2489,7 +2491,7 @@
 - change TargetEncoder&#39;s smooth argument from ratio to count ([#3876](https://github.com/NVIDIA/cuml/pull/3876)) [@daxiongshu](https://github.com/daxiongshu)
 - Enable warp-per-tree inference in FIL for regression and binary classification ([#3760](https://github.com/NVIDIA/cuml/pull/3760)) [@levsnv](https://github.com/levsnv)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Remove clang/clang-tools from conda recipe ([#4109](https://github.com/NVIDIA/cuml/pull/4109)) [@dantegd](https://github.com/dantegd)
 - Pin dask version ([#4108](https://github.com/NVIDIA/cuml/pull/4108)) [@galipremsagar](https://github.com/galipremsagar)
@@ -2525,9 +2527,9 @@
 - Remove old RF backend ([#3868](https://github.com/NVIDIA/cuml/pull/3868)) [@RAMitchell](https://github.com/RAMitchell)
 - Refactor to extract random forest objectives ([#3854](https://github.com/NVIDIA/cuml/pull/3854)) [@RAMitchell](https://github.com/RAMitchell)
 
-# cuML 21.06.00 (9 Jun 2021)
+## cuML 21.06.00 (9 Jun 2021)
 
-## 🚨 Breaking Changes
+### 🚨 Breaking Changes
 
 - Remove Base.enable_rmm_pool method as it is no longer needed ([#3875](https://github.com/NVIDIA/cuml/pull/3875)) [@teju85](https://github.com/teju85)
 - RF: Make experimental-backend default for regression tasks and deprecate old-backend. ([#3872](https://github.com/NVIDIA/cuml/pull/3872)) [@venkywonka](https://github.com/venkywonka)
@@ -2536,7 +2538,7 @@
 - Add feature to print forest shape in FIL upon importing ([#3763](https://github.com/NVIDIA/cuml/pull/3763)) [@levsnv](https://github.com/levsnv)
 - Remove &#39;seed&#39; and &#39;output_type&#39; deprecated features ([#3739](https://github.com/NVIDIA/cuml/pull/3739)) [@lowener](https://github.com/lowener)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Disable UMAP deterministic test on CTK11.2 ([#3942](https://github.com/NVIDIA/cuml/pull/3942)) [@trivialfis](https://github.com/trivialfis)
 - Revert #3869 ([#3933](https://github.com/NVIDIA/cuml/pull/3933)) [@hcho3](https://github.com/hcho3)
@@ -2550,18 +2552,18 @@
 - Fix MNMG test test_rf_regression_dask_fil ([#3830](https://github.com/NVIDIA/cuml/pull/3830)) [@hcho3](https://github.com/hcho3)
 - AgglomerativeClustering support single cluster and ignore only zero distances from self-loops ([#3824](https://github.com/NVIDIA/cuml/pull/3824)) [@cjnolet](https://github.com/cjnolet)
 
-## 📖 Documentation
+### 📖 Documentation
 
 - Small doc fixes for 21.06 release ([#3936](https://github.com/NVIDIA/cuml/pull/3936)) [@dantegd](https://github.com/dantegd)
 - Document ability to export cuML RF to predict on other machines ([#3890](https://github.com/NVIDIA/cuml/pull/3890)) [@hcho3](https://github.com/hcho3)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - Deterministic UMAP with floating point rounding. ([#3848](https://github.com/NVIDIA/cuml/pull/3848)) [@trivialfis](https://github.com/trivialfis)
 - HDBSCAN ([#3821](https://github.com/NVIDIA/cuml/pull/3821)) [@cjnolet](https://github.com/cjnolet)
 - Add feature to print forest shape in FIL upon importing ([#3763](https://github.com/NVIDIA/cuml/pull/3763)) [@levsnv](https://github.com/levsnv)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Pin dask ot 2021.5.1 for 21.06 release ([#3937](https://github.com/NVIDIA/cuml/pull/3937)) [@dantegd](https://github.com/dantegd)
 - Upgrade xgboost to 1.4.2 ([#3925](https://github.com/NVIDIA/cuml/pull/3925)) [@dantegd](https://github.com/dantegd)
@@ -2586,9 +2588,9 @@
 - ColumnTransformer &amp; FunctionTransformer ([#3745](https://github.com/NVIDIA/cuml/pull/3745)) [@viclafargue](https://github.com/viclafargue)
 - Remove &#39;seed&#39; and &#39;output_type&#39; deprecated features ([#3739](https://github.com/NVIDIA/cuml/pull/3739)) [@lowener](https://github.com/lowener)
 
-# cuML 0.19.0 (21 Apr 2021)
+## cuML 0.19.0 (21 Apr 2021)
 
-## 🚨 Breaking Changes
+### 🚨 Breaking Changes
 
 - Use the new RF backend by default for classification ([#3686](https://github.com/NVIDIA/cuml/pull/3686)) [@hcho3](https://github.com/hcho3)
 - Deprecating quantile-per-tree and removing three previously deprecated Random Forest parameters ([#3667](https://github.com/NVIDIA/cuml/pull/3667)) [@vinaydes](https://github.com/vinaydes)
@@ -2596,7 +2598,7 @@
 - Upgrade FAISS to 1.7.x ([#3509](https://github.com/NVIDIA/cuml/pull/3509)) [@viclafargue](https://github.com/viclafargue)
 - cuML&#39;s estimator Base class for preprocessing models ([#3270](https://github.com/NVIDIA/cuml/pull/3270)) [@viclafargue](https://github.com/viclafargue)
 
-## 🐛 Bug Fixes
+### 🐛 Bug Fixes
 
 - Fix brute force KNN distance metric issue ([#3755](https://github.com/NVIDIA/cuml/pull/3755)) [@viclafargue](https://github.com/viclafargue)
 - Fix min_max_axis ([#3735](https://github.com/NVIDIA/cuml/pull/3735)) [@viclafargue](https://github.com/viclafargue)
@@ -2628,7 +2630,7 @@
 - Ensure global_output_type is thread-safe ([#3497](https://github.com/NVIDIA/cuml/pull/3497)) [@wphicks](https://github.com/wphicks)
 - List as input for SimpleImputer ([#3489](https://github.com/NVIDIA/cuml/pull/3489)) [@viclafargue](https://github.com/viclafargue)
 
-## 📖 Documentation
+### 📖 Documentation
 
 - Add sparse docstring comments ([#3712](https://github.com/NVIDIA/cuml/pull/3712)) [@JohnZed](https://github.com/JohnZed)
 - FIL and Dask demo ([#3698](https://github.com/NVIDIA/cuml/pull/3698)) [@miroenev](https://github.com/miroenev)
@@ -2642,7 +2644,7 @@
 - Update One-Hot Encoder doc ([#3600](https://github.com/NVIDIA/cuml/pull/3600)) [@lowener](https://github.com/lowener)
 - Fix documentation of KMeans ([#3595](https://github.com/NVIDIA/cuml/pull/3595)) [@lowener](https://github.com/lowener)
 
-## 🚀 New Features
+### 🚀 New Features
 
 - Reduce the size of the cuml libraries ([#3702](https://github.com/NVIDIA/cuml/pull/3702)) [@robertmaynard](https://github.com/robertmaynard)
 - Use ninja as default CMake generator ([#3664](https://github.com/NVIDIA/cuml/pull/3664)) [@wphicks](https://github.com/wphicks)
@@ -2659,7 +2661,7 @@
 - Adding CodeCov Info for Dask Tests ([#3338](https://github.com/NVIDIA/cuml/pull/3338)) [@mdemoret-nv](https://github.com/mdemoret-nv)
 - Add predict_proba() to XGBoost-style models in FIL C++ ([#2894](https://github.com/NVIDIA/cuml/pull/2894)) [@levsnv](https://github.com/levsnv)
 
-## 🛠️ Improvements
+### 🛠️ Improvements
 
 - Updating docs, readme, and umap param tests for 0.19 ([#3731](https://github.com/NVIDIA/cuml/pull/3731)) [@cjnolet](https://github.com/cjnolet)
 - Locking RAFT hash for 0.19 ([#3721](https://github.com/NVIDIA/cuml/pull/3721)) [@cjnolet](https://github.com/cjnolet)
@@ -2707,9 +2709,9 @@
 - Make `_get_tags` a class/static method ([#3257](https://github.com/NVIDIA/cuml/pull/3257)) [@dantegd](https://github.com/dantegd)
 - NVTX Markers for RF and RF-backend ([#3014](https://github.com/NVIDIA/cuml/pull/3014)) [@venkywonka](https://github.com/venkywonka)
 
-# cuML 0.18.0 (24 Feb 2021)
+## cuML 0.18.0 (24 Feb 2021)
 
-## Breaking Changes 🚨
+### Breaking Changes 🚨
 
 - cuml.experimental SHAP improvements (#3433) @dantegd
 - Enable feature sampling for the experimental backend of Random Forest (#3364) @vinaydes
@@ -2722,7 +2724,7 @@
 - Return confusion matrix as int unless float weights are used (#3275) @lowener
 - Approximate Nearest Neighbors (#2780) @viclafargue
 
-## Bug Fixes 🐛
+### Bug Fixes 🐛
 
 - HOTFIX Add ucx-proc package back that got lost during an auto merge conflict (#3551) @dantegd
 - Non project-flash CI ml test 18.04 issue debugging and bugfixing (#3495) @dantegd
@@ -2763,7 +2765,7 @@
 - Remove static specifier in DecisionTree unit test for C++14 compliance (#3281) @wphicks
 - Correct pure virtual declaration in manifold_inputs_t (#3279) @wphicks
 
-## Documentation 📖
+### Documentation 📖
 
 - Correct import path in docs for experimental preprocessing features (#3488) @wphicks
 - Minor doc updates for 0.18 (#3475) @JohnZed
@@ -2772,7 +2774,7 @@
 - Remove outdated references to changelog in CONTRIBUTING.md (#3328) @wphicks
 - Adding highlighting to bibtex in readme (#3296) @cjnolet
 
-## New Features 🚀
+### New Features 🚀
 
 - Improve runtime performance of RF to Treelite conversion (#3410) @wphicks
 - Parallelize Treelite to FIL conversion over trees (#3396) @wphicks
@@ -2794,7 +2796,7 @@
 - Approximate Nearest Neighbors (#2780) @viclafargue
 - Add KNN parameter to t-SNE (#2592) @aleksficek
 
-## Improvements 🛠️
+### Improvements 🛠️
 
 - Update stale GHA with exemptions &amp; new labels (#3507) @mike-wendt
 - Add GHA to mark issues/prs as stale/rotten (#3500) @Ethyling
@@ -2818,9 +2820,9 @@
 - Linear models predict function consolidation (#3256) @dantegd
 - Preparing sparse primitives for movement to RAFT (#3157) @cjnolet
 
-# cuML 0.17.0 (10 Dec 2020)
+## cuML 0.17.0 (10 Dec 2020)
 
-## New Features
+### New Features
 - PR #3164: Expose silhouette score in Python
 - PR #3160: Least Angle Regression (experimental)
 - PR #2659: Add initial max inner product sparse knn
@@ -2829,7 +2831,7 @@
 - PR #2894: predict_proba in FIL C++ for XGBoost-style multi-class models
 - PR #3126: Experimental versions of GPU accelerated Kernel and Permutation SHAP
 
-## Improvements
+### Improvements
 - PR #3077: Improve runtime for test_kmeans
 - PR #3070: Speed up dask/test_datasets tests
 - PR #3075: Speed up test_linear_model tests
@@ -2877,7 +2879,7 @@
 - PR #3240: Minor doc updates
 - PR #3275: Return confusion matrix as int unless float weights are used
 
-## Bug Fixes
+### Bug Fixes
 - PR #3218: Specify dependency branches in conda dev environment to avoid pip resolver issue
 - PR #3196: Disable ascending=false path for sortColumnsPerRow
 - PR #3051: MNMG KNN Cl&Re fix + multiple improvements
@@ -2928,9 +2930,9 @@
 - PR #3245: Rename `rows_sample` -> `max_samples` to be consistent with sklearn's RF
 - PR #3282: Add secondary test to kernel explainer pytests for stability in Volta
 
-# cuML 0.16.0 (23 Oct 2020)
+## cuML 0.16.0 (23 Oct 2020)
 
-## New Features
+### New Features
 - PR #2922: Install RAFT headers with cuML
 - PR #2909: Update allgatherv for compatibility with latest RAFT
 - PR #2677: Ability to export RF trees as JSON
@@ -2944,7 +2946,7 @@
 - PR #2881: Introduces experimental batched backend for random forest
 - PR #2916: Add SKLearn multi-class GBDT model support in FIL
 
-## Improvements
+### Improvements
 - PR #2947: Add more warnings for accuracy degradation with 64-bit models
 - PR #2873: Remove empty marker kernel code for NVTX markers
 - PR #2796: Remove tokens of length 1 by default for text vectorizers
@@ -2987,7 +2989,7 @@
 - PR #3010: Improve gpuCI Scripts
 - PR #3141: Move DistanceType enum to RAFT
 
-## Bug Fixes
+### Bug Fixes
 - PR #2973: Allow data imputation for nan values
 - PR #2982: Adjust kneighbors classifier test threshold to avoid intermittent failure
 - PR #2885: Changing test target for NVTX wrapper test
@@ -3032,9 +3034,9 @@
 - PR #2990: Reduce MNMG kneighbors regressor test threshold
 - PR #2997: Changing ARIMA `get/set_params` to `get/set_fit_params`
 
-# cuML 0.15.0 (26 Aug 2020)
+## cuML 0.15.0 (26 Aug 2020)
 
-## New Features
+### New Features
 - PR #2581: Added model persistence via joblib in each section of estimator_intro.ipynb
 - PR #2554: Hashing Vectorizer and general vectorizer improvements
 - PR #2240: Making Dask models pickleable
@@ -3065,7 +3067,7 @@
 - PR #2675: Update conda recipes to support CUDA 11
 - PR #2645: Add experimental, sklearn-based preprocessing
 
-## Improvements
+### Improvements
 - PR #2336: Eliminate `rmm.device_array` usage
 - PR #2262: Using fully shared PartDescriptor in MNMG decomposiition, linear models, and solvers
 - PR #2310: Pinning ucx-py to 0.14 to make 0.15 CI pass
@@ -3138,7 +3140,7 @@
 - PR #2721: Update API docs
 - PR #2730: Unpin cumlprims in conda recipes for release
 
-## Bug Fixes
+### Bug Fixes
 - PR #2369: Update RF code to fix set_params memory leak
 - PR #2364: Fix for random projection
 - PR #2373: Use Treelite Pip package in GPU testing
@@ -3209,9 +3211,9 @@
 - PR #2720: Updates to outdated links
 - PR #2722: Getting cuML covariance test passing w/ Cupy 7.8 & CUDA 11
 
-# cuML 0.14.0 (03 Jun 2020)
+## cuML 0.14.0 (03 Jun 2020)
 
-## New Features
+### New Features
 - PR #1994: Support for distributed OneHotEncoder
 - PR #1892: One hot encoder implementation with cupy
 - PR #1655: Adds python bindings for homogeneity score
@@ -3232,7 +3234,7 @@
 - PR #2551: Add cuML RF multiclass prediction using FIL from python
 - PR #1728: Added notebook testing to gpuCI gpu build
 
-## Improvements
+### Improvements
 - PR #1931: C++: enabled doxygen docs for all of the C++ codebase
 - PR #1944: Support for dask_cudf.core.Series in _extract_partitions
 - PR #1947: Cleaning up cmake
@@ -3328,7 +3330,7 @@
 - PR #2324: Raise an error if n_bins > number of training samples in RF
 - PR #2335: Throw a warning if treelite cannot be imported and `load_from_sklearn` is used
 
-## Bug Fixes
+### Bug Fixes
 - PR #1939: Fix syntax error in cuml.common.array
 - PR #1941: Remove c++ cuda flag that was getting duplicated in CMake
 - PR #1971: python: Correctly honor --singlegpu option and CUML_BUILD_PATH env variable
@@ -3384,9 +3386,9 @@
 - PR #2619: Explicitly skip raft test folder for pytest 6.0.0
 - PR #2788: Set the minimum number of columns that can be sampled to 1 to fix 0 mem allocation error
 
-# cuML 0.13.0 (31 Mar 2020)
+## cuML 0.13.0 (31 Mar 2020)
 
-## New Features
+### New Features
 - PR #1777: Python bindings for entropy
 - PR #1742: Mean squared error implementation with cupy
 - PR #1817: Confusion matrix implementation with cupy (SNSG and MNMG)
@@ -3408,7 +3410,7 @@
 - PR #1815: Adding KNN parameter to UMAP
 - PR #1978: Adding `predict_proba` function to dask RF
 
-## Improvements
+### Improvements
 - PR #1644: Add `predict_proba()` for FIL binary classifier
 - PR #1620: Pickling tests now automatically finds all model classes inheriting from cuml.Base
 - PR #1637: Update to newer treelite version with XGBoost 1.0 compatibility
@@ -3448,7 +3450,7 @@
 - PR #1873: Remove usage of nvstring and nvcat from LabelEncoder
 - PR #1891: Additional improvements to naive bayes tree reduction
 
-## Bug Fixes
+### Bug Fixes
 - PR #1835 : Fix calling default RF Classification always
 - PT #1904: replace cub sort
 - PR #1833: Fix depth issue in shallow RF regression estimators
@@ -3503,9 +3505,9 @@
 - PR #1950: Fix UMAP test failure
 
 
-# cuML 0.12.0 (04 Feb 2020)
+## cuML 0.12.0 (04 Feb 2020)
 
-## New Features
+### New Features
 - PR #1483: prims: Fused L2 distance and nearest-neighbor prim
 - PR #1494: bench: ml-prims benchmark
 - PR #1514: bench: Fused L2 NN prim benchmark
@@ -3513,7 +3515,7 @@
 - PR #1520: Cython side of MNMG Ridge Regression
 - PR #1516: Suppor Vector Regression (epsilon-SVR)
 
-## Improvements
+### Improvements
 - PR #1638: Update cuml/docs/README.md
 - PR #1468: C++: updates to clang format flow to make it more usable among devs
 - PR #1473: C++: lazy initialization of "costly" resources inside cumlHandle
@@ -3541,7 +3543,7 @@
 - PR #1583: API docs updates for 0.12
 - PR #1591: Updated FIL documentation
 
-## Bug Fixes
+### Bug Fixes
 - PR #1470: Documentation: add make_regression, fix ARIMA section
 - PR #1482: Updated the code to remove sklearn from the mbsgd stress test
 - PR #1491: Update dev environments for 0.12
@@ -3560,9 +3562,9 @@
 - PR #1589: Fixing the default value for RF and updating mnmg predict to accept cudf
 - PR #1601: Fixed wrong datatype used in knn voting kernel
 
-# cuML 0.11.0 (11 Dec 2019)
+## cuML 0.11.0 (11 Dec 2019)
 
-## New Features
+### New Features
 
 - PR #1295: Cython side of MNMG PCA
 - PR #1218: prims: histogram prim
@@ -3581,7 +3583,7 @@
 - PR #1371: Cython side of MNMG tSVD
 - PR #1386: Expose SVC decision function value
 
-## Improvements
+### Improvements
 - PR #1170: Use git to clone subprojects instead of git submodules
 - PR #1239: Updated the treelite version
 - PR #1225: setup.py clone dependencies like cmake and correct include paths
@@ -3623,7 +3625,7 @@
 - PR #1439: Match sklearn 0.22 default n_estimators for RF and fix test errors
 - PR #1461: Add kneighbors to API docs
 
-## Bug Fixes
+### Bug Fixes
 - PR #1281: Making rng.h threadsafe
 - PR #1212: Fix cmake git cloning always running configure in subprojects
 - PR #1261: Fix comms build errors due to cuml++ include folder changes
@@ -3653,9 +3655,9 @@
 - PR #1458: Add joblib as an explicit requirement
 - PR #1474: Defer knn mnmg to 0.12 nightly builds and disable ucx-py dependency
 
-# cuML 0.10.0 (16 Oct 2019)
+## cuML 0.10.0 (16 Oct 2019)
 
-## New Features
+### New Features
 - PR #1148: C++ benchmark tool for c++/CUDA code inside cuML
 - PR #1071: Selective eigen solver of cuSolver
 - PR #1073: Updating RF wrappers to use FIL for GPU accelerated prediction
@@ -3668,7 +3670,7 @@
 - PR #912: Support Vector Machine
 - PR #1274: Updated the RF score function to use GPU predict
 
-## Improvements
+### Improvements
 - PR #961: High Peformance RF; HIST algo
 - PR #1028: Dockerfile updates after dir restructure. Conda env yaml to add statsmodels as a dependency
 - PR #1047: Consistent OPG interface for kmeans, based on internal libcumlprims update
@@ -3692,7 +3694,7 @@
 - PR #1219: Adding custom bench_func and verbose logging to cuml.benchmark
 - PR #1247: Improved MNMG RF error checking
 
-## Bug Fixes
+### Bug Fixes
 
 - PR #1231: RF respect number of cuda streams from cuml handle
 - PR #1230: Rf bugfix memleak in regression
@@ -3725,9 +3727,9 @@
 - PR #1260: Small bugfix for major conversion in input_utils
 - PR #1276: Fix float64 prediction crash in test_random_forest
 
-# cuML 0.9.0 (21 Aug 2019)
+## cuML 0.9.0 (21 Aug 2019)
 
-## New Features
+### New Features
 
 - PR #894: Convert RF to treelite format
 - PR #826: Jones transformation of params for ARIMA models timeSeries ml-prim
@@ -3761,7 +3763,7 @@
 - PR #994: Adding MPI comm impl for testing / benchmarking MNMG CUDA
 - PR #960: Enable using libcumlprims for MG algorithms/prims
 
-## Improvements
+### Improvements
 - PR #822: build: build.sh update to club all make targets together
 - PR #807: Added development conda yml files
 - PR #840: Require cmake >= 3.14
@@ -3787,7 +3789,7 @@
 - PR #1015: Ability to control the number of internal streams in cumlHandle_impl via cumlHandle
 - PR #1175: Add more modules to docs ToC
 
-## Bug Fixes
+### Bug Fixes
 
 - PR #923: Fix misshapen level/trend/season HoltWinters output
 - PR #831: Update conda package dependencies to cudf 0.9
@@ -3813,9 +3815,9 @@
 - PR #1034: Fix typos and formatting issues in RF docs
 - PR #1052: Fix the rows_sample dtype to float
 
-# cuML 0.8.0 (27 June 2019)
+## cuML 0.8.0 (27 June 2019)
 
-## New Features
+### New Features
 
 - PR #652: Adjusted Rand Index metric ml-prim
 - PR #679: Class label manipulation ml-prim
@@ -3834,7 +3836,7 @@
 - PR #673: prims: reduce cols by key primitive
 - PR #812: Add cuML Communications API & consolidate Dask cuML
 
-## Improvements
+### Improvements
 
 - PR #597: C++ cuML and ml-prims folder refactor
 - PR #590: QN Recover from numeric errors
@@ -3869,7 +3871,7 @@
 - PR #746: LogisticRegression and QN API docstrings
 - PR #820: Updating DEVELOPER GUIDE threading guidelines
 
-## Bug Fixes
+### Bug Fixes
 - PR #584: Added missing virtual destructor to deviceAllocator and hostAllocator
 - PR #620: C++: Removed old unit-test files in ml-prims
 - PR #627: C++: Fixed dbscan crash issue filed in 613
@@ -3898,9 +3900,9 @@
 - PR #806: Add a seed for sklearn model in RF test file
 - PR #843: Rf quantile fix
 
-# cuML 0.7.0 (10 May 2019)
+## cuML 0.7.0 (10 May 2019)
 
-## New Features
+### New Features
 
 - PR #405: Quasi-Newton GLM Solvers
 - PR #277: Add row- and column-wise weighted mean primitive
@@ -3921,7 +3923,7 @@
 - PR #525: Add docs build script to cuML
 - PR #528: Remove current KMeans and replace it with a new single GPU implementation built using ML primitives
 
-## Improvements
+### Improvements
 
 - PR #481: Refactoring Quasi-Newton to use cumlHandle
 - PR #467: Added validity check on cumlHandle_t
@@ -3948,7 +3950,7 @@
 - PR #592: More efficient matrix copy/reverse methods
 - PR #721: Added pickle tests for DBSCAN and Random Projections
 
-## Bug Fixes
+### Bug Fixes
 
 - PR #334: Fixed segfault in `ML::cumlHandle_impl::destroyResources`
 - PR #349: Developer guide clarifications for cumlHandle and cumlHandle_impl
@@ -3987,16 +3989,16 @@
 - PR #594: fixed cuda-memcheck mean_center test failures
 
 
-# cuML 0.6.1 (09 Apr 2019)
+## cuML 0.6.1 (09 Apr 2019)
 
-## Bug Fixes
+### Bug Fixes
 
 - PR #462 Runtime library path fix for cuML pip package
 
 
-# cuML 0.6.0 (22 Mar 2019)
+## cuML 0.6.0 (22 Mar 2019)
 
-## New Features
+### New Features
 
 - PR #249: Single GPU Stochastic Gradient Descent for linear regression, logistic regression, and linear svm with L1, L2, and elastic-net penalties.
 - PR #247: Added "proper" CUDA API to cuML
@@ -4007,7 +4009,7 @@
 - PR #325: Initial support for single process multi-GPU OLS and tSVD
 - PR #271: Initial support for hyperparameter optimization with dask for many models
 
-## Improvements
+### Improvements
 
 - PR #144: Dockerfile update and docs for LinearRegression and Kalman Filter.
 - PR #168: Add /ci/gpu/build.sh file to cuML
@@ -4043,7 +4045,7 @@
 - PR #572: Pulling DBSCAN components into reusable primitives
 
 
-## Bug Fixes
+### Bug Fixes
 
 - PR #193: Fix AttributeError in PCA and TSVD
 - PR #211: Fixing inconsistent use of proper batch size calculation in DBSCAN
@@ -4066,16 +4068,16 @@
 - PR #385: Fix for long import cuml time in containers and fix for setup_pip
 - PR #630: Fixing a missing kneighbors in nearest neighbors python proxy
 
-# cuML 0.5.1 (05 Feb 2019)
+## cuML 0.5.1 (05 Feb 2019)
 
-## Bug Fixes
+### Bug Fixes
 
 - PR #189 Avoid using numpy via cimport to prevent ABI issues in Cython compilation
 
 
-# cuML 0.5.0 (28 Jan 2019)
+## cuML 0.5.0 (28 Jan 2019)
 
-## New Features
+### New Features
 
 - PR #66: OLS Linear Regression
 - PR #44: Distance calculation ML primitives
@@ -4084,7 +4086,7 @@
 - PR #117: Pip install support
 - PR #64: Device to device support from cuML device pointers into FAISS
 
-## Improvements
+### Improvements
 
 - PR #56: Make OpenMP optional for building
 - PR #67: Github issue templates
@@ -4098,7 +4100,7 @@
 - PR #164: Add numba kernel for faster column to row major transform
 - PR #114: Adding FAISS to cuml build
 
-## Bug Fixes
+### Bug Fixes
 
 - PR #48: CUDA 10 compilation warnings fix
 - PR #51: Fixes to Dockerfile and docs for new build system
@@ -4110,25 +4112,25 @@
 - PR #125: Remove randomized solver option from PCA python bindings
 
 
-# cuML 0.4.0 (05 Dec 2018)
+## cuML 0.4.0 (05 Dec 2018)
 
-## New Features
+### New Features
 
-## Improvements
+### Improvements
 
 - PR #42: New build system: separation of libcuml.so and cuml python package
 - PR #43: Added changelog.md
 
-## Bug Fixes
+### Bug Fixes
 
 
-# cuML 0.3.0 (30 Nov 2018)
+## cuML 0.3.0 (30 Nov 2018)
 
-## New Features
+### New Features
 
 - PR #33: Added ability to call cuML algorithms using numpy arrays
 
-## Improvements
+### Improvements
 
 - PR #24: Fix references of python package from cuML to cuml and start using versioneer for better versioning
 - PR #40: Added support for refactored cuDF 0.3.0, updated Conda files
@@ -4136,7 +4138,7 @@
 - PR #34: Updated batch count calculation logic in DBSCAN
 - PR #35: Beginning of DBSCAN refactor to use cuML mlprims and general improvements
 
-## Bug Fixes
+### Bug Fixes
 
 - PR #30: Fixed batch size bug in DBSCAN that caused crash. Also fixed various locations for potential integer overflows
 - PR #28: Fix readthedocs build documentation
@@ -4146,26 +4148,26 @@
 - PR #38: cuda\_free bug removed that caused google tests to sometimes pass and sometimes fail randomly
 - PR #39: Updated cmake to correctly link with CUDA libraries, add CUDA runtime linking and include source files in compile target
 
-# cuML 0.2.0 (02 Nov 2018)
+## cuML 0.2.0 (02 Nov 2018)
 
-## New Features
+### New Features
 
 - PR #11: Kmeans algorithm added
 - PR #7: FAISS KNN wrapper added
 - PR #21: Added Conda install support
 
-## Improvements
+### Improvements
 
 - PR #15: Added compatibility with cuDF (from prior pyGDF)
 - PR #13: Added FAISS to Dockerfile
 - PR #21: Added TravisCI build system for CI and Conda builds
 
-## Bug Fixes
+### Bug Fixes
 
 - PR #4: Fixed explained variance bug in TSVD
 - PR #5: Notebook bug fixes and updated results
 
 
-# cuML 0.1.0
+## cuML 0.1.0
 
 Initial release including PCA, TSVD, DBSCAN, ml-prims and cython wrappers
