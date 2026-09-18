@@ -390,119 +390,51 @@
 
 **Full Changelog**: https://github.com/NVIDIA/cuml/compare/v26.04.00a...release/26.04
 
-## cuml 26.02.00 (4 Feb 2026)
+## cuML 26.02.00 (4 Feb 2026)
 
-### 🚨 Breaking Changes
-* Simplify type reflection implementation by @jcrist in https://github.com/NVIDIA/cuml/pull/7539
-* Deprecate `TotalIters` for SVC/SVR by @jcrist in https://github.com/NVIDIA/cuml/pull/7612
-* Deprecate handle from public APIs by @jcrist in https://github.com/NVIDIA/cuml/pull/7628
-* Don't coerce `output_type=None` to global `output_type` in `__init__` by @jcrist in https://github.com/NVIDIA/cuml/pull/7649
-* Remove unused QR decomposition MG code by @JohnZed in https://github.com/NVIDIA/cuml/pull/7687
-* Use train_test_split from scikit-learn by @betatim in https://github.com/NVIDIA/cuml/pull/7667
-### 🐛 Bug Fixes
-* Don't link to cumlprims_mg when MG is turned off by @robertmaynard in https://github.com/NVIDIA/cuml/pull/7583
-* UMAP fix int32 overflow causing illegal mem access by @aamijar in https://github.com/NVIDIA/cuml/pull/7587
-* Explicitly initialize uninitialized SvmParameter fields in SVC constructor by @dantegd in https://github.com/NVIDIA/cuml/pull/7604
-* Use a generated dataset in place of the actual Covertype dataset. by @csadorf in https://github.com/NVIDIA/cuml/pull/7634
-* Remove reliance on remote datasets in tests by @csadorf in https://github.com/NVIDIA/cuml/pull/7637
-* Use synthetic dataset in BERTopic wheel integration tests. by @csadorf in https://github.com/NVIDIA/cuml/pull/7644
-* Refactor pointer comparison in check_ptr function for input validation by @csadorf in https://github.com/NVIDIA/cuml/pull/7636
-* Add XGBoost back to tests by @dantegd in https://github.com/NVIDIA/cuml/pull/7653
-* xfail check_estimators spectral embedding tests by @aamijar in https://github.com/NVIDIA/cuml/pull/7677
-* Update RMM memory resource APIs to use ref-based equivalents by @bdice in https://github.com/NVIDIA/cuml/pull/7668
-* Xfail test 'test_tsne_distance_metrics_on_sparse_input' by @csadorf in https://github.com/NVIDIA/cuml/pull/7681
-* Use NCCL for Dask kNN and DBSCAN by @viclafargue in https://github.com/NVIDIA/cuml/pull/7574
-* Mark some SpectralEmbedding() common test_estimators tests as flaky. by @csadorf in https://github.com/NVIDIA/cuml/pull/7686
-* Handle new sklearn LARS error message in test_typeerror_input by @csadorf in https://github.com/NVIDIA/cuml/pull/7694
-* Build.sh now support custom LIBCUML_BUILD_DIR value by @robertmaynard in https://github.com/NVIDIA/cuml/pull/7582
-* Fix UMAP outliers when `random_state` is given by @jinsolp in https://github.com/NVIDIA/cuml/pull/7597
-* Work-around sentence-transformer regression in BERTopic integration tests and do not fail test runs on integration tests by @csadorf in https://github.com/NVIDIA/cuml/pull/7715
-* classlabels utils refactor by @viclafargue in https://github.com/NVIDIA/cuml/pull/7691
-### 📖 Documentation
-* DOC Rework LinearRegression documentation by @virchan in https://github.com/NVIDIA/cuml/pull/7218
-* `k-means++` documented as a init option by @aamijar in https://github.com/NVIDIA/cuml/pull/7615
-* Add general XGBoost demo notebook by @dantegd in https://github.com/NVIDIA/cuml/pull/7601
-* Add security warnings to model serialization/deserialization notebook. by @csadorf in https://github.com/NVIDIA/cuml/pull/7661
-### 🚀 New Features
-* Use CCCL's mdspan implementation by @divyegala in https://github.com/NVIDIA/cuml/pull/7555
-* `TargetEncoder` in cuml.accel by @aamijar in https://github.com/NVIDIA/cuml/pull/7476
-### 🛠️ Improvements
-* Forward merge `release/25.12` into `main` by @jcrist in https://github.com/NVIDIA/cuml/pull/7519
-* Use strict priority in CI conda tests by @bdice in https://github.com/NVIDIA/cuml/pull/7524
-* CI: Do not automatically update the release field of linked issues. by @csadorf in https://github.com/NVIDIA/cuml/pull/7521
-* Remove verbose descriptor by @jcrist in https://github.com/NVIDIA/cuml/pull/7527
-* Forward merge release/25.12 into main by @jcrist in https://github.com/NVIDIA/cuml/pull/7531
-* CI: Improve PR target release automation by @csadorf in https://github.com/NVIDIA/cuml/pull/7511
-* CI: Add or adjust job-specific timeouts for GHA test jobs by @csadorf in https://github.com/NVIDIA/cuml/pull/7533
-* Forward-merge release/25.12 into main by @csadorf in https://github.com/NVIDIA/cuml/pull/7537
-* CI: Fail PR auto assignment gracefully. by @csadorf in https://github.com/NVIDIA/cuml/pull/7558
-* Use strict priority in CI conda tests by @bdice in https://github.com/NVIDIA/cuml/pull/7559
-* Adjust CI timeouts by @jcrist in https://github.com/NVIDIA/cuml/pull/7563
-* use CUDA-suffixed XGBoost wheels by @jameslamb in https://github.com/NVIDIA/cuml/pull/7550
-* MNT: Remove unused legacy spectral.cu by @mani-builds in https://github.com/NVIDIA/cuml/pull/7556
-* Remove alpha specs from non-RAPIDS dependencies by @bdice in https://github.com/NVIDIA/cuml/pull/7568
-* Enable merge barriers by @KyleFromNVIDIA in https://github.com/NVIDIA/cuml/pull/7579
-* Update to numba-cuda `>=0.22.1,<0.23.0` by @brandon-b-miller in https://github.com/NVIDIA/cuml/pull/7549
-* Forward merge `release/25.12` into `main` by @jcrist in https://github.com/NVIDIA/cuml/pull/7592
-* Add devcontainer fallback for C++ test location by @bdice in https://github.com/NVIDIA/cuml/pull/7596
-* Add lower bound to dask-ml>=2024 by @bdice in https://github.com/NVIDIA/cuml/pull/7600
-* Forward `cuml.accel` logging to subprocesses by @jcrist in https://github.com/NVIDIA/cuml/pull/7602
-* Improved condense hierarchy of HDBSCAN by @jinsolp in https://github.com/NVIDIA/cuml/pull/7459
-* Isolating `test_umap_outliers` from precomputed kNN issues by @jinsolp in https://github.com/NVIDIA/cuml/pull/7594
-* Fix scikit-learn 1.8 test incompatibilities by @csadorf in https://github.com/NVIDIA/cuml/pull/7589
-* Prepare cuml for removal of deprecated raft apis by @aamijar in https://github.com/NVIDIA/cuml/pull/7561
-* Require scipy>=1.13.0. by @csadorf in https://github.com/NVIDIA/cuml/pull/7605
-* Remove deprecations for 26.02 by @jcrist in https://github.com/NVIDIA/cuml/pull/7613
-* Remove deprecated `normalize` parameter by @jcrist in https://github.com/NVIDIA/cuml/pull/7611
-* Update cuML to C++20 by @divyegala in https://github.com/NVIDIA/cuml/pull/7619
-* Avoid deprecated conversion of numpy array->scalar by @jcrist in https://github.com/NVIDIA/cuml/pull/7618
-* Updating UMAP random_state doc by @viclafargue in https://github.com/NVIDIA/cuml/pull/7590
-* Add warning in UMAP for nondeterministic behavior when `build_algo=nn_descent` by @jinsolp in https://github.com/NVIDIA/cuml/pull/7620
-* FIX Remove custom CUDA kernels from naive bayes estimators by @betatim in https://github.com/NVIDIA/cuml/pull/7424
-* Bypass data allocation to GPU given precomputed knn in UMAP by @jinsolp in https://github.com/NVIDIA/cuml/pull/7566
-* Attempt to find `cmake-format-rapids-cmake.json` in `cpp/latest` by @divyegala in https://github.com/NVIDIA/cuml/pull/7626
-* Optional seed spectral embedding by @aamijar in https://github.com/NVIDIA/cuml/pull/7608
-* Cleanup naive bayes by @jcrist in https://github.com/NVIDIA/cuml/pull/7623
-* Don't fail on `cuda.core.experimental` deprecation warnings by @jcrist in https://github.com/NVIDIA/cuml/pull/7629
-* Empty commit to trigger a build by @bdice in https://github.com/NVIDIA/cuml/pull/7630
-* Move cumlprims_mg into cuML by @dantegd in https://github.com/NVIDIA/cuml/pull/7585
-* CI Make nightly cuml.accel integration test stricter by @betatim in https://github.com/NVIDIA/cuml/pull/7631
-* Use SPDX license identifiers in pyproject.toml, bump build dependency floors by @jameslamb in https://github.com/NVIDIA/cuml/pull/7641
-* Require scikit-learn>=1.5 by @csadorf in https://github.com/NVIDIA/cuml/pull/7606
-* remove unused test dependency 'tenacity' by @jameslamb in https://github.com/NVIDIA/cuml/pull/7645
-* Add CUDA 13.1 support by @bdice in https://github.com/NVIDIA/cuml/pull/7610
-* Remove cumlprims from clang-format by @bdice in https://github.com/NVIDIA/cuml/pull/7647
-* Use cuvs spectral clustering dataset api by @aamijar in https://github.com/NVIDIA/cuml/pull/7625
-* CI: Add notebook tests to nightly tests by @csadorf in https://github.com/NVIDIA/cuml/pull/7567
-* Address sklearn deprecation warnings by @csadorf in https://github.com/NVIDIA/cuml/pull/7371
-* Remove cutlass reference in unused header by @divyegala in https://github.com/NVIDIA/cuml/pull/7655
-* Add LedoitWolf covariance estimator by @will-hill in https://github.com/NVIDIA/cuml/pull/7548
-* Update input_utils CI tests to account for cuDF update by @viclafargue in https://github.com/NVIDIA/cuml/pull/7660
-* build and test against CUDA 13.1.0 by @jameslamb in https://github.com/NVIDIA/cuml/pull/7650
-* Empty commit to trigger a build by @jameslamb in https://github.com/NVIDIA/cuml/pull/7666
-* Use main shared-workflows branch by @jameslamb in https://github.com/NVIDIA/cuml/pull/7682
-* Use saga solver in test_logistic_regression test function. by @csadorf in https://github.com/NVIDIA/cuml/pull/7670
-* Mirror input mem type for `nn_descent` algo in HDBSCAN by @jinsolp in https://github.com/NVIDIA/cuml/pull/7614
-* Avoid installing CCCL headers in wheels by @divyegala in https://github.com/NVIDIA/cuml/pull/7662
-* CI Add a nightly job that uses scikit-learn's nightlies by @betatim in https://github.com/NVIDIA/cuml/pull/7621
-* UMAP with `int64_t` spectral initialization by @aamijar in https://github.com/NVIDIA/cuml/pull/7586
-* UMAP custom init by @viclafargue in https://github.com/NVIDIA/cuml/pull/7651
-* Support older IPython versions for `cuml.accel` magics by @jcrist in https://github.com/NVIDIA/cuml/pull/7675
-* wheel builds: react to changes in pip's handling of build constraints by @mmccarty in https://github.com/NVIDIA/cuml/pull/7693
-* Use all-neighbors brute force in UMAP and deprecate `build_kwds` args to be consistent with HDBSCAN by @jinsolp in https://github.com/NVIDIA/cuml/pull/7698
-* fix(build): build package on merge to `release/*` branch by @gforsyth in https://github.com/NVIDIA/cuml/pull/7719
-* UMAP inverse transform by @viclafargue in https://github.com/NVIDIA/cuml/pull/7674
-* Fallback to numba-cuda with no extra CUDA packages if 'cuda_suffixed' isn't true by @trxcllnt in https://github.com/NVIDIA/cuml/pull/7721
-* Add precomputed kernel support in SVM by @viclafargue in https://github.com/NVIDIA/cuml/pull/7616
-* Document support for and limitations of TargetEncoder in cuml.accel. by @csadorf in https://github.com/NVIDIA/cuml/pull/7741
+### Highlights
 
-### New Contributors
-* @virchan made their first contribution in https://github.com/NVIDIA/cuml/pull/7218
-* @mani-builds made their first contribution in https://github.com/NVIDIA/cuml/pull/7556
-* @will-hill made their first contribution in https://github.com/NVIDIA/cuml/pull/7548
-* @mmccarty made their first contribution in https://github.com/NVIDIA/cuml/pull/7693
+- Adds `LedoitWolf` covariance estimation and `cuml.accel` support for `TargetEncoder`.
+- Adds precomputed-kernel SVMs, UMAP inverse transforms, and custom UMAP initialization.
+- Improves distributed nearest-neighbor communication and graph construction.
+- Removes APIs deprecated for 26.02 and announces migrations for public execution handles and UMAP build options.
 
-**Full Changelog**: https://github.com/NVIDIA/cuml/compare/v26.02.00a...release/26.02
+### Added
+
+- Adds `cuml.covariance.LedoitWolf` for shrinkage covariance estimation. ([#7548](https://github.com/NVIDIA/cuml/pull/7548), [@will-hill](https://github.com/will-hill))
+- Adds `cuml.accel` support for scikit-learn's `TargetEncoder`; unsupported target types and configurations fall back to CPU as documented. ([#7476](https://github.com/NVIDIA/cuml/pull/7476), [#7741](https://github.com/NVIDIA/cuml/pull/7741), [@aamijar](https://github.com/aamijar), [@csadorf](https://github.com/csadorf))
+- Adds precomputed-kernel support to cuML SVM estimators. ([#7616](https://github.com/NVIDIA/cuml/pull/7616), [@viclafargue](https://github.com/viclafargue))
+- Adds `UMAP.inverse_transform` and custom initialization arrays. ([#7651](https://github.com/NVIDIA/cuml/pull/7651), [#7674](https://github.com/NVIDIA/cuml/pull/7674), [@jcrist](https://github.com/jcrist), [@viclafargue](https://github.com/viclafargue))
+- Adds optional seeded initialization to `spectral_embedding` and `SpectralEmbedding`. ([#7608](https://github.com/NVIDIA/cuml/pull/7608), [@aamijar](https://github.com/aamijar))
+
+### Changed
+
+- Dask k-nearest-neighbor and DBSCAN communication now uses NCCL rather than UCX-Py. Distributed deployments no longer need UCX-Py for these paths. ([#7574](https://github.com/NVIDIA/cuml/pull/7574), [@viclafargue](https://github.com/viclafargue))
+- UMAP uses all-neighbors brute force consistently. HDBSCAN's NN-descent path preserves input memory location when `knn_n_clusters=1`; clustered graph construction continues to use host placement. ([#7614](https://github.com/NVIDIA/cuml/pull/7614), [#7698](https://github.com/NVIDIA/cuml/pull/7698), [@jinsolp](https://github.com/jinsolp))
+- **Breaking:** SVC/SVR `max_iter` now limits total solver iterations rather than outer iterations. Pass an integer directly as `max_iter=N`; `n_iter_` reports fitted iteration counts. ([#7612](https://github.com/NVIDIA/cuml/pull/7612), [@jcrist](https://github.com/jcrist))
+- `train_test_split` now follows the scikit-learn signature, and pandas inputs produce pandas outputs rather than cuDF outputs. ([#7667](https://github.com/NVIDIA/cuml/pull/7667), [@betatim](https://github.com/betatim))
+- `output_type=None` now remains estimator-local instead of being replaced at construction time by the current global output type. Output resolution therefore occurs when methods run. ([#7649](https://github.com/NVIDIA/cuml/pull/7649), [@jcrist](https://github.com/jcrist))
+- Raises minimum versions to scikit-learn 1.5, SciPy 1.13, and dask-ml 2024, and requires C++20 to build or consume the C++ library. ([#7600](https://github.com/NVIDIA/cuml/pull/7600), [#7605](https://github.com/NVIDIA/cuml/pull/7605), [#7606](https://github.com/NVIDIA/cuml/pull/7606), [#7619](https://github.com/NVIDIA/cuml/pull/7619), [@bdice](https://github.com/bdice), [@csadorf](https://github.com/csadorf), [@divyegala](https://github.com/divyegala))
+
+### Deprecated
+
+- Deprecates the public `handle` argument for removal in 26.04. Stop passing `handle=`; cuML manages execution contexts internally. ([#7628](https://github.com/NVIDIA/cuml/pull/7628), [@jcrist](https://github.com/jcrist))
+- Deprecates SVC/SVR `TotalIters` for removal in 26.04; pass an integer directly as `max_iter=N`. ([#7612](https://github.com/NVIDIA/cuml/pull/7612), [@jcrist](https://github.com/jcrist))
+- Deprecates UMAP `build_kwds["nnd_n_clusters"]` and `["nnd_overlap_factor"]` for removal in 26.04; rename them to `knn_n_clusters` and `knn_overlap_factor`. ([#7698](https://github.com/NVIDIA/cuml/pull/7698), [@jinsolp](https://github.com/jinsolp))
+- Deprecates `train_test_split` target-column extraction and explicit `y=` for removal in 26.04. Extract the target first, for example `X, y = df.drop("target", axis=1), df["target"]`, then pass `X, y` positionally. ([#7667](https://github.com/NVIDIA/cuml/pull/7667), [@betatim](https://github.com/betatim))
+
+### Removed
+
+- **Breaking:** Removes the deprecated `normalize` parameter from linear models and their C++ solver APIs. Remove `normalize=` and scale features explicitly, for example with `StandardScaler`, when needed. ([#7611](https://github.com/NVIDIA/cuml/pull/7611), [@jcrist](https://github.com/jcrist))
+- **Breaking:** Removes `AgglomerativeClustering.n_neighbors` and support for `metric=None`; use `c=` and `metric="euclidean"`. Also removes `TSNE.n_iter` in favor of `max_iter`, and `cuml.multiclass.MulticlassClassifier` in favor of the surviving cuML `OneVsOneClassifier` or `OneVsRestClassifier`. ([#7613](https://github.com/NVIDIA/cuml/pull/7613), [@jcrist](https://github.com/jcrist))
+
+### Fixed
+
+- Fixes UMAP integer overflow, seeded outliers, and precomputed-neighbor device allocation. ([#7566](https://github.com/NVIDIA/cuml/pull/7566), [#7587](https://github.com/NVIDIA/cuml/pull/7587), [#7597](https://github.com/NVIDIA/cuml/pull/7597), [@jinsolp](https://github.com/jinsolp), [@aamijar](https://github.com/aamijar))
+- Fixes uninitialized SVM parameters that could produce incorrect constructor state. ([#7604](https://github.com/NVIDIA/cuml/pull/7604), [@dantegd](https://github.com/dantegd))
+- Propagates `cuml.accel` logging configuration to subprocesses. ([#7602](https://github.com/NVIDIA/cuml/pull/7602), [@jcrist](https://github.com/jcrist))
+
+**Full changelog:** [v25.12.00...v26.02.00](https://github.com/NVIDIA/cuml/compare/v25.12.00...v26.02.00)
 
 ## cuML 25.12.00 (10 Dec 2025)
 
