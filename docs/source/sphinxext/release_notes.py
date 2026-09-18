@@ -28,9 +28,21 @@ def render_release_notes(
         ),
         "",
     ]
+    source_lines = changelog.splitlines()
+    headings = [
+        (len(match.group(1)), match.group(2))
+        for line in source_lines
+        if (match := _HEADING.match(line))
+    ]
+    sectioned = any(
+        level == 2 and not _RELEASE.match(heading)
+        for level, heading in headings
+    ) and any(
+        level == 3 and _RELEASE.match(heading) for level, heading in headings
+    )
     found_release = False
 
-    for line in changelog.splitlines():
+    for line in source_lines:
         match = _HEADING.match(line)
         if not match:
             lines.append(line)
@@ -44,7 +56,14 @@ def render_release_notes(
             continue
         if _RELEASE.match(heading):
             found_release = True
+            release_level = 3 if sectioned else 2
+            lines.append(f"{'#' * release_level} {heading}")
+        elif sectioned and level <= 2:
+            # Section headings remain above releases in the canonical,
+            # sectioned changelog.
             lines.append(f"## {heading}")
+        elif sectioned and found_release and level <= 4:
+            lines.append(f"#### {heading}")
         elif found_release and level <= 3:
             # Historic generated notes use both H2 and H3 for categories.
             # Keep the prose untouched while presenting a consistent tree.

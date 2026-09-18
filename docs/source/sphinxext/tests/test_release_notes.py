@@ -43,6 +43,39 @@ def test_render_release_notes_normalizes_legacy_heading_levels():
     assert "](../deprecation_policy/)" in rendered
 
 
+def test_render_release_notes_preserves_sectioned_hierarchy():
+    changelog = """# Release notes
+
+## Recent releases
+
+Introductory prose.
+
+# rapids-pre-commit-hooks: disable-next-line[verify-hardcoded-version]
+### cuML 26.10.00 (unreleased)
+
+#### Added
+
+## Archive
+
+Archive prose.
+
+### cuml 25.08.00 (6 Aug 2025)
+
+#### Fixed
+"""
+
+    rendered = release_notes.render_release_notes(changelog)
+
+    assert rendered.count("# Release notes\n") == 1
+    assert "## Recent releases\n" in rendered
+    # rapids-pre-commit-hooks: disable-next-line[verify-hardcoded-version]
+    assert "### cuML 26.10.00 (unreleased)\n" in rendered
+    assert "#### Added\n" in rendered
+    assert "## Archive\n" in rendered
+    assert "### cuml 25.08.00 (6 Aug 2025)\n" in rendered
+    assert "#### Fixed\n" in rendered
+
+
 def test_render_release_notes_replaces_existing_title():
     changelog = """# Release notes
 
@@ -121,7 +154,9 @@ def test_read_release_notes_reports_missing_changelog(monkeypatch, tmp_path):
 
 
 def test_deprecation_policy_uses_resolvable_developer_policy_link():
-    policy = (_DOCS_SOURCE / "deprecation_policy.md").read_text(encoding="utf-8")
+    policy = (_DOCS_SOURCE / "deprecation_policy.md").read_text(
+        encoding="utf-8"
+    )
 
     assert "(developer_guide/python/development.md)" in policy
     assert "development.md#" not in policy
