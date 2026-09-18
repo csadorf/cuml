@@ -1,5 +1,60 @@
 # Release notes
 
+## cuML 26.10.00 (unreleased)
+
+### Highlights
+
+- Accelerates scikit-learn's `IsolationForest`, `HDBSCAN`, and `OneHotEncoder` through `cuml.accel`.
+- Modernizes feature extraction and transformer metadata while fixing several estimator compatibility and correctness issues.
+- Removes APIs deprecated for 26.10; review the migration guidance below before upgrading.
+- Dask random forests now use distributed training and deprecate several legacy parameters.
+
+### Added
+
+- Adds `cuml.accel` support for `sklearn.ensemble.IsolationForest`. Dense finite inputs use GPU execution, while unsupported parameters, sparse inputs, and non-finite inputs fall back to scikit-learn. ([#8477](https://github.com/NVIDIA/cuml/pull/8477), [@adityaanikam](https://github.com/adityaanikam))
+- Adds `cuml.accel` support for `sklearn.cluster.HDBSCAN`, preserving fitted-state conversion and serialization; unsupported inputs and parameters fall back to CPU. ([#8472](https://github.com/NVIDIA/cuml/pull/8472), [@viclafargue](https://github.com/viclafargue))
+- Adds `cuml.accel` support for `sklearn.preprocessing.OneHotEncoder`, including mixed-type tabular input and CPU fallback for byte-valued columns. ([#8528](https://github.com/NVIDIA/cuml/pull/8528), [#8551](https://github.com/NVIDIA/cuml/pull/8551), [@jcrist](https://github.com/jcrist))
+- Adds standard `get_feature_names_out` support across most cuML transformers and propagates those names to reflected DataFrame outputs. ([#8500](https://github.com/NVIDIA/cuml/pull/8500), [#8511](https://github.com/NVIDIA/cuml/pull/8511), [#8542](https://github.com/NVIDIA/cuml/pull/8542), [@jcrist](https://github.com/jcrist))
+- Adds a `tokenizer` parameter to the rewritten `cuml.feature_extraction.text` estimators for custom document tokenization. ([#8575](https://github.com/NVIDIA/cuml/pull/8575), [@jcrist](https://github.com/jcrist))
+
+### Changed
+
+- **Breaking:** Removes `convert_dtype` from cuML APIs. Remove this argument from calls; validate input dtypes explicitly if relying on `convert_dtype=False` to reject conversion. ([#8436](https://github.com/NVIDIA/cuml/pull/8436), [@jcrist](https://github.com/jcrist))
+- **Breaking:** Removes legacy output types `"numba"`, `"array"`, `"df_obj"`, `"dataframe"`, and `"series"`. Use `"cupy"` instead of `"array"`, `"cudf"` instead of `"df_obj"`, and explicitly coerce dimensionality when a Series or DataFrame is required. ([#8439](https://github.com/NVIDIA/cuml/pull/8439), [@jcrist](https://github.com/jcrist))
+- **Breaking:** Removes the deprecated `cuml.fil` module and `RandomForest*.as_fil` methods. Import `ForestInference` from `nvforest` and convert fitted random-forest models with `model.as_nvforest()`. ([#8437](https://github.com/NVIDIA/cuml/pull/8437), [@jcrist](https://github.com/jcrist))
+- **Breaking:** Removes deprecated `cuml.experimental.linear_model` and `pairwise_distances(metric_arg=...)`. Import `Lars` from `cuml.linear_model`, and pass metric options through `kwds` or `p` for Minkowski distance. ([#8435](https://github.com/NVIDIA/cuml/pull/8435), [@jcrist](https://github.com/jcrist))
+- **Breaking:** Removes `cuml.preprocessing.text.stem.PorterStemmer`; migrate to a maintained alternative Porter Stemmer implementation. ([#8435](https://github.com/NVIDIA/cuml/pull/8435), [@jcrist](https://github.com/jcrist))
+- The rewritten `OneHotEncoder` and `OrdinalEncoder` align input validation, output reflection, unknown-category handling, and feature names with scikit-learn. One-column `transform`-style methods now consistently return two-dimensional tabular output instead of being coerced to a Series. ([#8490](https://github.com/NVIDIA/cuml/pull/8490), [#8512](https://github.com/NVIDIA/cuml/pull/8512), [@jcrist](https://github.com/jcrist))
+- Dask random forests now train through the distributed RAFT algorithm and retain one canonical fitted worker model for prediction and `get_combined_model()`. This removes partial-inference behavior and makes global row counts govern parameter constraints. ([#8466](https://github.com/NVIDIA/cuml/pull/8466), [@chyunsu3](https://github.com/chyunsu3))
+- `KMeans.transform` now returns Euclidean distances, matching scikit-learn, instead of squared distances. ([#8539](https://github.com/NVIDIA/cuml/pull/8539), [@Hashim1999164](https://github.com/Hashim1999164))
+
+### Deprecated
+
+- Deprecates `get_feature_names` on text vectorizers, `OneHotEncoder`, `PolynomialFeatures`, and `ColumnTransformer` for removal in 26.12; use the standard `get_feature_names_out` method. ([#8480](https://github.com/NVIDIA/cuml/pull/8480), [@jcrist](https://github.com/jcrist))
+- Deprecates the Dask random-forest parameters `n_streams`, `ignore_empty_partitions`, and `broadcast_data` for removal in 26.12. Remove `n_streams` and `ignore_empty_partitions` from constructor calls, and remove `broadcast_data` from `fit` and `predict` calls. ([#8466](https://github.com/NVIDIA/cuml/pull/8466), [@chyunsu3](https://github.com/chyunsu3))
+
+### Removed
+
+- **Breaking:** Removes `cuml.metrics.sparse_pairwise_distances`; use `cuml.metrics.pairwise_distances`, which accepts sparse input. ([#8439](https://github.com/NVIDIA/cuml/pull/8439), [@jcrist](https://github.com/jcrist))
+- **Breaking:** Removes the remaining unsupported `cuml.experimental` namespace. Remove imports of its example-only plotting utilities. ([#8444](https://github.com/NVIDIA/cuml/pull/8444), [@jcrist](https://github.com/jcrist))
+- **Breaking:** Removes the unsupported `warm_start` constructor argument and `sample_weights` fit argument from `IsolationForest`; these arguments previously only raised errors. Remove them from calls. ([#8486](https://github.com/NVIDIA/cuml/pull/8486), [@betatim](https://github.com/betatim))
+
+### Fixed
+
+- Fixes weighted KMeans `inertia_` and `score()` scaling by preserving original sample weights, and fixes Dask KMeans labels so they follow input partition order. ([#8618](https://github.com/NVIDIA/cuml/pull/8618), [@viclafargue](https://github.com/viclafargue))
+- Fixes nearest-neighbor handling of non-contiguous callable weights and sparse self-query indices, and fixes sparse t-SNE graph shapes when the neighbor count is clamped. ([#8619](https://github.com/NVIDIA/cuml/pull/8619), [#8621](https://github.com/NVIDIA/cuml/pull/8621), [@csadorf](https://github.com/csadorf))
+- Fixes SVM solver stalls by rotating the working set after zero-update iterations and raising an actionable numerical-stagnation error when no alternative working set exists. ([#8609](https://github.com/NVIDIA/cuml/pull/8609), [@viclafargue](https://github.com/viclafargue))
+- Fixes `HashingVectorizer` and other feature-extraction behavior to align with scikit-learn, including character n-gram index alignment. ([#8429](https://github.com/NVIDIA/cuml/pull/8429), [#8575](https://github.com/NVIDIA/cuml/pull/8575), [@adityaanikam](https://github.com/adityaanikam), [@jcrist](https://github.com/jcrist))
+- Fixes `IsolationForest` pickling, fitted conversion to scikit-learn, unfitted-method errors, and export compatibility with scikit-learn 1.10. ([#8483](https://github.com/NVIDIA/cuml/pull/8483), [#8493](https://github.com/NVIDIA/cuml/pull/8493), [#8546](https://github.com/NVIDIA/cuml/pull/8546), [#8589](https://github.com/NVIDIA/cuml/pull/8589), [@JulienAu](https://github.com/JulienAu), [@betatim](https://github.com/betatim), [@csadorf](https://github.com/csadorf))
+- Fixes sporadic `KBinsDiscretizer` bin-edge mismatches. ([#8467](https://github.com/NVIDIA/cuml/pull/8467), [@viclafargue](https://github.com/viclafargue))
+- Preserves `float64` targets in `KNeighborsRegressor`. ([#8456](https://github.com/NVIDIA/cuml/pull/8456), [@jcrist](https://github.com/jcrist))
+- Preserves dtype for NumPy array-protocol inputs and supports PyTorch inputs whose dtype is not NumPy-compatible. ([#8432](https://github.com/NVIDIA/cuml/pull/8432), [#8491](https://github.com/NVIDIA/cuml/pull/8491), [@jcrist](https://github.com/jcrist))
+- Restores accelerated-model serialization with joblib 1.6 by supporting its external `cloudpickle` dependency. ([#8535](https://github.com/NVIDIA/cuml/pull/8535), [@jcrist](https://github.com/jcrist))
+- Rejects negative inputs to chi-squared kernels with a clear validation error. ([#8438](https://github.com/NVIDIA/cuml/pull/8438), [@fallintoplace](https://github.com/fallintoplace))
+- Rejects invalid `HDBSCAN(min_cluster_size)` values with a clear validation error. ([#8588](https://github.com/NVIDIA/cuml/pull/8588), [@csadorf](https://github.com/csadorf))
+
+**Full changelog:** [v26.08.00...release/26.10](https://github.com/NVIDIA/cuml/compare/v26.08.00...release/26.10)
+
 ## cuML 26.08.00 (5 Aug 2026)
 
 ### Highlights
