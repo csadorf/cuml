@@ -614,6 +614,7 @@ dependencies:
         matrices:
           - matrix: {dependencies: "nightly"}
             packages:
+              - --extra-index-url=https://pypi.anaconda.org/scientific-python-nightly-wheels/simple
               # Pre-release specifier tells pip to accept dev/alpha/beta versions
               - scikit-learn>=1.6.0a0
           - matrix:
@@ -633,13 +634,6 @@ dependencies:
             packages:
               - ipython==7.34.0
           - matrix:
-            packages:
-      - output_types: requirements
-        matrices:
-          - matrix: {dependencies: "nightly"}
-            packages:
-              - --extra-index-url=https://pypi.anaconda.org/scientific-python-nightly-wheels/simple
-          - matrix:  # fallback for non-nightly dependencies
             packages:
       # TODO: we're seeing test failures with openblas > 0.3.30 on aarch64. For
       # now we pin openblas in tests on that architecture.
