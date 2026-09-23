@@ -599,7 +599,21 @@ dependencies:
           - *cmake_ver
   test_python:
     specific:
-      - output_types: [conda, requirements, pyproject]
+      - output_types: [conda, pyproject]
+        matrices:
+          # Package versions to use for the "oldest-dep" CI run
+          - matrix: {dependencies: "oldest"}
+            packages:
+              - scikit-learn==1.6.0
+              - umap-learn==0.5.7
+              - hdbscan==0.8.39
+              - numpy==2.0
+          - matrix:
+            packages:
+              - *scikit_learn
+              - hdbscan>=0.8.39
+              - ipython>=7.32.0
+      - output_types: requirements
         matrices:
           # Package versions to use for the "oldest-dep" CI run
           - matrix: {dependencies: "oldest"}
