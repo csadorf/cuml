@@ -30,11 +30,12 @@ The `estimators` built-in (the default suite) is packaged in
 `python/cuml/cuml/benchmark/suites/estimators.yaml`. Refer to the manifest for
 its workloads, implementation backends, and profiles.
 
-Without `--implementation`, only `cuml` runs. Use `--implementation` to select
-a different backend, or repeat the option to select multiple backends. Explicit
-selections replace the default. Backends run **sequentially in separate processes**, in
-manifest order, to keep measurements isolated. Execution continues after a
-backend failure; the command exits nonzero if any selected backend fails.
+By default, the CLI runs benchmarks using only `cuml`. Use `--implementation`
+to select another backend and compare implementations of the same algorithms.
+Repeat the option to select multiple backends; explicit selections replace the
+default. Selected backends run sequentially in separate processes, in manifest
+order. Execution continues after a backend failure; the command exits nonzero
+if any selected backend fails.
 
 The default profile is `standard`. Select a profile with `--profile`.
 Copy the manifest and edit its cases or profiles to customize workloads,
