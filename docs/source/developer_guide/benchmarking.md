@@ -1,64 +1,61 @@
 # Benchmarking with the built-in harness
 
 Use `python -m cuml.benchmark` to run estimator workloads and save warmup and
-measurement observations in JSON. A YAML suite selects a backend, cases, and profiles.
+measurement observations in JSON. A YAML suite defines shared workloads, their
+implementation backends, and execution profiles.
 
 ## Run a suite
 
-Run in an environment with cuML installed, the selected backend's dependencies,
+Run in an environment with cuML installed, the selected backends' dependencies,
 and enough host/device memory. Suite loading requires PyYAML and msgspec
 (`python -m pip install pyyaml msgspec` if they are missing).
 
 ```bash
-# Start with all single-GPU cases at reduced size.
-python -m cuml.benchmark --suite cuml_sg --profile smoke --output cuml.json
+# Run every declared backend at reduced size (including multi-GPU Dask).
+python -m cuml.benchmark --suite estimators --profile smoke --output results
 
-# Inspect available profiles; run CPU cases with per-repetition logging.
-python -m cuml.benchmark --suite cuml_accel --help
-python -m cuml.benchmark --suite sklearn_cpu --profile smoke -v --output cpu.json
+# Run only native single-GPU cuML and the CPU baseline.
+python -m cuml.benchmark --suite estimators --profile smoke \
+  --implementation cuml --implementation scikit-learn --output comparison
+
+# Inspect profiles; run accelerated cases with per-repetition logging.
+python -m cuml.benchmark --suite estimators --help
+python -m cuml.benchmark --implementation cuml.accel --profile smoke -v
 
 # Run a custom manifest.
-python -m cuml.benchmark --suite ./my-suite.yaml --profile standard --output custom.json
+python -m cuml.benchmark --suite ./my-suite.yaml --output custom-results
 ```
 
-Built-in suites are packaged under `python/cuml/cuml/benchmark/suites/`:
+The `estimators` built-in (the default suite) is packaged in
+`python/cuml/cuml/benchmark/suites/estimators.yaml`. Refer to the manifest for
+its workloads, implementation backends, and profiles.
 
-| Suite | Manifest `implementation` | Execution |
-| --- | --- | --- |
-| `cuml_sg` (default) | `cuml` | Native single-GPU cuML estimators |
-| `cuml_mg` | `cuml.dask` | Distributed cuML on a local multi-GPU cluster |
-| `cuml_accel` | `cuml.accel` | Accelerated scikit-learn-compatible estimators |
-| `sklearn_cpu` | `scikit-learn` | CPU estimators, including registered UMAP/HDBSCAN cases |
+Without `--implementation`, all suite-declared backends run. Repeat the option
+to select a subset. Backends run **sequentially in separate processes**, in
+manifest order, to keep measurements isolated. Execution continues after a
+backend failure; the command exits nonzero if any selected backend fails.
 
-The default profile is `standard`. All built-ins define `standard` (one warmup,
-three measurements, full rows) and `smoke` (one warmup, one measurement, 1% rows).
-Smoke retains every case and feature column; it is an execution check, not a
-performance baseline, and can still need substantial memory. You can define additional
-named profiles in your suite manifest and select them with `--profile`.
+The default profile is `standard`. Select a profile with `--profile`.
+Copy the manifest and edit its cases or profiles to customize workloads,
+parameters, and execution counts.
 
-There are no CLI filters for estimators, operations, or cases, and no CLI
-parameter/count overrides. To run a subset or change a workload, copy a packaged
-manifest, edit its `cases` or `profiles`, and pass its path to `--suite`.
-
-Backend caveats:
-- `cuml_accel` activates acceleration at process startup automatically, restarting
-  the process if needed. It requires at least one warmup. Warmups collect dispatch
-  evidence; any recorded CPU fallback fails the case and stops its repetitions.
-  Measurement repetitions do not use the accelerator profiler.
-- `cuml_mg` requires at least two visible GPUs and the Dask/Dask-CUDA dependencies.
-  The harness creates a local cluster using the visible GPUs. CSR inputs and
-  case timeouts are not supported for this backend.
-- Estimator availability and accepted constructor parameters depend on the
-  installed packages; catalog validation does not guarantee every combination runs.
+Backend requirements:
+- `cuml.accel` requires at least one warmup. Warmups collect dispatch evidence;
+  any recorded CPU fallback fails the case and stops its repetitions.
+  Profiling is limited to warmups.
+- `cuml.dask` requires at least two visible GPUs and Dask/Dask-CUDA dependencies.
+  The harness creates one local cluster for the backend run.
+- Estimator availability and accepted constructor parameters depend on installed
+  packages.
 
 ## Define a suite
 
-Save this complete manifest as `my-suite.yaml` for the custom command above:
+Save this manifest as `my-suite.yaml`:
 
 ```yaml
 version: 2
 name: small-kmeans
-implementation: cuml
+implementations: [cuml, scikit-learn, cuml.accel]
 profiles:
   standard:
     warmups: 1
@@ -78,67 +75,65 @@ cases:
     parameters: {n_clusters: 5, random_state: 42}
 ```
 
-A suite manifest brings together a few core concepts:
+A suite brings together:
 
-- **Implementation:** the backend used to run all cases in the suite.
-- **Profiles:** named execution settings controlling warmups, measurements,
-  dataset size scaling, and optional timeouts.
-- **Cases:** the workloads to benchmark. Each case selects an estimator, its
-  constructor parameters, and the operation to measure, such as `fit_predict`.
-- **Datasets:** synthetic inputs defined by a generator, shape, data type, and
-  representation. Dataset parameters configure generation separately from
-  estimator parameters.
-- **Input selection:** the inputs passed to the operation, such as features
-  (`X`) or features and targets (`X` and `y`). Inference cases also describe
-  the training data and inputs used to fit the estimator before measurement.
+- **Implementations:** a nonempty, unique list of execution backends.
+- **Profiles:** named warmup/measurement counts, dataset size scaling, and optional
+  timeouts.
+- **Cases:** estimator workloads with constructor parameters and measured
+  operations, such as `fit_predict`.
+- **Datasets:** synthetic inputs defined by generator, shape, data type, and
+  representation. Generator parameters are separate from estimator parameters.
+- **Input selection:** arguments passed to the operation (`X`, `y`, or both).
+  Inference cases also specify training rows and inputs for the initial fit.
 
-The manifest uses `version: 2`. For the complete structure, get the suite JSON
-Schema from `cuml.benchmark.suite.suite_manifest_json_schema()`; see the
+Cases inherit the suite's implementations. To restrict a case, give it a
+nonempty subset, for example:
+
+```yaml
+  - estimator: AgglomerativeClustering
+    implementations: [cuml, scikit-learn]
+    # ... dataset, operation, input_selection, and parameters ...
+```
+
+The manifest uses `version: 2`. Get the complete generated schema from
+`cuml.benchmark.suite.suite_manifest_json_schema()`; see the
 [API and schema reference](../api/cuml.benchmark).
 
 ## Timing and artifacts
 
-Save a run's results to a JSON artifact with `--output`:
+The output directory contains one neutral-v2 JSON artifact per backend:
 
-```bash
-python -m cuml.benchmark --suite ./my-suite.yaml --profile standard --output results.json
+```text
+results/
+  cuml.json
+  scikit-learn.json
+  cuml.accel.json
+  cuml.dask.json
 ```
 
-The artifact contains run metadata and a list of case results. This illustrative
-excerpt shows selected fields from a successful case; other fields and
-observations are omitted:
+Without `--output`, the CLI chooses an unused timestamped directory in the current
+working directory. An explicit output directory may already exist. **Without
+`--resume`, artifacts for selected backends are replaced**; unrelated files and
+unselected backend artifacts are left untouched. If startup fails before an
+artifact is created, the failure is reported in the console and exit status.
+Check the command's exit status to confirm the invocation succeeded.
 
-```json
-{
-  "algorithm": "KMeans",
-  "operation": {"name": "fit_predict", "lifecycle": "fit"},
-  "outcome": {"status": "success"},
-  "observations": [
-    {
-      "role": "measurement",
-      "outcome": {"status": "success"},
-      "timings": [{"name": "wall_time", "value": 0.012, "unit": "s"}]
-    }
-  ]
-}
-```
+Each artifact contains:
 
-- **Run metadata:** records the command, suite/profile, system, and software
-  used for the experiment.
-- **Case results:** describe each workload, its implementation, and whether it
-  succeeded or failed. Workload IDs help match cases across backend runs.
-- **Observations:** record individual warmup and measurement repetitions.
-  Use successful measurement observations for performance summaries; the
-  harness saves raw timings rather than calculating aggregate statistics.
+- **Run metadata:** command, suite/profile, backend execution plan, system, and
+  software used for that backend run.
+- **Case results:** workload descriptors, implementation, and success/failure.
+  Workload IDs are backend-independent, so matching cases can be joined across
+  artifact files. Each backend run has its own run ID.
+- **Observations:** individual warmup and measurement repetitions. Use successful
+  measurement observations to calculate performance summaries from raw timings.
 - **Timing:** synchronized wall time in seconds for the selected estimator
-  operation. Data preparation and setup are excluded, so these timings differ
-  from the overall elapsed time reported in the console.
+  operation. Preparation and setup are excluded, so these timings differ from
+  total elapsed console time.
 
-Results are saved after each case, including failures. Without `--output`, the
-CLI chooses a timestamped filename in the current directory. An explicit
-`--output` **replaces an existing file unless `--resume` is specified**.
-
-Artifacts use `schema_version: 2`. For the complete structure, see
+Each backend checkpoints its artifact after every case, including failures.
+Artifacts retain `schema_version: 2`; see
 `cuml/benchmark/schemas/benchmark-result.schema.json` or retrieve it with
 `cuml.benchmark.schemas.benchmark_result_schema()` in the
 [API and schema reference](../api/cuml.benchmark).
@@ -146,40 +141,42 @@ Artifacts use `schema_version: 2`. For the complete structure, see
 ## Resume a run
 
 ```bash
-python -m cuml.benchmark --suite cuml_sg --profile smoke --output cuml.json --resume
+python -m cuml.benchmark --suite estimators --profile smoke \
+  --output results --resume
 ```
 
-`--resume` requires an explicit `--output` pointing to an existing compatible
-artifact. It retains successful case results, retries failed cases from scratch,
-and runs missing cases. The original run ID is preserved. Matching workload IDs
-alone are insufficient: schema version, methodology, suite metadata (including
-path, implementation, profile and execution plan), software, and system metadata
-must match. Changing counts, timeouts, suite location, packages, or hardware can
-prevent resume. Use a new output for a changed experiment.
+`--resume` requires an explicit, existing output directory. For each selected
+backend, it retains successful cases, retries failed cases from scratch, and
+runs missing cases. A missing backend artifact starts a new backend run. Other
+backends' artifacts are preserved when selecting a subset or adding another
+backend.
+
+Existing artifacts must be compatible: schema version, methodology, suite
+metadata (including path, backend, profile, and execution plan), software, and
+system metadata must match. Original backend run IDs are preserved. Changing
+counts, timeouts, suite location, packages, or hardware can prevent resume.
+Use a new output directory for a changed experiment.
 
 ## Add or modify cases
 
-Start from a packaged suite or its neighboring `example_*.yaml` manifests.
-These small examples exercise matching workloads across backends, including
-supervised fitting, data types, sparse inputs, and inference. They are templates
-and execution checks, not performance baselines or comprehensive coverage.
-Run them by passing their file path to `--suite`.
+Start from `suites/estimators.yaml` or the smaller `suites/example.yaml`.
+The example exercises matching workloads across native cuML, CPU, and accel,
+including supervised fitting, data types, sparse inputs, and inference. Use it
+as a template and execution check.
 
-Check the backend's estimator catalog in `registry.py` and generator constraints
-in `datasets.py`. Set estimator random-state parameters when supported; the data
-seed does not set estimator randomness. Keep workloads identical across backends,
-avoid duplicate resolved cases, and test small workloads first. Extend packaged
-manifests and catalogs together; check `python/cuml/tests/test_benchmark.py`.
+Check estimator catalogs in `registry.py` and generator constraints in
+`datasets.py`. Extend packaged manifests and catalogs together; the tests in
+`python/cuml/tests/test_benchmark.py` check coverage and workload identity.
 
 ## NVTX profiling
 
-`cuml.benchmark.nvtx_benchmark` is available as a standalone Nsight Systems
-profiling utility. It requires `nsys` version 2021.4 or later and profiles NVTX
-ranges in the command supplied as its single argument:
+`cuml.benchmark.nvtx_benchmark` is a standalone Nsight Systems utility. It
+requires `nsys` version 2021.4 or later and profiles NVTX ranges in the command
+supplied as its single argument:
 
 ```bash
 python -m cuml.benchmark.nvtx_benchmark \
-  "python -m cuml.benchmark --suite cuml_sg --profile smoke --output cuml.json"
+  "python -m cuml.benchmark --implementation cuml --profile smoke --output results"
 ```
 
 It is independent of the harness's observation timing and JSON serialization.

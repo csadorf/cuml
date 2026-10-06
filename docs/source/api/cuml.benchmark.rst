@@ -10,8 +10,11 @@ Suite loading and execution
 ---------------------------
 
 For programmatic use, load a built-in suite name or a YAML path, then pass the
-resolved suite to the runner. Direct callers are responsible for backend process
-startup; the CLI handles this automatically, including ``cuml.accel`` activation.
+resolved plan's individual ``runs`` to the single-backend runner. The loader
+accepts an optional ``implementations`` list; omission selects all declared
+backends. Direct callers must isolate backend runs in separate processes and
+configure backend startup. Prefer the CLI for automatic isolation, sequential
+execution, and one output artifact per backend.
 
 .. autofunction:: cuml.benchmark.suite.load_suite_reference
 
