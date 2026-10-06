@@ -159,7 +159,12 @@ prevent resume. Use a new output for a changed experiment.
 
 ## Add or modify cases
 
-Start from a packaged suite or its neighboring `capabilities_*.yaml` examples.
+Start from a packaged suite or its neighboring `example_*.yaml` manifests.
+These small examples exercise matching workloads across backends, including
+supervised fitting, data types, sparse inputs, and inference. They are templates
+and execution checks, not performance baselines or comprehensive coverage.
+Run them by passing their file path to `--suite`.
+
 Check the backend's estimator catalog in `registry.py` and generator constraints
 in `datasets.py`. Set estimator random-state parameters when supported; the data
 seed does not set estimator randomness. Keep workloads identical across backends,
