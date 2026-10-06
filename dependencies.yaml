@@ -346,6 +346,7 @@ dependencies:
       - output_types: [conda, requirements, pyproject]
         packages:
           - joblib>=0.11
+          - msgspec
           - numba>=0.60.0,<0.65.0
           - &numpy numpy>=2.0,<3.0
           - scipy>=1.14.0
@@ -667,7 +668,6 @@ dependencies:
           - hdbscan>=0.8.39
           - hypothesis>=6.0,<7
           - ipython>=7.32.0
-          - msgspec
           - nltk
           # 'nvidia-ml-py' provides the 'pynvml' module
           - nvidia-ml-py>=12
