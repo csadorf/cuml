@@ -11,7 +11,7 @@ and enough host/device memory. Suite loading requires PyYAML and msgspec
 (`python -m pip install pyyaml msgspec` if they are missing).
 
 ```bash
-# Run every declared backend at reduced size (including multi-GPU Dask).
+# Run native single-GPU cuML at reduced size.
 python -m cuml.benchmark --suite estimators --profile smoke --output results
 
 # Run only native single-GPU cuML and the CPU baseline.
@@ -30,8 +30,9 @@ The `estimators` built-in (the default suite) is packaged in
 `python/cuml/cuml/benchmark/suites/estimators.yaml`. Refer to the manifest for
 its workloads, implementation backends, and profiles.
 
-Without `--implementation`, all suite-declared backends run. Repeat the option
-to select a subset. Backends run **sequentially in separate processes**, in
+Without `--implementation`, only `cuml` runs. Use `--implementation` to select
+a different backend, or repeat the option to select multiple backends. Explicit
+selections replace the default. Backends run **sequentially in separate processes**, in
 manifest order, to keep measurements isolated. Execution continues after a
 backend failure; the command exits nonzero if any selected backend fails.
 

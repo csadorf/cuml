@@ -835,7 +835,15 @@ def registered_suite(monkeypatch, tmp_path):
 
 def _run_cli(manifest, output, *, resume=False):
     return cli.main(
-        ["--_worker", "--suite", str(manifest), "--output", str(output)]
+        [
+            "--_worker",
+            "--suite",
+            str(manifest),
+            "--output",
+            str(output),
+            "--implementation",
+            "test",
+        ]
         + (["--resume"] if resume else [])
     )
 
@@ -1018,12 +1026,20 @@ def test_cli_coordinates_isolated_backends(document, tmp_path, monkeypatch):
 
     monkeypatch.setattr(cli.subprocess, "run", run)
     argv = ["--suite", str(path), "--output", str(output), "--verbose"]
-    assert cli.main(argv) == 1
+    assert cli.main(argv) == 0
+    assert calls == [("cuml", False)]
+    calls.clear()
+    selected = [
+        arg
+        for name in document["implementations"]
+        for arg in ("--implementation", name)
+    ]
+    assert cli.main([*argv, *selected]) == 1
     assert calls == [(name, False) for name in document["implementations"]]
     assert os.environ["CUML_ACCEL_ENABLED"] == "1"
     (output / "cuml.accel.json").unlink()
     calls.clear()
-    assert cli.main([*argv, "--resume"]) == 1
+    assert cli.main([*argv, *selected, "--resume"]) == 1
     assert calls == [
         ("cuml", True),
         ("scikit-learn", True),
@@ -1032,9 +1048,26 @@ def test_cli_coordinates_isolated_backends(document, tmp_path, monkeypatch):
     calls.clear()
     assert cli.main([*argv, "--implementation", "cuml"]) == 0
     assert calls == [("cuml", False)]
+    calls.clear()
+    assert cli.main([*argv, "--implementation", "scikit-learn"]) == 1
+    assert calls == [("scikit-learn", False)]
+
+
+def test_cli_default_requires_cuml_in_suite(
+    document, tmp_path, monkeypatch, capsys
+):
+    path = _write_suite(tmp_path, document)
+    monkeypatch.setattr(
+        cli.subprocess, "run", lambda *a, **k: pytest.fail("launched worker")
+    )
+    with pytest.raises(SystemExit) as exc:
+        cli.main(["--suite", str(path), "--output", str(tmp_path / "results")])
+    assert exc.value.code == 2
+    assert "subset of suite implementations" in capsys.readouterr().err
 
 
 def test_cli_coordinator_output_errors(document, tmp_path, monkeypatch):
+    document["implementations"] = ["cuml"]
     path = _write_suite(tmp_path, document)
     output = tmp_path / "missing"
     monkeypatch.setattr(
@@ -1060,6 +1093,9 @@ def test_cli_real_workers(document, tmp_path, monkeypatch, implementations):
     path = _write_suite(tmp_path, document)
     output = tmp_path / "results"
     argv = ["--suite", str(path), "--output", str(output)]
+    argv.extend(
+        arg for name in implementations for arg in ("--implementation", name)
+    )
     assert cli.main(argv) == 0
     artifacts = {}
     for implementation in implementations:
@@ -1326,6 +1362,29 @@ def test_dask_synchronization(monkeypatch, fallback):
     assert events == (
         ["wait", "compute", "gpu"] if fallback else ["wait", "gpu"]
     )
+
+
+@pytest.mark.parametrize("count", [0, 1])
+def test_dask_requires_multiple_gpus(monkeypatch, count):
+    def import_module(name):
+        assert name == "cupy", (
+            "must reject before importing cluster dependencies"
+        )
+        return SimpleNamespace(
+            cuda=SimpleNamespace(
+                runtime=SimpleNamespace(getDeviceCount=lambda: count)
+            )
+        )
+
+    monkeypatch.setattr(importlib, "import_module", import_module)
+    case = resolve_case(_request(), PROFILE)
+    with pytest.raises(
+        SuiteError, match=f"at least two visible GPUs; found {count}"
+    ):
+        with get_backend("cuml.dask").runtime(
+            _suite(case, implementation="cuml.dask")
+        ):
+            pytest.fail("must reject before resource creation")
 
 
 @pytest.mark.parametrize(

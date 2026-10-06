@@ -24,6 +24,7 @@ from .suite import (
 )
 
 DEFAULT_SUITE = "estimators"
+DEFAULT_IMPLEMENTATION = "cuml"
 
 
 def _parser(
@@ -57,7 +58,7 @@ def _parser(
         "--implementation",
         action="append",
         dest="implementations",
-        help="run only this suite implementation (repeatable; default: all declared)",
+        help=f"run only this suite implementation (repeatable; default: {DEFAULT_IMPLEMENTATION})",
     )
     parser.add_argument(
         "--_worker", action="store_true", help=argparse.SUPPRESS
@@ -168,7 +169,9 @@ def main(argv: list[str] | None = None) -> int:
         parser.error("--resume requires --output")
     try:
         suite = load_suite_reference(
-            args.suite, args.profile, args.implementations
+            args.suite,
+            args.profile,
+            args.implementations or [DEFAULT_IMPLEMENTATION],
         )
         output = (
             Path(args.output).resolve()
