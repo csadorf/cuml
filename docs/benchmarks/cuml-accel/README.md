@@ -1,12 +1,61 @@
 # Synchronizing the cuml.accel benchmark page
 
 The checked-in `benchmark-data.json` is the compact input for the Sphinx page.
-It is produced by `cumlbench-dash`; raw benchmark observations stay outside
-this repository. The file stores the benchmark system and package versions
+The current reference artifact was produced by `cumlbench-dash`. Fresh
+measurements can be produced locally using the accel performance suite and
+the driver below; raw benchmark observations stay outside this repository. The file stores the benchmark system and package versions
 alongside case labels, shapes, median timings, CPU timeout limits when
 applicable, and PCA component counts that cannot be derived from labels.
 Speedups, classifications, summaries, input sizes, and display units are
 derived while rendering.
+
+## Run and export fresh measurements
+
+From the repository root, activate the development environment containing the
+updated local cuML package and all suite dependencies (including scikit-learn,
+umap-learn, and hdbscan). On Linux, select exactly one CUDA-visible GPU and run:
+
+```console
+CUDA_VISIBLE_DEVICES=0 python docs/benchmarks/run_cuml_accel_benchmarks.py \
+  --output-dir /path/to/accel-performance-run
+```
+
+The Python driver invokes the specific `accel-performance.yaml` suite with
+both CPU and `cuml.accel` backends, using one warmup and three measurements.
+Do not enable `CUML_ACCEL_ENABLED` in the driver process; it launches isolated
+backend processes itself. The output directory must initially be empty.
+It contains `scikit-learn.json`, `cuml.accel.json`, a `system.json` snapshot,
+and the exported `benchmark-data.json`. CPU topology and RAM are read from
+Linux `/proc`, and GPU name and memory from CUDA. Package versions come from
+the benchmark artifacts, not the reference publication.
+
+Continue an interrupted run or regenerate only the compact publication file:
+
+```console
+python docs/benchmarks/run_cuml_accel_benchmarks.py \
+  --output-dir /path/to/accel-performance-run --resume
+python docs/benchmarks/run_cuml_accel_benchmarks.py \
+  --output-dir /path/to/accel-performance-run --export-only
+```
+
+Resume requires the same system, software, and suite. Export-only uses saved
+metadata and does not probe the current GPU. The exporter pairs observations
+by workload ID and checks labels, execution settings, complete measurements,
+and GPU dispatch evidence. Both input artifacts must satisfy the benchmark
+artifact schema. All CPU and GPU cases must complete successfully; timeouts
+and other failures prevent publication. Complete-case deadlines include
+startup, preparation, fitting, warmups, and multiple measurements, so they
+cannot establish per-operation speedup lower bounds. To complete a run with
+CPU timeouts, increase the suite's timeouts and start a new output directory;
+changed execution settings cannot resume existing artifacts. Neither running
+nor exporting replaces the checked-in publication file automatically.
+
+This is approximate reproduction: shapes and timeouts are rounded and inputs
+use the existing benchmark generators. See
+`python/cuml/cuml/benchmark/suites/accel-performance.md` for provenance and
+methodological differences, including the absence of output-parity checks.
+
+## Synchronize and render
 
 From the repository root, synchronize an updated publication artifact with:
 
