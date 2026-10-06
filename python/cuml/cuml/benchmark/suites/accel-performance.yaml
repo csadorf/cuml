@@ -1,0 +1,3393 @@
+# Representative cuml.accel performance workloads across 168 cases.
+# See accel-performance.md for provenance and methodology.
+# Uses the existing dataset generators with rounded workload sizes.
+
+version: 2
+name: accel-performance
+implementations:
+- scikit-learn
+- cuml.accel
+profiles:
+  standard:
+    warmups: 1
+    repetitions: 3
+    size_scale: 1.0
+
+cases:
+  - label: dbscan.fit_predict.large.balanced
+    estimator: DBSCAN
+    dataset:
+      kind: blobs
+      shape:
+        rows: 32000
+        features: 32
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_predict
+    input_selection:
+    - X
+    parameters:
+      eps: 3.0
+      min_samples: 5
+      n_jobs: -1
+    timeout_sec: 850
+
+  - label: dbscan.fit_predict.medium.balanced
+    estimator: DBSCAN
+    dataset:
+      kind: blobs
+      shape:
+        rows: 8000
+        features: 32
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_predict
+    input_selection:
+    - X
+    parameters:
+      eps: 3.0
+      min_samples: 5
+      n_jobs: -1
+    timeout_sec: 100
+
+  - label: dbscan.fit_predict.medium.thin
+    estimator: DBSCAN
+    dataset:
+      kind: blobs
+      shape:
+        rows: 8000
+        features: 8
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_predict
+    input_selection:
+    - X
+    parameters:
+      eps: 3.0
+      min_samples: 5
+      n_jobs: -1
+    timeout_sec: 100
+
+  - label: dbscan.fit_predict.medium.wide
+    estimator: DBSCAN
+    dataset:
+      kind: blobs
+      shape:
+        rows: 8000
+        features: 256
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_predict
+    input_selection:
+    - X
+    parameters:
+      eps: 3.0
+      min_samples: 5
+      n_jobs: -1
+    timeout_sec: 100
+
+  - label: dbscan.fit_predict.small.balanced
+    estimator: DBSCAN
+    dataset:
+      kind: blobs
+      shape:
+        rows: 2000
+        features: 32
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_predict
+    input_selection:
+    - X
+    parameters:
+      eps: 3.0
+      min_samples: 5
+      n_jobs: -1
+    timeout_sec: 70
+
+  - label: elastic_net.fit.large.balanced
+    estimator: ElasticNet
+    dataset:
+      kind: regression
+      shape:
+        rows: 5000000
+        features: 128
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      alpha: 0.01
+      l1_ratio: 0.5
+      max_iter: 1000
+      random_state: 42
+    timeout_sec: 850
+
+  - label: elastic_net.fit.medium.balanced
+    estimator: ElasticNet
+    dataset:
+      kind: regression
+      shape:
+        rows: 500000
+        features: 128
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      alpha: 0.01
+      l1_ratio: 0.5
+      max_iter: 1000
+      random_state: 42
+    timeout_sec: 100
+
+  - label: elastic_net.fit.medium.thin
+    estimator: ElasticNet
+    dataset:
+      kind: regression
+      shape:
+        rows: 1600000
+        features: 16
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      alpha: 0.01
+      l1_ratio: 0.5
+      max_iter: 1000
+      random_state: 42
+    timeout_sec: 100
+
+  - label: elastic_net.fit.medium.wide
+    estimator: ElasticNet
+    dataset:
+      kind: regression
+      shape:
+        rows: 240000
+        features: 1024
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      alpha: 0.01
+      l1_ratio: 0.5
+      max_iter: 1000
+      random_state: 42
+    timeout_sec: 100
+
+  - label: elastic_net.fit.small.balanced
+    estimator: ElasticNet
+    dataset:
+      kind: regression
+      shape:
+        rows: 50000
+        features: 128
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      alpha: 0.01
+      l1_ratio: 0.5
+      max_iter: 1000
+      random_state: 42
+    timeout_sec: 70
+
+  - label: elastic_net.predict.large.balanced
+    estimator: ElasticNet
+    dataset:
+      kind: regression
+      shape:
+        rows: 5000000
+        features: 128
+        train_rows: 1000000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      alpha: 0.01
+      l1_ratio: 0.5
+      max_iter: 1000
+      random_state: 42
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 850
+
+  - label: elastic_net.predict.medium.balanced
+    estimator: ElasticNet
+    dataset:
+      kind: regression
+      shape:
+        rows: 980000
+        features: 128
+        train_rows: 100000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      alpha: 0.01
+      l1_ratio: 0.5
+      max_iter: 1000
+      random_state: 42
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: elastic_net.predict.medium.thin
+    estimator: ElasticNet
+    dataset:
+      kind: regression
+      shape:
+        rows: 7800000
+        features: 16
+        train_rows: 100000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      alpha: 0.01
+      l1_ratio: 0.5
+      max_iter: 1000
+      random_state: 42
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: elastic_net.predict.medium.wide
+    estimator: ElasticNet
+    dataset:
+      kind: regression
+      shape:
+        rows: 490000
+        features: 1024
+        train_rows: 100000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      alpha: 0.01
+      l1_ratio: 0.5
+      max_iter: 1000
+      random_state: 42
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: elastic_net.predict.small.balanced
+    estimator: ElasticNet
+    dataset:
+      kind: regression
+      shape:
+        rows: 200000
+        features: 128
+        train_rows: 10000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      alpha: 0.01
+      l1_ratio: 0.5
+      max_iter: 1000
+      random_state: 42
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 70
+
+  - label: hdbscan.fit_predict.large.balanced
+    estimator: HDBSCAN
+    dataset:
+      kind: blobs
+      shape:
+        rows: 32000
+        features: 32
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_predict
+    input_selection:
+    - X
+    parameters:
+      min_cluster_size: 10
+    timeout_sec: 850
+
+  - label: hdbscan.fit_predict.medium.balanced
+    estimator: HDBSCAN
+    dataset:
+      kind: blobs
+      shape:
+        rows: 8000
+        features: 32
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_predict
+    input_selection:
+    - X
+    parameters:
+      min_cluster_size: 10
+    timeout_sec: 100
+
+  - label: hdbscan.fit_predict.medium.thin
+    estimator: HDBSCAN
+    dataset:
+      kind: blobs
+      shape:
+        rows: 8000
+        features: 8
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_predict
+    input_selection:
+    - X
+    parameters:
+      min_cluster_size: 10
+    timeout_sec: 100
+
+  - label: hdbscan.fit_predict.medium.wide
+    estimator: HDBSCAN
+    dataset:
+      kind: blobs
+      shape:
+        rows: 8000
+        features: 256
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_predict
+    input_selection:
+    - X
+    parameters:
+      min_cluster_size: 10
+    timeout_sec: 100
+
+  - label: hdbscan.fit_predict.small.balanced
+    estimator: HDBSCAN
+    dataset:
+      kind: blobs
+      shape:
+        rows: 2000
+        features: 32
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_predict
+    input_selection:
+    - X
+    parameters:
+      min_cluster_size: 10
+    timeout_sec: 70
+
+  - label: k_neighbors_classifier.predict.large.balanced
+    estimator: KNeighborsClassifier
+    dataset:
+      kind: classification
+      shape:
+        rows: 32000
+        features: 128
+        train_rows: 32000
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_neighbors: 5
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 850
+
+  - label: k_neighbors_classifier.predict.medium.balanced
+    estimator: KNeighborsClassifier
+    dataset:
+      kind: classification
+      shape:
+        rows: 8000
+        features: 128
+        train_rows: 8000
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_neighbors: 5
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: k_neighbors_classifier.predict.medium.thin
+    estimator: KNeighborsClassifier
+    dataset:
+      kind: classification
+      shape:
+        rows: 8000
+        features: 16
+        train_rows: 8000
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_neighbors: 5
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: k_neighbors_classifier.predict.medium.wide
+    estimator: KNeighborsClassifier
+    dataset:
+      kind: classification
+      shape:
+        rows: 8000
+        features: 1024
+        train_rows: 8000
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_neighbors: 5
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: k_neighbors_classifier.predict.small.balanced
+    estimator: KNeighborsClassifier
+    dataset:
+      kind: classification
+      shape:
+        rows: 2000
+        features: 128
+        train_rows: 2000
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_neighbors: 5
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 70
+
+  - label: k_neighbors_regressor.predict.large.balanced
+    estimator: KNeighborsRegressor
+    dataset:
+      kind: regression
+      shape:
+        rows: 32000
+        features: 128
+        train_rows: 32000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_neighbors: 5
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 850
+
+  - label: k_neighbors_regressor.predict.medium.balanced
+    estimator: KNeighborsRegressor
+    dataset:
+      kind: regression
+      shape:
+        rows: 8000
+        features: 128
+        train_rows: 8000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_neighbors: 5
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: k_neighbors_regressor.predict.medium.thin
+    estimator: KNeighborsRegressor
+    dataset:
+      kind: regression
+      shape:
+        rows: 8000
+        features: 16
+        train_rows: 8000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_neighbors: 5
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: k_neighbors_regressor.predict.medium.wide
+    estimator: KNeighborsRegressor
+    dataset:
+      kind: regression
+      shape:
+        rows: 8000
+        features: 1024
+        train_rows: 8000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_neighbors: 5
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: k_neighbors_regressor.predict.small.balanced
+    estimator: KNeighborsRegressor
+    dataset:
+      kind: regression
+      shape:
+        rows: 2000
+        features: 128
+        train_rows: 2000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_neighbors: 5
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 70
+
+  - label: kernel_density.score_samples.large.balanced
+    estimator: KernelDensity
+    dataset:
+      kind: matrix
+      shape:
+        rows: 32000
+        features: 128
+        train_rows: 32000
+      dtype: float32
+    operation: score_samples
+    input_selection:
+    - X
+    parameters:
+      bandwidth: 1.0
+    fit_input_selection:
+    - X
+    timeout_sec: 850
+
+  - label: kernel_density.score_samples.medium.balanced
+    estimator: KernelDensity
+    dataset:
+      kind: matrix
+      shape:
+        rows: 8000
+        features: 128
+        train_rows: 8000
+      dtype: float32
+    operation: score_samples
+    input_selection:
+    - X
+    parameters:
+      bandwidth: 1.0
+    fit_input_selection:
+    - X
+    timeout_sec: 100
+
+  - label: kernel_density.score_samples.medium.thin
+    estimator: KernelDensity
+    dataset:
+      kind: matrix
+      shape:
+        rows: 8000
+        features: 16
+        train_rows: 8000
+      dtype: float32
+    operation: score_samples
+    input_selection:
+    - X
+    parameters:
+      bandwidth: 1.0
+    fit_input_selection:
+    - X
+    timeout_sec: 100
+
+  - label: kernel_density.score_samples.medium.wide
+    estimator: KernelDensity
+    dataset:
+      kind: matrix
+      shape:
+        rows: 8000
+        features: 1024
+        train_rows: 8000
+      dtype: float32
+    operation: score_samples
+    input_selection:
+    - X
+    parameters:
+      bandwidth: 1.0
+    fit_input_selection:
+    - X
+    timeout_sec: 100
+
+  - label: kernel_density.score_samples.small.balanced
+    estimator: KernelDensity
+    dataset:
+      kind: matrix
+      shape:
+        rows: 2000
+        features: 128
+        train_rows: 2000
+      dtype: float32
+    operation: score_samples
+    input_selection:
+    - X
+    parameters:
+      bandwidth: 1.0
+    fit_input_selection:
+    - X
+    timeout_sec: 70
+
+  - label: kmeans.fit_predict.large.balanced
+    estimator: KMeans
+    dataset:
+      kind: blobs
+      shape:
+        rows: 5000000
+        features: 128
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_predict
+    input_selection:
+    - X
+    parameters:
+      n_clusters: 8
+      random_state: 42
+      n_init: 1
+    timeout_sec: 850
+
+  - label: kmeans.fit_predict.medium.balanced
+    estimator: KMeans
+    dataset:
+      kind: blobs
+      shape:
+        rows: 500000
+        features: 128
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_predict
+    input_selection:
+    - X
+    parameters:
+      n_clusters: 8
+      random_state: 42
+      n_init: 1
+    timeout_sec: 100
+
+  - label: kmeans.fit_predict.medium.thin
+    estimator: KMeans
+    dataset:
+      kind: blobs
+      shape:
+        rows: 1600000
+        features: 16
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_predict
+    input_selection:
+    - X
+    parameters:
+      n_clusters: 8
+      random_state: 42
+      n_init: 1
+    timeout_sec: 100
+
+  - label: kmeans.fit_predict.medium.wide
+    estimator: KMeans
+    dataset:
+      kind: blobs
+      shape:
+        rows: 240000
+        features: 1024
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_predict
+    input_selection:
+    - X
+    parameters:
+      n_clusters: 8
+      random_state: 42
+      n_init: 1
+    timeout_sec: 100
+
+  - label: kmeans.fit_predict.small.balanced
+    estimator: KMeans
+    dataset:
+      kind: blobs
+      shape:
+        rows: 50000
+        features: 128
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_predict
+    input_selection:
+    - X
+    parameters:
+      n_clusters: 8
+      random_state: 42
+      n_init: 1
+    timeout_sec: 70
+
+  - label: kmeans.predict.large.balanced
+    estimator: KMeans
+    dataset:
+      kind: blobs
+      shape:
+        rows: 5000000
+        features: 128
+        train_rows: 1000000
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_clusters: 8
+      random_state: 42
+      n_init: 1
+    fit_input_selection:
+    - X
+    timeout_sec: 850
+
+  - label: kmeans.predict.medium.balanced
+    estimator: KMeans
+    dataset:
+      kind: blobs
+      shape:
+        rows: 980000
+        features: 128
+        train_rows: 100000
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_clusters: 8
+      random_state: 42
+      n_init: 1
+    fit_input_selection:
+    - X
+    timeout_sec: 100
+
+  - label: kmeans.predict.medium.thin
+    estimator: KMeans
+    dataset:
+      kind: blobs
+      shape:
+        rows: 7800000
+        features: 16
+        train_rows: 100000
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_clusters: 8
+      random_state: 42
+      n_init: 1
+    fit_input_selection:
+    - X
+    timeout_sec: 100
+
+  - label: kmeans.predict.medium.wide
+    estimator: KMeans
+    dataset:
+      kind: blobs
+      shape:
+        rows: 490000
+        features: 1024
+        train_rows: 100000
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_clusters: 8
+      random_state: 42
+      n_init: 1
+    fit_input_selection:
+    - X
+    timeout_sec: 100
+
+  - label: kmeans.predict.small.balanced
+    estimator: KMeans
+    dataset:
+      kind: blobs
+      shape:
+        rows: 200000
+        features: 128
+        train_rows: 10000
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_clusters: 8
+      random_state: 42
+      n_init: 1
+    fit_input_selection:
+    - X
+    timeout_sec: 70
+
+  - label: lasso.fit.large.balanced
+    estimator: Lasso
+    dataset:
+      kind: regression
+      shape:
+        rows: 5000000
+        features: 128
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      alpha: 0.01
+      max_iter: 1000
+      random_state: 42
+    timeout_sec: 850
+
+  - label: lasso.fit.medium.balanced
+    estimator: Lasso
+    dataset:
+      kind: regression
+      shape:
+        rows: 500000
+        features: 128
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      alpha: 0.01
+      max_iter: 1000
+      random_state: 42
+    timeout_sec: 100
+
+  - label: lasso.fit.medium.thin
+    estimator: Lasso
+    dataset:
+      kind: regression
+      shape:
+        rows: 1600000
+        features: 16
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      alpha: 0.01
+      max_iter: 1000
+      random_state: 42
+    timeout_sec: 100
+
+  - label: lasso.fit.medium.wide
+    estimator: Lasso
+    dataset:
+      kind: regression
+      shape:
+        rows: 240000
+        features: 1024
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      alpha: 0.01
+      max_iter: 1000
+      random_state: 42
+    timeout_sec: 100
+
+  - label: lasso.fit.small.balanced
+    estimator: Lasso
+    dataset:
+      kind: regression
+      shape:
+        rows: 50000
+        features: 128
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      alpha: 0.01
+      max_iter: 1000
+      random_state: 42
+    timeout_sec: 70
+
+  - label: lasso.predict.large.balanced
+    estimator: Lasso
+    dataset:
+      kind: regression
+      shape:
+        rows: 5000000
+        features: 128
+        train_rows: 1000000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      alpha: 0.01
+      max_iter: 1000
+      random_state: 42
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 850
+
+  - label: lasso.predict.medium.balanced
+    estimator: Lasso
+    dataset:
+      kind: regression
+      shape:
+        rows: 980000
+        features: 128
+        train_rows: 100000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      alpha: 0.01
+      max_iter: 1000
+      random_state: 42
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: lasso.predict.medium.thin
+    estimator: Lasso
+    dataset:
+      kind: regression
+      shape:
+        rows: 7800000
+        features: 16
+        train_rows: 100000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      alpha: 0.01
+      max_iter: 1000
+      random_state: 42
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: lasso.predict.medium.wide
+    estimator: Lasso
+    dataset:
+      kind: regression
+      shape:
+        rows: 490000
+        features: 1024
+        train_rows: 100000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      alpha: 0.01
+      max_iter: 1000
+      random_state: 42
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: lasso.predict.small.balanced
+    estimator: Lasso
+    dataset:
+      kind: regression
+      shape:
+        rows: 200000
+        features: 128
+        train_rows: 10000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      alpha: 0.01
+      max_iter: 1000
+      random_state: 42
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 70
+
+  - label: linear_regression.fit.large.balanced
+    estimator: LinearRegression
+    dataset:
+      kind: regression
+      shape:
+        rows: 5000000
+        features: 128
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters: {}
+    timeout_sec: 850
+
+  - label: linear_regression.fit.medium.balanced
+    estimator: LinearRegression
+    dataset:
+      kind: regression
+      shape:
+        rows: 500000
+        features: 128
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters: {}
+    timeout_sec: 100
+
+  - label: linear_regression.fit.medium.thin
+    estimator: LinearRegression
+    dataset:
+      kind: regression
+      shape:
+        rows: 1600000
+        features: 16
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters: {}
+    timeout_sec: 100
+
+  - label: linear_regression.fit.medium.wide
+    estimator: LinearRegression
+    dataset:
+      kind: regression
+      shape:
+        rows: 240000
+        features: 1024
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters: {}
+    timeout_sec: 100
+
+  - label: linear_regression.fit.small.balanced
+    estimator: LinearRegression
+    dataset:
+      kind: regression
+      shape:
+        rows: 50000
+        features: 128
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters: {}
+    timeout_sec: 70
+
+  - label: linear_regression.predict.large.balanced
+    estimator: LinearRegression
+    dataset:
+      kind: regression
+      shape:
+        rows: 5000000
+        features: 128
+        train_rows: 1000000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters: {}
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 850
+
+  - label: linear_regression.predict.medium.balanced
+    estimator: LinearRegression
+    dataset:
+      kind: regression
+      shape:
+        rows: 980000
+        features: 128
+        train_rows: 100000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters: {}
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: linear_regression.predict.medium.thin
+    estimator: LinearRegression
+    dataset:
+      kind: regression
+      shape:
+        rows: 7800000
+        features: 16
+        train_rows: 100000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters: {}
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: linear_regression.predict.medium.wide
+    estimator: LinearRegression
+    dataset:
+      kind: regression
+      shape:
+        rows: 490000
+        features: 1024
+        train_rows: 100000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters: {}
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: linear_regression.predict.small.balanced
+    estimator: LinearRegression
+    dataset:
+      kind: regression
+      shape:
+        rows: 200000
+        features: 128
+        train_rows: 10000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters: {}
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 70
+
+  - label: logistic_regression.fit.large.balanced
+    estimator: LogisticRegression
+    dataset:
+      kind: classification
+      shape:
+        rows: 5000000
+        features: 128
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      max_iter: 100
+      random_state: 42
+    timeout_sec: 850
+
+  - label: logistic_regression.fit.medium.balanced
+    estimator: LogisticRegression
+    dataset:
+      kind: classification
+      shape:
+        rows: 500000
+        features: 128
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      max_iter: 100
+      random_state: 42
+    timeout_sec: 100
+
+  - label: logistic_regression.fit.medium.thin
+    estimator: LogisticRegression
+    dataset:
+      kind: classification
+      shape:
+        rows: 1600000
+        features: 16
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      max_iter: 100
+      random_state: 42
+    timeout_sec: 100
+
+  - label: logistic_regression.fit.medium.wide
+    estimator: LogisticRegression
+    dataset:
+      kind: classification
+      shape:
+        rows: 240000
+        features: 1024
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      max_iter: 100
+      random_state: 42
+    timeout_sec: 100
+
+  - label: logistic_regression.fit.small.balanced
+    estimator: LogisticRegression
+    dataset:
+      kind: classification
+      shape:
+        rows: 50000
+        features: 128
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      max_iter: 100
+      random_state: 42
+    timeout_sec: 70
+
+  - label: logistic_regression.predict.large.balanced
+    estimator: LogisticRegression
+    dataset:
+      kind: classification
+      shape:
+        rows: 5000000
+        features: 128
+        train_rows: 1000000
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      max_iter: 100
+      random_state: 42
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 850
+
+  - label: logistic_regression.predict.medium.balanced
+    estimator: LogisticRegression
+    dataset:
+      kind: classification
+      shape:
+        rows: 980000
+        features: 128
+        train_rows: 100000
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      max_iter: 100
+      random_state: 42
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: logistic_regression.predict.medium.thin
+    estimator: LogisticRegression
+    dataset:
+      kind: classification
+      shape:
+        rows: 7800000
+        features: 16
+        train_rows: 100000
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      max_iter: 100
+      random_state: 42
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: logistic_regression.predict.medium.wide
+    estimator: LogisticRegression
+    dataset:
+      kind: classification
+      shape:
+        rows: 490000
+        features: 1024
+        train_rows: 100000
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      max_iter: 100
+      random_state: 42
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: logistic_regression.predict.small.balanced
+    estimator: LogisticRegression
+    dataset:
+      kind: classification
+      shape:
+        rows: 200000
+        features: 128
+        train_rows: 10000
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      max_iter: 100
+      random_state: 42
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 70
+
+  - label: nearest_neighbors.kneighbors.large.balanced
+    estimator: NearestNeighbors
+    dataset:
+      kind: blobs
+      shape:
+        rows: 32000
+        features: 128
+        train_rows: 32000
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: kneighbors
+    input_selection:
+    - X
+    parameters:
+      n_neighbors: 10
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    timeout_sec: 850
+
+  - label: nearest_neighbors.kneighbors.medium.balanced
+    estimator: NearestNeighbors
+    dataset:
+      kind: blobs
+      shape:
+        rows: 8000
+        features: 128
+        train_rows: 8000
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: kneighbors
+    input_selection:
+    - X
+    parameters:
+      n_neighbors: 10
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    timeout_sec: 100
+
+  - label: nearest_neighbors.kneighbors.medium.thin
+    estimator: NearestNeighbors
+    dataset:
+      kind: blobs
+      shape:
+        rows: 8000
+        features: 16
+        train_rows: 8000
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: kneighbors
+    input_selection:
+    - X
+    parameters:
+      n_neighbors: 10
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    timeout_sec: 100
+
+  - label: nearest_neighbors.kneighbors.medium.wide
+    estimator: NearestNeighbors
+    dataset:
+      kind: blobs
+      shape:
+        rows: 8000
+        features: 1024
+        train_rows: 8000
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: kneighbors
+    input_selection:
+    - X
+    parameters:
+      n_neighbors: 10
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    timeout_sec: 100
+
+  - label: nearest_neighbors.kneighbors.small.balanced
+    estimator: NearestNeighbors
+    dataset:
+      kind: blobs
+      shape:
+        rows: 2000
+        features: 128
+        train_rows: 2000
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: kneighbors
+    input_selection:
+    - X
+    parameters:
+      n_neighbors: 10
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    timeout_sec: 70
+
+  - label: pca.fit_transform.large.balanced
+    estimator: PCA
+    dataset:
+      kind: matrix
+      shape:
+        rows: 1000000
+        features: 1024
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 256
+      random_state: 42
+    timeout_sec: 850
+
+  - label: pca.fit_transform.medium.balanced
+    estimator: PCA
+    dataset:
+      kind: matrix
+      shape:
+        rows: 100000
+        features: 1024
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 256
+      random_state: 42
+    timeout_sec: 100
+
+  - label: pca.fit_transform.medium.thin
+    estimator: PCA
+    dataset:
+      kind: matrix
+      shape:
+        rows: 200000
+        features: 128
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 32
+      random_state: 42
+    timeout_sec: 100
+
+  - label: pca.fit_transform.medium.wide
+    estimator: PCA
+    dataset:
+      kind: matrix
+      shape:
+        rows: 61000
+        features: 4096
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 1024
+      random_state: 42
+    timeout_sec: 100
+
+  - label: pca.fit_transform.rank128.medium.wide
+    estimator: PCA
+    dataset:
+      kind: matrix
+      shape:
+        rows: 61000
+        features: 4096
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 128
+      random_state: 42
+    timeout_sec: 100
+
+  - label: pca.fit_transform.rank256.medium.wide
+    estimator: PCA
+    dataset:
+      kind: matrix
+      shape:
+        rows: 61000
+        features: 4096
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 256
+      random_state: 42
+    timeout_sec: 100
+
+  - label: pca.fit_transform.rank512.medium.wide
+    estimator: PCA
+    dataset:
+      kind: matrix
+      shape:
+        rows: 61000
+        features: 4096
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 512
+      random_state: 42
+    timeout_sec: 100
+
+  - label: pca.fit_transform.small.balanced
+    estimator: PCA
+    dataset:
+      kind: matrix
+      shape:
+        rows: 10000
+        features: 1024
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 256
+      random_state: 42
+    timeout_sec: 70
+
+  - label: pca.transform.large.balanced
+    estimator: PCA
+    dataset:
+      kind: matrix
+      shape:
+        rows: 2400000
+        features: 1024
+        train_rows: 1000000
+      dtype: float32
+    operation: transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 256
+      random_state: 42
+    fit_input_selection:
+    - X
+    timeout_sec: 850
+
+  - label: pca.transform.medium.balanced
+    estimator: PCA
+    dataset:
+      kind: matrix
+      shape:
+        rows: 490000
+        features: 1024
+        train_rows: 100000
+      dtype: float32
+    operation: transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 256
+      random_state: 42
+    fit_input_selection:
+    - X
+    timeout_sec: 100
+
+  - label: pca.transform.medium.thin
+    estimator: PCA
+    dataset:
+      kind: matrix
+      shape:
+        rows: 980000
+        features: 128
+        train_rows: 100000
+      dtype: float32
+    operation: transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 32
+      random_state: 42
+    fit_input_selection:
+    - X
+    timeout_sec: 100
+
+  - label: pca.transform.medium.wide
+    estimator: PCA
+    dataset:
+      kind: matrix
+      shape:
+        rows: 120000
+        features: 4096
+        train_rows: 100000
+      dtype: float32
+    operation: transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 1024
+      random_state: 42
+    fit_input_selection:
+    - X
+    timeout_sec: 100
+
+  - label: pca.transform.small.balanced
+    estimator: PCA
+    dataset:
+      kind: matrix
+      shape:
+        rows: 50000
+        features: 1024
+        train_rows: 10000
+      dtype: float32
+    operation: transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 256
+      random_state: 42
+    fit_input_selection:
+    - X
+    timeout_sec: 70
+
+  - label: random_forest_classifier.fit.large.balanced
+    estimator: RandomForestClassifier
+    dataset:
+      kind: classification
+      shape:
+        rows: 2000000
+        features: 128
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      n_estimators: 20
+      max_depth: 16
+      random_state: 42
+      n_jobs: -1
+    timeout_sec: 850
+
+  - label: random_forest_classifier.fit.medium.balanced
+    estimator: RandomForestClassifier
+    dataset:
+      kind: classification
+      shape:
+        rows: 250000
+        features: 128
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      n_estimators: 20
+      max_depth: 16
+      random_state: 42
+      n_jobs: -1
+    timeout_sec: 100
+
+  - label: random_forest_classifier.fit.medium.thin
+    estimator: RandomForestClassifier
+    dataset:
+      kind: classification
+      shape:
+        rows: 1600000
+        features: 16
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      n_estimators: 20
+      max_depth: 16
+      random_state: 42
+      n_jobs: -1
+    timeout_sec: 100
+
+  - label: random_forest_classifier.fit.medium.wide
+    estimator: RandomForestClassifier
+    dataset:
+      kind: classification
+      shape:
+        rows: 240000
+        features: 1024
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      n_estimators: 20
+      max_depth: 16
+      random_state: 42
+      n_jobs: -1
+    timeout_sec: 100
+
+  - label: random_forest_classifier.fit.small.balanced
+    estimator: RandomForestClassifier
+    dataset:
+      kind: classification
+      shape:
+        rows: 50000
+        features: 128
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      n_estimators: 20
+      max_depth: 16
+      random_state: 42
+      n_jobs: -1
+    timeout_sec: 70
+
+  - label: random_forest_classifier.predict.large.balanced
+    estimator: RandomForestClassifier
+    dataset:
+      kind: classification
+      shape:
+        rows: 5000000
+        features: 128
+        train_rows: 1000000
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_estimators: 20
+      max_depth: 16
+      random_state: 42
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 850
+
+  - label: random_forest_classifier.predict.medium.balanced
+    estimator: RandomForestClassifier
+    dataset:
+      kind: classification
+      shape:
+        rows: 980000
+        features: 128
+        train_rows: 100000
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_estimators: 20
+      max_depth: 16
+      random_state: 42
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: random_forest_classifier.predict.medium.thin
+    estimator: RandomForestClassifier
+    dataset:
+      kind: classification
+      shape:
+        rows: 7800000
+        features: 16
+        train_rows: 100000
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_estimators: 20
+      max_depth: 16
+      random_state: 42
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: random_forest_classifier.predict.medium.wide
+    estimator: RandomForestClassifier
+    dataset:
+      kind: classification
+      shape:
+        rows: 490000
+        features: 1024
+        train_rows: 100000
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_estimators: 20
+      max_depth: 16
+      random_state: 42
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: random_forest_classifier.predict.small.balanced
+    estimator: RandomForestClassifier
+    dataset:
+      kind: classification
+      shape:
+        rows: 200000
+        features: 128
+        train_rows: 10000
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_estimators: 20
+      max_depth: 16
+      random_state: 42
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 70
+
+  - label: random_forest_regressor.fit.large.balanced
+    estimator: RandomForestRegressor
+    dataset:
+      kind: regression
+      shape:
+        rows: 2000000
+        features: 128
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      n_estimators: 20
+      max_depth: 16
+      random_state: 42
+      n_jobs: -1
+    timeout_sec: 850
+
+  - label: random_forest_regressor.fit.medium.balanced
+    estimator: RandomForestRegressor
+    dataset:
+      kind: regression
+      shape:
+        rows: 250000
+        features: 128
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      n_estimators: 20
+      max_depth: 16
+      random_state: 42
+      n_jobs: -1
+    timeout_sec: 100
+
+  - label: random_forest_regressor.fit.medium.thin
+    estimator: RandomForestRegressor
+    dataset:
+      kind: regression
+      shape:
+        rows: 1600000
+        features: 16
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      n_estimators: 20
+      max_depth: 16
+      random_state: 42
+      n_jobs: -1
+    timeout_sec: 100
+
+  - label: random_forest_regressor.fit.medium.wide
+    estimator: RandomForestRegressor
+    dataset:
+      kind: regression
+      shape:
+        rows: 240000
+        features: 1024
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      n_estimators: 20
+      max_depth: 16
+      random_state: 42
+      n_jobs: -1
+    timeout_sec: 100
+
+  - label: random_forest_regressor.fit.small.balanced
+    estimator: RandomForestRegressor
+    dataset:
+      kind: regression
+      shape:
+        rows: 50000
+        features: 128
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      n_estimators: 20
+      max_depth: 16
+      random_state: 42
+      n_jobs: -1
+    timeout_sec: 70
+
+  - label: random_forest_regressor.predict.large.balanced
+    estimator: RandomForestRegressor
+    dataset:
+      kind: regression
+      shape:
+        rows: 5000000
+        features: 128
+        train_rows: 1000000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_estimators: 20
+      max_depth: 16
+      random_state: 42
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 850
+
+  - label: random_forest_regressor.predict.medium.balanced
+    estimator: RandomForestRegressor
+    dataset:
+      kind: regression
+      shape:
+        rows: 980000
+        features: 128
+        train_rows: 100000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_estimators: 20
+      max_depth: 16
+      random_state: 42
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: random_forest_regressor.predict.medium.thin
+    estimator: RandomForestRegressor
+    dataset:
+      kind: regression
+      shape:
+        rows: 7800000
+        features: 16
+        train_rows: 100000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_estimators: 20
+      max_depth: 16
+      random_state: 42
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: random_forest_regressor.predict.medium.wide
+    estimator: RandomForestRegressor
+    dataset:
+      kind: regression
+      shape:
+        rows: 490000
+        features: 1024
+        train_rows: 100000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_estimators: 20
+      max_depth: 16
+      random_state: 42
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: random_forest_regressor.predict.small.balanced
+    estimator: RandomForestRegressor
+    dataset:
+      kind: regression
+      shape:
+        rows: 200000
+        features: 128
+        train_rows: 10000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      n_estimators: 20
+      max_depth: 16
+      random_state: 42
+      n_jobs: -1
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 70
+
+  - label: ridge.fit.large.balanced
+    estimator: Ridge
+    dataset:
+      kind: regression
+      shape:
+        rows: 5000000
+        features: 128
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      alpha: 1.0
+    timeout_sec: 850
+
+  - label: ridge.fit.medium.balanced
+    estimator: Ridge
+    dataset:
+      kind: regression
+      shape:
+        rows: 500000
+        features: 128
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      alpha: 1.0
+    timeout_sec: 100
+
+  - label: ridge.fit.medium.thin
+    estimator: Ridge
+    dataset:
+      kind: regression
+      shape:
+        rows: 1600000
+        features: 16
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      alpha: 1.0
+    timeout_sec: 100
+
+  - label: ridge.fit.medium.wide
+    estimator: Ridge
+    dataset:
+      kind: regression
+      shape:
+        rows: 240000
+        features: 1024
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      alpha: 1.0
+    timeout_sec: 100
+
+  - label: ridge.fit.small.balanced
+    estimator: Ridge
+    dataset:
+      kind: regression
+      shape:
+        rows: 50000
+        features: 128
+      dtype: float32
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      alpha: 1.0
+    timeout_sec: 70
+
+  - label: ridge.predict.large.balanced
+    estimator: Ridge
+    dataset:
+      kind: regression
+      shape:
+        rows: 5000000
+        features: 128
+        train_rows: 1000000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      alpha: 1.0
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 850
+
+  - label: ridge.predict.medium.balanced
+    estimator: Ridge
+    dataset:
+      kind: regression
+      shape:
+        rows: 980000
+        features: 128
+        train_rows: 100000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      alpha: 1.0
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: ridge.predict.medium.thin
+    estimator: Ridge
+    dataset:
+      kind: regression
+      shape:
+        rows: 7800000
+        features: 16
+        train_rows: 100000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      alpha: 1.0
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: ridge.predict.medium.wide
+    estimator: Ridge
+    dataset:
+      kind: regression
+      shape:
+        rows: 490000
+        features: 1024
+        train_rows: 100000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      alpha: 1.0
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: ridge.predict.small.balanced
+    estimator: Ridge
+    dataset:
+      kind: regression
+      shape:
+        rows: 200000
+        features: 128
+        train_rows: 10000
+      dtype: float32
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      alpha: 1.0
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 70
+
+  - label: standard_scaler.fit_transform.large.balanced
+    estimator: StandardScaler
+    dataset:
+      kind: matrix
+      shape:
+        rows: 5000000
+        features: 128
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    parameters: {}
+    timeout_sec: 850
+
+  - label: standard_scaler.fit_transform.medium.balanced
+    estimator: StandardScaler
+    dataset:
+      kind: matrix
+      shape:
+        rows: 500000
+        features: 128
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    parameters: {}
+    timeout_sec: 100
+
+  - label: standard_scaler.fit_transform.medium.thin
+    estimator: StandardScaler
+    dataset:
+      kind: matrix
+      shape:
+        rows: 1600000
+        features: 16
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    parameters: {}
+    timeout_sec: 100
+
+  - label: standard_scaler.fit_transform.medium.wide
+    estimator: StandardScaler
+    dataset:
+      kind: matrix
+      shape:
+        rows: 240000
+        features: 1024
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    parameters: {}
+    timeout_sec: 100
+
+  - label: standard_scaler.fit_transform.small.balanced
+    estimator: StandardScaler
+    dataset:
+      kind: matrix
+      shape:
+        rows: 50000
+        features: 128
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    parameters: {}
+    timeout_sec: 70
+
+  - label: standard_scaler.transform.large.balanced
+    estimator: StandardScaler
+    dataset:
+      kind: matrix
+      shape:
+        rows: 5000000
+        features: 128
+        train_rows: 1000000
+      dtype: float32
+    operation: transform
+    input_selection:
+    - X
+    parameters: {}
+    fit_input_selection:
+    - X
+    timeout_sec: 850
+
+  - label: standard_scaler.transform.medium.balanced
+    estimator: StandardScaler
+    dataset:
+      kind: matrix
+      shape:
+        rows: 980000
+        features: 128
+        train_rows: 100000
+      dtype: float32
+    operation: transform
+    input_selection:
+    - X
+    parameters: {}
+    fit_input_selection:
+    - X
+    timeout_sec: 100
+
+  - label: standard_scaler.transform.medium.thin
+    estimator: StandardScaler
+    dataset:
+      kind: matrix
+      shape:
+        rows: 7800000
+        features: 16
+        train_rows: 100000
+      dtype: float32
+    operation: transform
+    input_selection:
+    - X
+    parameters: {}
+    fit_input_selection:
+    - X
+    timeout_sec: 100
+
+  - label: standard_scaler.transform.medium.wide
+    estimator: StandardScaler
+    dataset:
+      kind: matrix
+      shape:
+        rows: 490000
+        features: 1024
+        train_rows: 100000
+      dtype: float32
+    operation: transform
+    input_selection:
+    - X
+    parameters: {}
+    fit_input_selection:
+    - X
+    timeout_sec: 100
+
+  - label: standard_scaler.transform.small.balanced
+    estimator: StandardScaler
+    dataset:
+      kind: matrix
+      shape:
+        rows: 200000
+        features: 128
+        train_rows: 10000
+      dtype: float32
+    operation: transform
+    input_selection:
+    - X
+    parameters: {}
+    fit_input_selection:
+    - X
+    timeout_sec: 70
+
+  - label: svc.fit.large.balanced
+    estimator: SVC
+    dataset:
+      kind: classification
+      shape:
+        rows: 32000
+        features: 64
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      kernel: rbf
+    timeout_sec: 850
+
+  - label: svc.fit.medium.balanced
+    estimator: SVC
+    dataset:
+      kind: classification
+      shape:
+        rows: 8000
+        features: 64
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      kernel: rbf
+    timeout_sec: 100
+
+  - label: svc.fit.medium.thin
+    estimator: SVC
+    dataset:
+      kind: classification
+      shape:
+        rows: 8000
+        features: 8
+      parameters:
+        n_classes: 2
+        n_informative: 8
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      kernel: rbf
+    timeout_sec: 100
+
+  - label: svc.fit.medium.wide
+    estimator: SVC
+    dataset:
+      kind: classification
+      shape:
+        rows: 8000
+        features: 512
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      kernel: rbf
+    timeout_sec: 100
+
+  - label: svc.fit.small.balanced
+    estimator: SVC
+    dataset:
+      kind: classification
+      shape:
+        rows: 2000
+        features: 64
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: fit
+    input_selection:
+    - X
+    - y
+    parameters:
+      kernel: rbf
+    timeout_sec: 70
+
+  - label: svc.predict.large.balanced
+    estimator: SVC
+    dataset:
+      kind: classification
+      shape:
+        rows: 32000
+        features: 64
+        train_rows: 32000
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      kernel: rbf
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 850
+
+  - label: svc.predict.medium.balanced
+    estimator: SVC
+    dataset:
+      kind: classification
+      shape:
+        rows: 8000
+        features: 64
+        train_rows: 8000
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      kernel: rbf
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: svc.predict.medium.thin
+    estimator: SVC
+    dataset:
+      kind: classification
+      shape:
+        rows: 8000
+        features: 8
+        train_rows: 8000
+      parameters:
+        n_classes: 2
+        n_informative: 8
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      kernel: rbf
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: svc.predict.medium.wide
+    estimator: SVC
+    dataset:
+      kind: classification
+      shape:
+        rows: 8000
+        features: 512
+        train_rows: 8000
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      kernel: rbf
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: svc.predict.small.balanced
+    estimator: SVC
+    dataset:
+      kind: classification
+      shape:
+        rows: 2000
+        features: 64
+        train_rows: 2000
+      parameters:
+        n_classes: 2
+        n_informative: 16
+        n_redundant: 0
+      dtype:
+        X: float32
+        y: int64
+    operation: predict
+    input_selection:
+    - X
+    parameters:
+      kernel: rbf
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 70
+
+  - label: target_encoder.fit_transform.large.balanced
+    estimator: TargetEncoder
+    dataset:
+      kind: categorical
+      shape:
+        rows: 7800000
+        features: 32
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    - y
+    parameters:
+      cv: 5
+      smooth: auto
+      random_state: 42
+    timeout_sec: 850
+
+  - label: target_encoder.fit_transform.medium.balanced
+    estimator: TargetEncoder
+    dataset:
+      kind: categorical
+      shape:
+        rows: 780000
+        features: 32
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    - y
+    parameters:
+      cv: 5
+      smooth: auto
+      random_state: 42
+    timeout_sec: 100
+
+  - label: target_encoder.fit_transform.medium.thin
+    estimator: TargetEncoder
+    dataset:
+      kind: categorical
+      shape:
+        rows: 3100000
+        features: 8
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    - y
+    parameters:
+      cv: 5
+      smooth: auto
+      random_state: 42
+    timeout_sec: 100
+
+  - label: target_encoder.fit_transform.medium.wide
+    estimator: TargetEncoder
+    dataset:
+      kind: categorical
+      shape:
+        rows: 250000
+        features: 128
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    - y
+    parameters:
+      cv: 5
+      smooth: auto
+      random_state: 42
+    timeout_sec: 100
+
+  - label: target_encoder.fit_transform.small.balanced
+    estimator: TargetEncoder
+    dataset:
+      kind: categorical
+      shape:
+        rows: 200000
+        features: 32
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    - y
+    parameters:
+      cv: 5
+      smooth: auto
+      random_state: 42
+    timeout_sec: 70
+
+  - label: target_encoder.transform.large.balanced
+    estimator: TargetEncoder
+    dataset:
+      kind: categorical
+      shape:
+        rows: 16000000
+        features: 32
+        train_rows: 100000
+      dtype: float32
+    operation: transform
+    input_selection:
+    - X
+    parameters:
+      cv: 5
+      smooth: auto
+      random_state: 42
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 850
+
+  - label: target_encoder.transform.medium.balanced
+    estimator: TargetEncoder
+    dataset:
+      kind: categorical
+      shape:
+        rows: 3900000
+        features: 32
+        train_rows: 25000
+      dtype: float32
+    operation: transform
+    input_selection:
+    - X
+    parameters:
+      cv: 5
+      smooth: auto
+      random_state: 42
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: target_encoder.transform.medium.thin
+    estimator: TargetEncoder
+    dataset:
+      kind: categorical
+      shape:
+        rows: 16000000
+        features: 8
+        train_rows: 25000
+      dtype: float32
+    operation: transform
+    input_selection:
+    - X
+    parameters:
+      cv: 5
+      smooth: auto
+      random_state: 42
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: target_encoder.transform.medium.wide
+    estimator: TargetEncoder
+    dataset:
+      kind: categorical
+      shape:
+        rows: 980000
+        features: 128
+        train_rows: 25000
+      dtype: float32
+    operation: transform
+    input_selection:
+    - X
+    parameters:
+      cv: 5
+      smooth: auto
+      random_state: 42
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 100
+
+  - label: target_encoder.transform.small.balanced
+    estimator: TargetEncoder
+    dataset:
+      kind: categorical
+      shape:
+        rows: 780000
+        features: 32
+        train_rows: 5000
+      dtype: float32
+    operation: transform
+    input_selection:
+    - X
+    parameters:
+      cv: 5
+      smooth: auto
+      random_state: 42
+    fit_input_selection:
+    - X
+    - y
+    timeout_sec: 70
+
+  - label: tsne.fit_transform.large.balanced
+    estimator: TSNE
+    dataset:
+      kind: blobs
+      shape:
+        rows: 50000
+        features: 64
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 2
+      perplexity: 30
+      random_state: 42
+      method: barnes_hut
+    timeout_sec: 850
+
+  - label: tsne.fit_transform.medium.balanced
+    estimator: TSNE
+    dataset:
+      kind: blobs
+      shape:
+        rows: 10000
+        features: 64
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 2
+      perplexity: 30
+      random_state: 42
+      method: barnes_hut
+    timeout_sec: 100
+
+  - label: tsne.fit_transform.medium.thin
+    estimator: TSNE
+    dataset:
+      kind: blobs
+      shape:
+        rows: 10000
+        features: 8
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 2
+      perplexity: 30
+      random_state: 42
+      method: barnes_hut
+    timeout_sec: 100
+
+  - label: tsne.fit_transform.medium.wide
+    estimator: TSNE
+    dataset:
+      kind: blobs
+      shape:
+        rows: 10000
+        features: 512
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 2
+      perplexity: 30
+      random_state: 42
+      method: barnes_hut
+    timeout_sec: 100
+
+  - label: tsne.fit_transform.small.balanced
+    estimator: TSNE
+    dataset:
+      kind: blobs
+      shape:
+        rows: 2000
+        features: 64
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 2
+      perplexity: 30
+      random_state: 42
+      method: barnes_hut
+    timeout_sec: 70
+
+  - label: umap.fit_transform.large.balanced
+    estimator: UMAP
+    dataset:
+      kind: blobs
+      shape:
+        rows: 50000
+        features: 64
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 2
+      n_neighbors: 15
+      random_state: 42
+    timeout_sec: 850
+
+  - label: umap.fit_transform.medium.balanced
+    estimator: UMAP
+    dataset:
+      kind: blobs
+      shape:
+        rows: 10000
+        features: 64
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 2
+      n_neighbors: 15
+      random_state: 42
+    timeout_sec: 100
+
+  - label: umap.fit_transform.medium.thin
+    estimator: UMAP
+    dataset:
+      kind: blobs
+      shape:
+        rows: 10000
+        features: 8
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 2
+      n_neighbors: 15
+      random_state: 42
+    timeout_sec: 100
+
+  - label: umap.fit_transform.medium.wide
+    estimator: UMAP
+    dataset:
+      kind: blobs
+      shape:
+        rows: 10000
+        features: 512
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 2
+      n_neighbors: 15
+      random_state: 42
+    timeout_sec: 100
+
+  - label: umap.fit_transform.small.balanced
+    estimator: UMAP
+    dataset:
+      kind: blobs
+      shape:
+        rows: 2000
+        features: 64
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: fit_transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 2
+      n_neighbors: 15
+      random_state: 42
+    timeout_sec: 70
+
+  - label: umap.transform.large.balanced
+    estimator: UMAP
+    dataset:
+      kind: blobs
+      shape:
+        rows: 7800000
+        features: 64
+        train_rows: 50000
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 2
+      n_neighbors: 15
+      random_state: 42
+    fit_input_selection:
+    - X
+    timeout_sec: 850
+
+  - label: umap.transform.medium.balanced
+    estimator: UMAP
+    dataset:
+      kind: blobs
+      shape:
+        rows: 2000000
+        features: 64
+        train_rows: 10000
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 2
+      n_neighbors: 15
+      random_state: 42
+    fit_input_selection:
+    - X
+    timeout_sec: 100
+
+  - label: umap.transform.medium.thin
+    estimator: UMAP
+    dataset:
+      kind: blobs
+      shape:
+        rows: 16000000
+        features: 8
+        train_rows: 10000
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 2
+      n_neighbors: 15
+      random_state: 42
+    fit_input_selection:
+    - X
+    timeout_sec: 100
+
+  - label: umap.transform.medium.wide
+    estimator: UMAP
+    dataset:
+      kind: blobs
+      shape:
+        rows: 240000
+        features: 512
+        train_rows: 10000
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 2
+      n_neighbors: 15
+      random_state: 42
+    fit_input_selection:
+    - X
+    timeout_sec: 100
+
+  - label: umap.transform.small.balanced
+    estimator: UMAP
+    dataset:
+      kind: blobs
+      shape:
+        rows: 390000
+        features: 64
+        train_rows: 2000
+      parameters:
+        centers: 8
+      dtype: float32
+    operation: transform
+    input_selection:
+    - X
+    parameters:
+      n_components: 2
+      n_neighbors: 15
+      random_state: 42
+    fit_input_selection:
+    - X
+    timeout_sec: 70
