@@ -1,47 +1,34 @@
 cuml.benchmark
 ==============
 
-Execution Harness
------------------
+The built-in harness runs YAML-defined estimator workloads and writes JSON
+observation artifacts. Start with the
+:doc:`CLI benchmarking guide </developer_guide/benchmarking>` for commands,
+suite/profile selection, manifest examples, timing semantics, and resume rules.
 
-.. automodule:: cuml.benchmark.harness
-   :members: run_suite
+Suite loading and execution
+---------------------------
 
-Suite Configuration
--------------------
+For programmatic use, load a built-in suite name or a YAML path, then pass the
+resolved suite to the runner. Direct callers are responsible for backend process
+startup; the CLI handles this automatically, including ``cuml.accel`` activation.
 
-.. automodule:: cuml.benchmark.suite
-   :members: Suite, ResolvedCase, SuiteError, resolve_case, load_suite, load_suite_reference, suite_profile_names, suite_manifest_json_schema
+.. autofunction:: cuml.benchmark.suite.load_suite_reference
 
-Execution Backends
-------------------
+.. autofunction:: cuml.benchmark.harness.run_suite
 
-.. automodule:: cuml.benchmark.backends.base
-   :members:
+Schemas
+-------
 
-Estimator Specifications
-------------------------
+Suite manifests require ``version: 2``. The generated JSON Schema describes the
+strict manifest structure; suite loading additionally checks semantic constraints
+such as inference inputs, backend compatibility, and duplicate workload IDs.
 
-.. automodule:: cuml.benchmark.registry
-   :members: EstimatorSpec
+.. autofunction:: cuml.benchmark.suite.suite_manifest_json_schema
 
-Data Generation
----------------
+Result artifacts use ``schema_version: 2`` and contain ``run`` metadata and
+``results`` with raw warmup/measurement observations. The canonical JSON Schema
+is packaged at ``cuml/benchmark/schemas/benchmark-result.schema.json``; retrieve
+the resource with:
 
-.. automodule:: cuml.benchmark.datasets
-   :members: generate_data, resolve_dataset, resolve_dtypes
-
-Artifact Identity and Schema
-----------------------------
-
-.. automodule:: cuml.benchmark.identity
-   :members: canonical_json, identity_preimage, result_id, CanonicalizationError
-
-.. automodule:: cuml.benchmark.schemas
-   :members: benchmark_result_schema
-
-NVTX Profiling
---------------
-
-.. automodule:: cuml.benchmark.nvtx_benchmark
-   :members: Profiler
+.. autofunction:: cuml.benchmark.schemas.benchmark_result_schema
