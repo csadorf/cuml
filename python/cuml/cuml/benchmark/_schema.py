@@ -54,6 +54,7 @@ class CaseManifest(msgspec.Struct, forbid_unknown_fields=True):
     operation: NonEmptyString
     parameters: dict[str, Any]
     input_selection: InputSelection
+    label: NonEmptyString | None = None
     # Omission inherits the suite implementations; a list narrows applicability.
     implementations: Implementations | None = None
     # Required for inference, forbidden for fitting (validated by the loader).

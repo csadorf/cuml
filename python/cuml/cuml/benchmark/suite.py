@@ -102,6 +102,7 @@ class ResolvedCase:
     warmups: int
     repetitions: int
     timeout_sec: float | None
+    human_label: str | None = None
 
     @property
     def lifecycle(self) -> Literal["fit", "inference"]:
@@ -119,8 +120,10 @@ class ResolvedCase:
 
     @property
     def label(self) -> str:
-        """Return a compact label derived from the workload identifier."""
-        return f"case-{self.id.removeprefix('sha256:')[:20]}"
+        """Return the supplied display label or a workload-derived fallback."""
+        return (
+            self.human_label or f"case-{self.id.removeprefix('sha256:')[:20]}"
+        )
 
 
 def resolve_case(
@@ -151,6 +154,8 @@ def _resolve_case(
     schema = _manifest_schema()
     if request.operation not in OPERATIONS:
         raise SuiteError(f"invalid operation {request.operation!r}")
+    if request.label is not None and not request.label.strip():
+        raise SuiteError("label must not be whitespace-only")
     is_fit = request.operation in TRAINING_OPERATIONS
     dataset = request.dataset
     shape = dataset.shape
@@ -196,6 +201,7 @@ def _resolve_case(
         raise SuiteError(f"dataset: {exc}") from exc
     return ResolvedCase(
         estimator=request.estimator,
+        human_label=request.label,
         dataset=dataset.kind,
         operation=request.operation,
         generated_rows=generated_rows,
@@ -291,6 +297,7 @@ def load_suite(
     profile_data = manifest.profiles[profile_name]
     resolved = {name: [] for name in selected}
     seen = {name: set() for name in selected}
+    seen_labels = {name: set() for name in selected}
     for index, item in enumerate(manifest.cases):
         where = f"case {index}"
         applicable = item.implementations or manifest.implementations
@@ -315,6 +322,11 @@ def load_suite(
                 raise SuiteError(
                     f"{where}: duplicate case identity {case.id!r}"
                 )
+            if case.label in seen_labels[implementation]:
+                raise SuiteError(
+                    f"{where}: duplicate case label {case.label!r}"
+                )
+            seen_labels[implementation].add(case.label)
             seen[implementation].add(case.id)
             resolved[implementation].append(case)
     runs = []

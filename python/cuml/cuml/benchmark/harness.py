@@ -78,6 +78,7 @@ def _run_record(suite: Suite, argv: list[str]) -> dict[str, Any]:
                 "execution_plan": [
                     {
                         "case_label": c.label,
+                        "case_id": c.id,
                         "warmups": c.warmups,
                         "repetitions": c.repetitions,
                         "timeout_sec": c.timeout_sec,
@@ -532,7 +533,7 @@ def run_suite(
                 )
                 continue
             label = (
-                f"{case.estimator}.{case.operation} "
+                f"{case.label}: {case.estimator}.{case.operation} "
                 f"({case.measured_rows}x{case.features})"
             )
             logger.info("[%d/%d] %s: starting", index, total, label)

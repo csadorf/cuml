@@ -27,7 +27,12 @@ python -m cuml.benchmark --suite ./my-suite.yaml --output custom-results
 ```
 
 The `estimators` built-in (the default suite) is packaged in
-`python/cuml/cuml/benchmark/suites/estimators.yaml`. Refer to the manifest for
+`python/cuml/cuml/benchmark/suites/estimators.yaml`. Cases may specify an
+optional nonempty `label` for progress output and result artifacts. Labels must
+be unique per backend and do not affect content-derived workload identifiers.
+Omitted labels default to `case-<hash>`.
+
+Refer to the manifest for
 its workloads, implementation backends, and profiles.
 
 By default, the CLI runs benchmarks using only `cuml`. Use `--implementation`

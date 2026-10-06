@@ -120,6 +120,29 @@ def document():
     }
 
 
+@pytest.mark.parametrize("label", [None, "PCA medium workload"])
+def test_case_display_label_does_not_change_identity(label):
+    original = resolve_case(_request(), PROFILE)
+    labeled = resolve_case(_request(label=label), PROFILE)
+    assert labeled.id == original.id
+    assert labeled.label == (label or original.label)
+
+
+@pytest.mark.parametrize("label", ["", "   ", 42])
+def test_invalid_case_labels(label):
+    with pytest.raises(SuiteError):
+        resolve_case(_request(label=label), PROFILE)
+
+
+def test_duplicate_labels_rejected(document, tmp_path):
+    document["cases"] = [
+        _request(label="same"),
+        _request(label="same", parameters={"n_components": 3}),
+    ]
+    with pytest.raises(SuiteError, match="duplicate case label"):
+        load_suite(_write_suite(tmp_path, document))
+
+
 # Suite coverage and workload definitions. No estimator execution here.
 
 
@@ -215,6 +238,10 @@ def test_packaged_suites_are_valid_and_comparable():
                         profile,
                         case.estimator,
                         case.operation,
+                        case.measured_rows,
+                        case.training_rows,
+                        case.features,
+                        json.dumps(case.parameters, sort_keys=True),
                         case.input_format,
                         case.dtypes["X"],
                     )
@@ -726,9 +753,11 @@ def test_accel_warmup_dispatch_verification(monkeypatch, fallback_at):
     monkeypatch.setattr(
         importlib,
         "import_module",
-        lambda name: SimpleNamespace(profile=profile)
-        if name == "cuml.accel"
-        else original(name),
+        lambda name: (
+            SimpleNamespace(profile=profile)
+            if name == "cuml.accel"
+            else original(name)
+        ),
     )
     monkeypatch.setattr(backend, "load_estimator", lambda spec: Estimator)
     monkeypatch.setattr(backend, "synchronize", lambda value=None: None)
@@ -907,6 +936,7 @@ def test_cli_artifact_checkpoint_and_resume(registered_suite, monkeypatch):
         "schema",
         "methodology",
         "plan",
+        "label",
         "software",
         "system",
         "unknown_id",
@@ -927,6 +957,10 @@ def test_resume_rejects_incompatible_artifact(registered_suite, change):
         artifact["run"]["extensions"][harness.EXTENSION]["execution_plan"][0][
             "repetitions"
         ] += 1
+    elif change == "label":
+        artifact["run"]["extensions"][harness.EXTENSION]["execution_plan"][0][
+            "case_label"
+        ] = "outdated display label"
     elif change == "unknown_id":
         artifact["results"][0]["id"] = "sha256:unknown"
     elif change in {"workload", "failed_workload"}:
