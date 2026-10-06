@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: Copyright (c) 2026, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-"""Command line interface for suite-driven neutral-v2 benchmarks."""
+"""Run benchmark suites and save measurement results."""
 
 from __future__ import annotations
 
@@ -44,7 +44,7 @@ def _parser(
     parser.add_argument(
         "--output",
         help=(
-            "output directory for one neutral-v2 JSON artifact per backend; "
+            "output directory for one JSON results file per selected backend; "
             "defaults to a timestamped directory "
             "in the current directory"
         ),

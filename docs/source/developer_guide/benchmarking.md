@@ -97,13 +97,12 @@ nonempty subset, for example:
     # ... dataset, operation, input_selection, and parameters ...
 ```
 
-The manifest uses `version: 2`. Get the complete generated schema from
-`cuml.benchmark.suite.suite_manifest_json_schema()`; see the
-[API and schema reference](../api/cuml.benchmark).
+See the [API and schema reference](../api/cuml.benchmark) for suite validation
+and the generated schema.
 
-## Timing and artifacts
+## Timing and results
 
-The output directory contains one neutral-v2 JSON artifact per backend:
+The output directory contains one JSON results file per selected backend:
 
 ```text
 results/
@@ -115,29 +114,26 @@ results/
 
 Without `--output`, the CLI chooses an unused timestamped directory in the current
 working directory. An explicit output directory may already exist. **Without
-`--resume`, artifacts for selected backends are replaced**; unrelated files and
-unselected backend artifacts are left untouched. If startup fails before an
-artifact is created, the failure is reported in the console and exit status.
+`--resume`, results files for selected backends are replaced**; unrelated files and
+unselected backends' results files are left untouched. If startup fails before a
+results file is created, the failure is reported in the console and exit status.
 Check the command's exit status to confirm the invocation succeeded.
 
-Each artifact contains:
+Each results file contains:
 
 - **Run metadata:** command, suite/profile, backend execution plan, system, and
   software used for that backend run.
 - **Case results:** workload descriptors, implementation, and success/failure.
   Workload IDs are backend-independent, so matching cases can be joined across
-  artifact files. Each backend run has its own run ID.
+  results files. Each backend run has its own run ID.
 - **Observations:** individual warmup and measurement repetitions. Use successful
   measurement observations to calculate performance summaries from raw timings.
 - **Timing:** synchronized wall time in seconds for the selected estimator
   operation. Preparation and setup are excluded, so these timings differ from
   total elapsed console time.
 
-Each backend checkpoints its artifact after every case, including failures.
-Artifacts retain `schema_version: 2`; see
-`cuml/benchmark/schemas/benchmark-result.schema.json` or retrieve it with
-`cuml.benchmark.schemas.benchmark_result_schema()` in the
-[API and schema reference](../api/cuml.benchmark).
+Each backend saves its results file after every case, including failures.
+See the [API and schema reference](../api/cuml.benchmark) for the results schema.
 
 ## Resume a run
 
@@ -148,11 +144,11 @@ python -m cuml.benchmark --suite estimators --profile smoke \
 
 `--resume` requires an explicit, existing output directory. For each selected
 backend, it retains successful cases, retries failed cases from scratch, and
-runs missing cases. A missing backend artifact starts a new backend run. Other
-backends' artifacts are preserved when selecting a subset or adding another
+runs missing cases. A missing backend results file starts a new backend run. Other
+backends' results files are preserved when selecting a subset or adding another
 backend.
 
-Existing artifacts must be compatible: schema version, methodology, suite
+Existing results files must be compatible: schema version, methodology, suite
 metadata (including path, backend, profile, and execution plan), software, and
 system metadata must match. Original backend run IDs are preserved. Changing
 counts, timeouts, suite location, packages, or hardware can prevent resume.
