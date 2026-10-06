@@ -1,699 +1,347 @@
 # cuML Benchmark Suite
 
-This document describes how to run the cuML benchmark suite. The tools support two execution modes:
-
-- **Full mode**: `python -m cuml.benchmark` — requires cuML and GPU dependencies; runs GPU + CPU benchmarks.
-- **Standalone mode**: `python run_benchmarks.py` — works without cuML installed (e.g. from the repo); runs CPU-only benchmarks when cuML is not available.
-
-The benchmark runner also supports YAML manifests. A manifest is the declarative source of truth for a benchmark suite, while CLI flags can be used to filter or override selected fields at runtime.
-
-## Contents
-
-- [Running the benchmarks](#running-the-benchmarks)
-- [Common options](#common-options)
-- [Examples](#examples)
-- [Adding algorithm coverage](#adding-algorithm-coverage)
-- [YAML manifests](#yaml-manifests)
-  - [Manifest structure](#top-level-schema)
-  - [`suite`](#suite)
-  - [`profiles`](#profiles)
-  - [Compact `variants`](#compact-variants)
-  - [`defaults`](#defaults)
-  - [Benchmark entry schema](#benchmark-entry-schema)
-  - [Choosing dimensions](#choosing-dimensions)
-  - [Creating your own manifest](#creating-your-own-manifest)
-  - [CLI overrides in config mode](#cli-overrides-in-config-mode)
-- [Input types](#input-types)
-- [Manifest structural validation](#manifest-structural-validation)
+The suite-driven benchmark harness executes one implementation per process and
+writes implementation-neutral, version-2 JSON artifacts. Workloads are defined
+by strict version-2 YAML manifests. The legacy runners, version-1 manifests,
+parameter-sweep CLI, and flat CSV exports are no longer supported.
 
 ## Running the benchmarks
 
-### Full mode (cuML installed)
-
-When cuML is installed, use the module entry point:
-
-```bash
-python -m cuml.benchmark --dataset classification LogisticRegression --csv results.csv
-```
-
-If a GPU is available, this runs both GPU (cuML) and CPU implementations and reports speedup.
-Use `--output` to write the canonical JSON benchmark artifact:
+Use an environment with this checkout's cuML Python package installed, PyYAML,
+msgspec, NumPy, SciPy, and scikit-learn. Native cuML and cuml.accel additionally require
+their GPU runtime dependencies; distributed cuML requires Dask dependencies and
+at least two visible GPUs.
 
 ```bash
-python -m cuml.benchmark --dataset classification LogisticRegression --output results.json
+python -m cuml.benchmark --help
+python -m cuml.benchmark --suite cuml_sg --profile smoke --output cuml.json
+python -m cuml.benchmark --suite sklearn_cpu --profile smoke --output sklearn.json
+python -m cuml.benchmark --suite cuml_accel --profile smoke --output accel.json
+python -m cuml.benchmark --suite cuml_mg --profile smoke --output dask.json
 ```
 
-To run a YAML-defined suite:
-
-```bash
-python -m cuml.benchmark \
-  --config python/cuml/cuml/benchmark/configs/single_gpu.yaml \
-  --profile default \
-  --backends gpu \
-  --output results.json
-```
-
-To run the tiny harness-validation manifest:
-
-```bash
-python -m cuml.benchmark \
-  --config python/cuml/cuml/benchmark/configs/test.yaml \
-  --profile default \
-  --backends cpu
-```
-
-### Standalone mode (from the repository)
-
-From the `python/cuml/cuml/benchmark/` directory, you can run without installing cuML:
-
-```bash
-cd python/cuml/cuml/benchmark/
-python run_benchmarks.py --dataset classification LogisticRegression
-```
-
-When cuML is not installed, only CPU (e.g. scikit-learn) benchmarks run. The same script works with cuML installed for full GPU+CPU runs.
-
-Standalone mode also supports YAML manifests:
-
-```bash
-cd python/cuml/cuml/benchmark/
-python run_benchmarks.py \
-  --config configs/test.yaml \
-  --profile default \
-  --backends cpu
-```
-
-The following Python packages are required for standalone mode:
-
-```bash
-pip install numpy pandas scikit-learn scipy
-```
-
-YAML manifests require PyYAML and msgspec. If either is not installed, the
-benchmark CLI will print install instructions. You can install them with:
-
-```bash
-conda install -c conda-forge pyyaml msgspec
-# or
-python -m pip install pyyaml msgspec
-```
-
-### CPU-only mode
-
-To run only CPU benchmarks (e.g. when no GPU or to compare CPU implementations only):
-
-```bash
-python -m cuml.benchmark --skip-gpu --dataset classification LogisticRegression
-# or: python run_benchmarks.py --skip-gpu --dataset classification LogisticRegression
-```
-
-### GPU-only mode
-
-To run only GPU (cuML) benchmarks:
-
-```bash
-python -m cuml.benchmark --skip-cpu --dataset classification LogisticRegression
-```
-
-**Note:** Do not use both `--skip-gpu` and `--skip-cpu`; that would run no benchmarks. The script will report an error.
-
-## Common options
+The built-in suites are `cuml_sg` (the default), `sklearn_cpu`, `cuml_accel`,
+and `cuml_mg`. Use `--suite /path/to/suite.yaml` for a custom manifest. Each
+manifest selects its implementation; run implementations in separate processes.
+The accel CLI activates acceleration at process startup before estimator imports.
 
 | Option | Description |
 |--------|-------------|
-| `--dataset` | Dataset name: e.g. `blobs`, `classification`, `regression`, `higgs`. Use `--print-datasets` to list all. |
-| `--config` | Path to a YAML benchmark manifest. |
-| `--profile` | Named profile to select from a YAML benchmark manifest. |
-| `--backends` | Comma-separated backends to run (`cpu`, `gpu`). |
-| `--skip-gpu` | Skip GPU/cuML benchmarks (CPU only); compatibility shortcut. |
-| `--skip-cpu` | Skip CPU benchmarks (GPU/cuML only); compatibility shortcut. |
-| `--output FILE` | Save the canonical JSON artifact with metadata and grouped benchmark results. |
-| `--csv [FILE]` | Save a legacy flat CSV export. |
-| `--min-rows`, `--max-rows`, `--num-sizes` | Control sample sizes for scaling benchmarks. |
-| `--input-dimensions` | Feature dimensions to test (e.g. `16 256`). |
-| `--metadata-override KEY=VALUE` | Override a JSON metadata field using dotted paths, e.g. `hardware.label=test-node`. May be repeated. |
-| `--print-algorithms` | List available algorithms and exit. |
-| `--print-datasets` | List available datasets and exit. |
-| `--print-status` | Print GPU/cuML availability and exit. |
+| `--suite` | Built-in suite name or version-2 YAML manifest path; defaults to `cuml_sg`. |
+| `--profile` | Profile defined by the selected suite; defaults to `standard`. |
+| `--output` | JSON artifact path; defaults to a timestamped file in the current directory. |
+| `--resume` | Requires `--output`; retain successful cases from a compatible artifact and retry failures. |
+| `-v`, `--verbose` | Include warmup and measurement repetition details in progress logs. |
 
-## Examples
+The artifact is checkpointed atomically after each case. Case errors are recorded
+and execution continues; the CLI exits nonzero if any case fails. Keyboard
+interruption checkpoints the interrupted case before propagating. Resume requires
+matching suite, software, system metadata, and workload identities.
 
-Run a single algorithm at default sizes:
+Progress uses Python's `cuml.benchmark` logger: `INFO` for suite and case status,
+`DEBUG` for individual repetitions, and `ERROR` for failures, including their
+phase and reason. The CLI writes these logs to stderr; failure reasons are shown
+without `--verbose`. Python callers can configure standard logging handlers and
+levels instead of passing progress callbacks or verbosity to `run_suite`.
+Subprocess logs are delivered through the parent, so the same handlers apply to
+both execution modes. Handlers should be fast and nonblocking.
 
-```bash
-python -m cuml.benchmark --dataset classification LogisticRegression
-```
+Logs are best-effort diagnostics, not a second results database. The artifact is
+the authoritative record and is checkpointed before case completion is logged.
+Worker phase tracking is independent of logging, so timeouts and crashes retain
+the last phase received even when logs are disabled. A hard worker failure does
+not recover observations that were not returned to the parent.
 
-Run with parameter sweeps and save a JSON artifact:
+## Output and workload identity
 
-```bash
-python -m cuml.benchmark --dataset classification \
-  --max-rows 100000 --min-rows 10000 \
-  --dataset-param-sweep n_classes=[2,4] \
-  --cuml-param-sweep n_estimators=[10,100] \
-  --output results.json \
-  RandomForestClassifier
-```
+Artifacts contain `schema_version: 2`, a `run` record, and a `results` list.
+The run records the command, system components, software packages, and execution
+plan. Each result describes an algorithm, dataset, operation, input, declared and
+effective estimator parameters, implementation, outcome, and raw observations.
+Warmups and measurements are recorded separately. Timing covers the estimator
+operation and backend synchronization; data generation, estimator setup, and
+artifact writes remain outside the timed interval. The harness does not call
+`score()` or inspect outputs for heuristic quality metrics between repetitions.
+Observation `metrics` lists are empty; correctness and quality checks belong in
+separate tests. Accel warmup dispatch verification remains enabled.
 
-Run multiple algorithms (use `--` before algorithm names when passing `--input-dimensions`):
+The timing-only methodology is `cuml-benchmark-observations-v3`. The artifact
+schema remains version 2 and workload identities are unchanged. Removing scoring
+and output conversion changes the work performed between timed repetitions, so
+resume rejects artifacts produced by the earlier `cuml-benchmark-observations-v2`
+methodology rather than mixing measurements from the two protocols.
 
-```bash
-python -m cuml.benchmark --dataset blobs --num-sizes 1 \
-  --input-dimensions 16 256 -- \
-  DBSCAN KMeans PCA UMAP
-```
+The packaged JSON Schema is available through
+`cuml.benchmark.schemas.benchmark_result_schema()`. Workload IDs are computed by
+`cuml.benchmark.identity.result_id()` from implementation-neutral fields. Derived
+comparisons such as speedup belong in downstream analysis, not the artifact.
+`ResolvedCase.id` is that same canonical workload ID, used for duplicate detection
+and resume validation. `ResolvedCase` is the authoritative workload definition;
+`ResolvedCase.to_artifact_fields()` serializes it into the neutral artifact schema,
+excluding execution settings and runtime metadata. This serialization is also
+used for canonical hashing, not maintained as a separate workload definition.
+Short `case_label` values are derived from the canonical digest, not independently
+hashed. Equivalent resolved workloads therefore have identical IDs and labels.
+Descriptors and IDs are derived solely from resolved suite inputs, including
+dataset defaults and profile scaling. Request resolution normalizes
+generated/training/measured row counts, generator defaults, X/y dtypes, and
+execution settings once. Data generation, partitioning, and serialization consume
+those resolved settings rather than reinterpreting manifest shorthand. Inference identity also includes the
+explicit inputs used by its untimed preparatory fit. Backend catalogs, estimator runtime
+metadata, and measurements cannot change workload identity.
 
-Run with a real dataset at its default size:
+## Python requests and resolved cases
 
-```bash
-python -m cuml.benchmark --dataset higgs --default-size \
-  RandomForestClassifier LogisticRegression
-```
+`resolve_case(request, profile)` accepts Python dictionaries with the same
+structure as a YAML case and profile. Both entry points use the same strict
+manifest schemas and semantic resolver; there is no separate Python request
+model. Resolution does not import estimators or consult a backend. Suite loading
+additionally validates backend catalog membership, backend profile requirements,
+and duplicate workload identities.
 
-Run a manifest but restrict execution to one algorithm:
+```python
+from cuml.benchmark.suite import resolve_case
 
-```bash
-python -m cuml.benchmark \
-  --config python/cuml/cuml/benchmark/configs/single_gpu.yaml \
-  --profile default \
-  LogisticRegression
-```
-
-Run a manifest and override only the row count from the CLI:
-
-```bash
-python -m cuml.benchmark \
-  --config python/cuml/cuml/benchmark/configs/test.yaml \
-  --profile default \
-  --num-rows 500 \
-  --backends cpu
-```
-
-In config mode, only explicitly provided CLI flags override the manifest. Parser defaults do not silently replace YAML values.
-
-## Output
-
-The recommended output artifact is a single JSON file written with `--output`:
-
-```bash
-python -m cuml.benchmark \
-  --config python/cuml/cuml/benchmark/configs/single_gpu.yaml \
-  --profile default \
-  --backends gpu \
-  --output results.json
-```
-
-The JSON file contains:
-
-- `metadata`: run context, command, Python/platform info, cuML/git identity, GPU availability, hardware details, and config/profile provenance
-- `results`: grouped benchmark results, with raw backend timings and statuses under each logical benchmark variation
-
-For lab or CI machines where detected hardware names need a stable display label,
-use repeated metadata overrides:
-
-```bash
-python -m cuml.benchmark \
-  --config python/cuml/cuml/benchmark/configs/single_gpu.yaml \
-  --profile default \
-  --backends gpu \
-  --output results.json \
-  --metadata-override hardware.label=dgx-ci-01 \
-  --metadata-override hardware.gpu.effective.name=H100
-```
-
-Example shape:
-
-```json
-{
-  "metadata": {
-    "result_schema_version": 1,
-    "config": {
-      "path": "python/cuml/cuml/benchmark/configs/single_gpu.yaml",
-      "profile": "default"
-    }
-  },
-  "results": [
-    {
-      "benchmark_id": "logreg_fit_narrow_default",
-      "algorithm": "LogisticRegression",
-      "shape": {
-        "rows": 84000000,
-        "features": 16,
-        "estimated_input_size_gb": 5.376
-      },
-      "params": {
-        "declared": {},
-        "effective": {
-          "gpu": {},
-          "cpu": null
-        }
-      },
-      "backends": {
-        "gpu": {
-          "status": "success",
-          "time_sec": 0.91,
-          "accuracy": 0.995
-        }
-      }
-    }
-  ]
+request = {
+    "estimator": "LogisticRegression",
+    "operation": "predict",
+    "input_selection": ["X"],
+    "fit_input_selection": ["X", "y"],
+    "parameters": {"max_iter": 100},
+    "dataset": {
+        "kind": "classification",
+        "shape": {"rows": 100, "train_rows": 900, "features": 8},
+        "dtype": "float64",
+    },
 }
+profile = {"warmups": 1, "repetitions": 3, "size_scale": 1.0}
+case = resolve_case(request, profile)
+assert (case.generated_rows, case.training_rows, case.measured_rows) == (1000, 900, 100)
+
+# Edit the request, then resolve again. The original case is unaffected.
+request["dataset"]["shape"]["rows"] = 200
+changed = resolve_case(request, profile)
 ```
 
-Derived comparisons such as GPU speedup are intentionally not stored in JSON. They are computed from raw backend timings for terminal display and downstream analysis.
+Profile scaling, including the minimum of 32 scaled rows, applies identically to
+Python and YAML requests. Omitted case timeouts inherit the profile value;
+explicit `None` disables them. The resolver does not mutate requests and makes
+independent copies of nested estimator parameters, dataset parameters, and dtypes.
 
-### JSON result schema
+`ResolvedCase` is a keyword-only, low-level container of explicit values. Its
+constructor no longer accepts `rows`, `train_rows`, or `dtype`, and performs no
+validation or normalization. It has no `__post_init__`; its lifecycle is a
+read-only property derived from the operation. Normally construct it through
+`resolve_case` or `load_suite`. Low-level callers must supply every resolved field
+and maintain consistency themselves. `dataclasses.replace` does not re-resolve
+dependent values; migrate request edits to the pattern above.
 
-The JSON artifact is versioned separately from the YAML manifest schema. The current output schema is identified by:
-
-```json
-{
-  "metadata": {
-    "result_schema_version": 1
-  }
-}
-```
-
-Top-level fields:
-
-- `results`: list of benchmark result records
-- `metadata`: run-level provenance and environment information
-
-Each entry in `results` represents one logical benchmark variation:
-
-- `benchmark_id`: stable ID from YAML configs, or `null` for ad hoc CLI runs
-- `algorithm`: benchmark algorithm name
-- `dataset`: dataset generator name
-- `operation`: operation name when defined by YAML, otherwise `null`
-- `shape`: row/feature dimensions and estimated dense input size
-- `data`: input type, dtype, and repetition count
-- `params.declared`: parameters explicitly supplied through YAML or CLI sweeps
-- `params.effective`: estimator parameters reported by `get_params()` for each backend when available
-- `backends`: backend-specific result records keyed by `cpu` and/or `gpu`
-
-Backend result records use these fields:
-
-- `status`: `success` or `skipped`
-- `time_sec`: elapsed benchmark time in seconds, present for successful runs
-- `accuracy`: accuracy or score metric when available
-- `reason`: explanation for skipped backends, such as `GPU unavailable`
-
-Run metadata includes:
-
-- `command`: argv and current working directory
-- `host`: hostname captured with `platform.node()`
-- `python`: Python executable, version, and platform
-- `cuml`: cuML version, current Git repo path, SHA, and dirty-state flag when available
-- `runtime`: GPU/cuML availability status
-- `config`: selected config path, profile, and backend override
-- `hardware`: detected CPU/GPU/OS/memory metadata plus optional effective labels from metadata overrides
-- `environment`: package snapshot from `conda list` or `pip list`
-
-The environment package snapshot is intentionally compact. Conda entries include only `name`, `version`, `build`, and `channel`; pip entries include only `name` and `version`.
-
-Terminal output is a concise progress table, for example:
-
-```text
- progress  algorithm                            shape        data   gpu_time   cpu_time  details
---------------------------------------------------------------------------------------------
-   [1/96]  LogisticRegression              84.0M x 16    ~5.38 GB     0.91s          -  acc=0.9950
-```
-
-When multiple backends are present, timings are grouped on one row:
-
-```text
-   [1/96]  LogisticRegression              50.0K x 16    ~0.00 GB    12.3ms    18.5ms  gpu_speedup=1.50x acc=0.9944
-```
-
-CSV output remains available through `--csv`, but it is a flat compatibility export. Prefer JSON for regression tracking and reproducibility.
-
-## Adding algorithm coverage
-
-New algorithms should include benchmark coverage for every applicable
-implementation layer. Add a Python estimator to the registry in
-`python/cuml/cuml/benchmark/algorithms.py` and add or update the appropriate
-manifest. For a new C++ algorithm, add a Google Benchmark case under
-`cpp/bench/sg` and list its source in `cpp/bench/CMakeLists.txt`.
-
-Use benchmarks and profiling for performance-sensitive changes to establish
-baselines and investigate bottlenecks, regressions, and unexpected memory
-behavior.
+Field bindings are frozen, but nested mappings are not deeply immutable. Treat
+resolved mappings as read-only. This separation does not change workload IDs,
+artifact schema version 2, or timing methodology v3.
 
 ## YAML manifests
 
-A manifest defines a benchmark suite, default settings for the suite, and the individual benchmark entries to run.
-
-The repository currently includes:
-
-- `python/cuml/cuml/benchmark/configs/test.yaml`: tiny smoke/harness-validation suite
-- `python/cuml/cuml/benchmark/configs/single_gpu.yaml`: canonical single-GPU regression suite with multiple profiles
-
-### Top-level schema
-
-Each manifest is a YAML mapping with these top-level fields:
-
-- `version`: integer schema version. Currently `1`.
-- `suite`: metadata about the suite.
-- `profiles`: optional named selectors that include benchmarks by tag.
-- `defaults`: optional fields applied to every benchmark unless overridden.
-- `benchmarks`: list of benchmark entries.
-
-Example:
+A complete case distinguishes dataset options from estimator options:
 
 ```yaml
-version: 1
-
-suite:
-  name: single_gpu
-  tier: single_gpu
-  description: Canonical single-GPU regression manifest
-
+version: 2
+name: small-csr-example
+implementation: scikit-learn
 profiles:
-  default:
-    include_tags: [default]
-
-defaults:
-  input_type: cupy
-  dtype: fp32
-  n_reps: 3
-  random_state: 42
-  test_split: 0.1
-  backends: [cpu, gpu]
-  raise_on_error: true
-
-benchmarks:
-  - id: logreg_fit_small
-    algorithm: LogisticRegression
-    dataset: classification
-    operation: fit
-    rows: [100000]
-    features: [16]
-    tags: [default, linear, classification]
+  standard: {warmups: 1, repetitions: 1, size_scale: 1.0}
+cases:
+  - estimator: LogisticRegression
+    dataset:
+      kind: classification
+      parameters: {n_classes: 2, n_informative: 5, density: 0.25}
+      shape: {rows: 128, features: 8, train_rows: 128}
+      dtype: float64
+      format: csr
+    operation: predict
+    input_selection: [X]
+    fit_input_selection: [X, y]
+    parameters: {max_iter: 100}
 ```
 
-### `suite`
+All five top-level fields are required. Registered implementations include
+`scikit-learn`, `cuml`, `cuml.accel`, and `cuml.dask`. All backends share a fixed,
+closed manifest schema: backend registration cannot add profile fields. msgspec
+checks required and unknown fields, strict types, defaults, and numeric bounds
+before semantic resolution. Counts must be integers, not booleans; scalar scales
+and timeouts also reject booleans and nonfinite values. Every profile is checked
+structurally, including unselected profiles.
 
-`suite` must contain:
+`cuml.benchmark.suite.suite_manifest_json_schema()` returns this common version-2
+manifest JSON Schema as a dictionary, with no backend argument. It describes
+structure, not registry membership, supported operations, generator constraints,
+or duplicate workload identities. The loader checks those semantics separately,
+and calls the selected backend's `validate_profile(profile_name, warmups)` hook
+only for the selected profile. Structural errors include the suite path and the
+invalid field's path; semantic errors identify the profile or case.
 
-- `name`: short suite identifier
-- `tier`: suite category such as `test` or `single_gpu`
-- `description`: human-readable description
+Suite imports and CLI help remain lightweight. Loading, profile discovery, and
+manifest schema generation require msgspec; YAML loading also requires PyYAML.
 
-### `profiles`
+- Each case requires `estimator`, `dataset`, `operation`, `input_selection`,
+  and `parameters`.
+  Operations are `fit`, `fit_predict`, `fit_transform`, `predict`, `transform`,
+  `kneighbors`, and `score_samples`; estimators must implement the requested method.
+- Required `input_selection` declares the measured arguments as `[X]`, `[y]`,
+  or `[X, y]`. Inference cases additionally require `fit_input_selection` with
+  the same allowed values to declare untimed preparatory fitting arguments.
+  Fitting cases must omit `fit_input_selection` (or set it to `null`). There are
+  no estimator-specific input defaults. LabelEncoder/LabelBinarizer declare
+  `[y]`; supervised fitting typically declares `[X, y]` and prediction `[X]`.
+  Execution consumes exactly the inputs declared in the suite.
+- `dataset` requires `kind` and `shape`. Shape requires positive integer `rows`
+  and `features`. Inference additionally requires positive integer `train_rows`;
+  training operations must omit it.
+- `dataset.parameters` is optional and separate from case `parameters`, which
+  is passed to the estimator. Generator defaults resolve after scaling.
+- `dataset.dtype` defaults to `float32` for both X and y. A mapping must specify
+  both, for example `dtype: {X: int32, y: int64}`. Supported element types are
+  `float32`, `float64`, `int32`, and `int64`.
+- `dataset.format` defaults to `dense`; `csr` generates SciPy CSR features before
+  backend conversion and contiguous training/inference slicing.
+- `rows` always specifies the input size of the measured operation. Inference
+  generates `train_rows + rows` samples together, then takes disjoint contiguous
+  training and inference partitions. There is no implicit training/test split.
+  To migrate an old inference case without `train_rows`, replace its total
+  `rows: N` with `train_rows: round(0.9 * N)` and
+  `rows: N - round(0.9 * N)`. Profiles scale the two sizes independently, so
+  small smoke workloads can change because measured rows have a minimum of 32.
+- Training operations (`fit`, `fit_predict`, `fit_transform`) use a fresh
+  estimator for every warmup and measurement. Inference constructs and fits one
+  estimator before the first observation, then reuses it for all warmups and
+  measurements, including when there are no warmups. Construction and
+  preparatory fitting are untimed; only the requested operation is measured.
+- Profiles require nonnegative `warmups`, positive `repetitions`, and
+  `size_scale` in `(0, 1]`. Scaling affects rows (minimum 32) and explicit training
+  rows (minimum 1), not features.
+- Optional `timeout_sec` can be set per profile or overridden per case. Numeric
+  values must be finite and positive. An omitted case timeout inherits the
+  profile value; explicit `null` disables the timeout. Timed cases run in
+  subprocesses; Dask case timeouts are unsupported.
+- Accel requires at least one warmup and automatically verifies dispatch on
+  every warmup repetition. Evidence is recorded in `com.nvidia.cuml.accel` with
+  `scope: warmup` and a zero-based `repetition`. CPU fallback fails the case.
+  Measurement repetitions remain unprofiled; verification is not a suite option.
+  Verification covers the requested operation, not inference's preparatory fit.
 
-Profiles allow a single manifest to define multiple run surfaces such as default or nightly.
+Supported generator options (generation uses seed 42):
 
-In `single_gpu.yaml`, the manifest is organized along two axes:
+| Dataset kind | Defaults and constraints |
+|--------------|--------------------------|
+| `blobs` | `centers: 5` (positive integer); `cluster_std: 1.0` (positive finite scalar) |
+| `classification` | `n_classes: 2`, `n_informative: max(2, min(features, features // 2 + 1))`, `n_redundant: 0`, `n_clusters_per_class: 2`; informative + redundant must fit features, and classes x clusters-per-class must be at most `2 ** n_informative` |
+| `matrix`, `regression`, `positive`, `categorical` | No dataset-specific options |
+| CSR `classification` or `matrix` only | Additionally `density: 0.1`, a finite scalar in `(0, 1]`; forbidden for dense inputs |
 
-- width class: `narrow`, `medium`, `wide`
-- runtime tier: `default`, `nightly`
+CSR density is a target Bernoulli retention probability, not an exact realized
+fraction. Masking uses a separate seed-42 RNG and leaves labels unchanged.
+Generation allocates dense features and a dense mask before constructing CSR;
+this is not a memory-scalable sparse generator. Distributed cuML CSR is rejected
+before cluster creation. Other estimator/CSR combinations may fail during
+execution even when the dataset request is valid.
 
-The width class changes the feature shape of the workload. The runtime tier changes only the row count. Every algorithm should therefore appear as a full `width x tier` grid.
+Input types come from the dataset request, not the estimator name. CategoricalNB
+suite cases explicitly request `dtype: {X: int32, y: int64}`. LabelEncoder and
+LabelBinarizer consume labels rather than features. Workload identity includes
+resolved generator settings, input format, and the dtype consumed by the
+estimator. Actual feature or label dtype and resolved generator parameters are
+also recorded in the `com.nvidia.cuml.benchmark` result extension.
 
-Each profile currently has:
+## Capability examples
 
-- `include_tags`: list of tags; a benchmark is included when it shares at least one tag with the profile
-
-Example:
-
-```yaml
-profiles:
-  default:
-    include_tags: [default]
-  nightly:
-    include_tags: [nightly]
-```
-
-This means:
-
-- `default` includes `narrow`, `medium`, and `wide` workloads for every algorithm at the smallest row counts
-- `nightly` includes the same `narrow`, `medium`, and `wide` workloads with the largest row counts
-
-Example:
-
-```yaml
-- id: logreg_fit_narrow_default
-  algorithm: LogisticRegression
-  dataset: classification
-  operation: fit
-  rows: [500000]
-  features: [16]
-  tags: [default, narrow, linear]
-
-- id: logreg_fit_narrow_nightly
-  algorithm: LogisticRegression
-  dataset: classification
-  operation: fit
-  rows: [1500000]
-  features: [16]
-  tags: [nightly, narrow, linear]
-
-- id: logreg_fit_wide_default
-  algorithm: LogisticRegression
-  dataset: classification
-  operation: fit
-  rows: [150000]
-  features: [512]
-  tags: [default, wide, linear]
-```
-
-### Compact `variants`
-
-To avoid repeating the same benchmark definition for every `width x tier` combination, a benchmark entry can define `variants`. This expands one compact entry into multiple resolved benchmark entries while preserving the same runtime behavior.
-
-Example:
-
-```yaml
-- id: logreg_fit
-  algorithm: LogisticRegression
-  dataset: classification
-  operation: fit
-  tags: [linear, classification]
-  variants:
-    narrow:
-      features: [16]
-      tiers:
-        default:
-          rows: [500000]
-        nightly:
-          rows: [1500000]
-    wide:
-      features: [512]
-      tiers:
-        default:
-          rows: [150000]
-```
-
-How this works:
-
-- each key under `variants` becomes a width-class suffix and tag, such as `narrow` or `wide`
-- each key under `tiers` becomes a runtime-tier suffix and tag, such as `default` or `nightly`
-- the example above expands to benchmark IDs like `logreg_fit_narrow_default`, `logreg_fit_narrow_nightly`, and `logreg_fit_wide_default`
-- fields from the outer benchmark entry are shared across all expanded entries
-- width-specific fields such as `features` live under the variant
-- tier-specific fields such as `rows` live under the tier
-
-Flat benchmark entries using explicit `rows`, `features`, or `shapes` are still supported. `variants` is just a more compact way to describe repeated width/tier grids.
-
-### `defaults`
-
-`defaults` can provide common values for benchmark entries, including:
-
-- `dataset`
-- `input_type`
-- `dtype`
-- `n_reps`
-- `random_state`
-- `test_split`
-- `backends`: execution backends to run, selected from `cpu` and `gpu`
-- `raise_on_error`
-- `enabled`
-- `tags`
-- `params`, `cuml_params`, `cpu_params`, `dataset_params`
-- `param_grid`, `cuml_param_grid`, `cpu_param_grid`, `dataset_param_grid`
-- `comparison`
-- `metadata`
-
-Benchmark entries override scalar defaults and merge dictionary-style fields.
-
-For GPU-oriented suites such as `single_gpu.yaml`, prefer a GPU-native `input_type` such as `cupy` or `cudf`. This avoids benchmarking large host/device or cuDF-to-NumPy conversion costs when the goal is to measure the estimator itself on GPU inputs.
-
-### Benchmark entry schema
-
-Each entry in `benchmarks` must define:
-
-- `algorithm`: algorithm name from the benchmark registry
-
-It can also define:
-
-- `id`: stable benchmark identifier; defaults to `algorithm` if omitted
-- `dataset`: dataset generator name such as `classification`, `regression`, or `blobs`
-- `operation`: benchmarked operation such as `fit`, `predict`, `transform`, `fit_transform`, `fit_predict`, `fit_kneighbors`, or `kneighbors`
-- `rows` and `features`: lists used as a Cartesian product
-- `shapes`: explicit paired `(rows, features)` combinations when you do not want a Cartesian product
-- `default_size`: use the dataset's natural default size instead of explicit dimensions
-- `variants`: compact expansion for repeated width/tier families
-- `params`: shared estimator parameters
-- `cuml_params`: GPU-only estimator parameters
-- `cpu_params`: CPU-only estimator parameters
-- `dataset_params`: dataset generator parameters
-- `param_grid`, `cuml_param_grid`, `cpu_param_grid`, `dataset_param_grid`: parameter sweeps expanded as Cartesian products
-- `n_reps`, `input_type`, `dtype`, `random_state`, `test_split`, `backends`, `raise_on_error`
-- `tags`: labels used by profiles
-- `enabled`, `skip_reason`
-- `comparison`, `metadata`
-
-### Choosing dimensions
-
-Use `rows` plus `features` when you want the Cartesian product:
-
-```yaml
-- id: pca_fit_small
-  algorithm: PCA
-  dataset: blobs
-  operation: fit
-  rows: [100000]
-  features: [32, 256]
-```
-
-This runs `(100000, 32)` and `(100000, 256)`.
-
-Use `shapes` when you want explicit pairs instead:
-
-```yaml
-- id: paired_shapes_example
-  algorithm: LogisticRegression
-  dataset: classification
-  operation: fit
-  shapes:
-    - rows: 10000
-      features: 32
-    - rows: 50000
-      features: 256
-```
-
-This runs only `(10000, 32)` and `(50000, 256)`.
-
-### Creating your own manifest
-
-Start from `test.yaml` if you want a tiny suite, or from `single_gpu.yaml` if you want a richer example with profiles.
-
-This minimal custom manifest is a good starting point:
-
-```yaml
-version: 1
-
-suite:
-  name: my_benchmarks
-  tier: custom
-  description: Example custom benchmark suite
-
-profiles:
-  default:
-    include_tags: [default]
-  nightly:
-    include_tags: [nightly]
-
-defaults:
-  input_type: cupy
-  dtype: fp32
-  n_reps: 2
-  random_state: 42
-  test_split: 0.1
-  backends: [cpu, gpu]
-  raise_on_error: true
-
-benchmarks:
-  - id: my_logreg_fit
-    algorithm: LogisticRegression
-    dataset: classification
-    operation: fit
-    tags: [linear]
-    variants:
-      narrow:
-        features: [16]
-        tiers:
-          default:
-            rows: [500000]
-          nightly:
-            rows: [1500000]
-      wide:
-        features: [512]
-        tiers:
-          default:
-            rows: [150000]
-
-  - id: my_kmeans_fitpredict
-    algorithm: KMeans
-    dataset: blobs
-    operation: fit_predict
-    dataset_params:
-      centers: 8
-    tags: [clustering]
-    variants:
-      medium:
-        features: [128]
-        tiers:
-          default:
-            rows: [50000]
-```
-
-Save it anywhere and run it with:
-
-```bash
-python -m cuml.benchmark --config /path/to/my_benchmarks.yaml --profile default
-```
-
-If you also define a `nightly` profile, keep the same algorithm and width-class entries, and increase only `rows` for the companion nightly tiers.
-
-### CLI overrides in config mode
-
-When `--config` is provided, the manifest remains the primary definition of the benchmark suite. CLI flags can still override selected fields for ad hoc runs.
-
-Common useful overrides are:
-
-- `--profile`
-- positional algorithm names to restrict which manifest entries run
-- `--backends`, `--skip-gpu`, or `--skip-cpu`
-- `--num-rows`, `--num-features`, `--input-dimensions`, `--default-size`
-- `--n-reps`, `--dtype`, `--input-type`, `--test-split`
-- `--param-sweep`, `--cuml-param-sweep`, `--cpu-param-sweep`, `--dataset-param-sweep`
-
-Example:
+These custom-path suites are capability checks, not performance baselines or
+built-in aliases:
 
 ```bash
 python -m cuml.benchmark \
-  --config python/cuml/cuml/benchmark/configs/single_gpu.yaml \
-  --profile default \
-  --backends cpu \
-  --num-rows 50000 \
-  LogisticRegression
+  --suite python/cuml/cuml/benchmark/suites/capabilities_sklearn.yaml \
+  --profile standard --output /tmp/capabilities-sklearn.json
+python -m cuml.benchmark \
+  --suite python/cuml/cuml/benchmark/suites/capabilities_cuml.yaml \
+  --profile standard --output /tmp/capabilities-cuml.json
+python -m cuml.benchmark \
+  --suite python/cuml/cuml/benchmark/suites/capabilities_accel.yaml \
+  --profile standard --output /tmp/capabilities-accel.json
 ```
 
-This keeps the manifest-selected benchmark entry but overrides the row count and execution mode for that run.
+All three contain the same eight workloads: KMeans fit with custom blobs,
+multiclass LogisticRegression fit, PCA fit with float32/float64 matrices, and
+LogisticRegression fit/predict with float32/float64 CSR inputs. The accel example
+verifies dispatch during every warmup. Equivalent workloads have matching
+canonical IDs despite different implementation metadata and timings. This does
+not advertise CSR or multiclass support for every estimator.
 
-## Input types
-
-With GPU/cuML you can use `--input-type` such as `numpy`, `pandas`, `cupy`, or `cudf`. Without GPU, only `numpy` and `pandas` are valid; the script will warn and switch to `numpy` if needed.
-
-## Manifest structural validation
-
-The benchmark manifest structure is validated by typed `msgspec` models in
-`python/cuml/cuml/benchmark/config.py`. The prose in this document explains the
-fields and gives examples, while the `msgspec` models provide the structural
-contract for parsing YAML manifests.
-
-To generate a JSON Schema from the `msgspec` manifest model:
+Representative dense-fit and CSR-inference smoke tests check actual input types
+and values, schema validity, workload IDs, and accel dispatch across sklearn,
+cuML, and cuml.accel. All capability manifests are also validated without running
+every workload:
 
 ```bash
-python - <<'PY'
-import json
-from cuml.benchmark.config import benchmark_manifest_json_schema
-
-print(json.dumps(benchmark_manifest_json_schema(), indent=2))
-PY
+python -m pytest -q python/cuml/tests/test_benchmark.py
 ```
 
-Some semantic checks, such as post-default required fields, unknown algorithm
-names, and compact `variants` conflicts, are still enforced by custom Python
-validation after the structural conversion step.
+## Adding algorithm coverage
+
+Add estimator specifications to `python/cuml/cuml/benchmark/registry.py` and
+cases to the appropriate `benchmark/suites/` manifests. Include coverage for
+each applicable implementation. For a new C++ algorithm, add a Google Benchmark
+case under `cpp/bench/sg` and list its source in `cpp/bench/CMakeLists.txt`.
+
+## Adding an execution backend
+
+Registration is explicit, not plugin discovery. The interface is defined in
+`python/cuml/cuml/benchmark/backends/base.py`.
+
+1. Define a catalog mapping estimator names to `EstimatorSpec(module, name,
+   package)` in `benchmark/registry.py`. Declare custom estimator inputs with
+   `input_selection` and, for inference, `fit_input_selection` in the suite.
+   Backend metadata never selects execution arguments.
+2. Implement a `Backend` subclass in `benchmark/backends/`. Keep estimator,
+   CUDA, distributed, and accelerator imports inside hooks, not at module scope.
+   `GPUBackend` adds CUDA synchronization.
+3. Add an instance to `BACKENDS` in `benchmark/backends/__init__.py`. Do not add
+   implementation branches to the CLI, suite parser, or harness.
+4. Add a version-2 manifest and focused registration, lifecycle, and artifact
+   tests, following the `registered_suite` fixture and CLI integration tests in
+   `python/cuml/tests/test_benchmark.py`.
+
+Override only the hooks needed by the backend:
+
+- `validate_profile(profile_name, warmups) -> None` checks backend semantics
+  during loading, after common structural validation. Raise `SuiteError` for an
+  unsupported selected profile; do not extend the manifest schema or return
+  backend options.
+- `bootstrap_process` and `prepare_process` establish process prerequisites
+  before the CLI imports the harness. Preserve accelerator startup ordering.
+- `runtime` owns resources and yields the value passed to `construct_estimator`.
+- `load_estimator` resolves classes lazily; `construct_estimator` must not mutate
+  declared parameters. `convert_data` receives the complete generated dataset
+  before training/inference partitioning.
+- `synchronize` completes work at timing boundaries. `instrumentation` surrounds
+  the operation and yields a `VerificationResult` containing optional evidence
+  and failure information. Accel profiles every warmup, never measurements.
+- `software_packages` supplies sorted package records, used consistently in run
+  and result metadata and resume compatibility checks.
+
+The harness owns data generation, estimator lifecycle, timing, process isolation,
+failure reporting, checkpointing, and neutral-v2 serialization. Backend evidence
+belongs in namespaced extensions. Registration must also exist in spawned workers;
+a temporary in-process mapping change is insufficient for timeout execution.
+
+## NVTX profiling
+
+`cuml.benchmark.nvtx_benchmark` remains available as a standalone Nsight Systems
+profiling utility. It requires `nsys` version 2021.4 or later and profiles NVTX
+ranges in the command supplied as its single argument:
+
+```bash
+python -m cuml.benchmark.nvtx_benchmark \
+  "python -m cuml.benchmark --suite cuml_sg --profile smoke --output cuml.json"
+```
+
+It is independent of the harness's observation timing and JSON serialization.
