@@ -3,6 +3,8 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
+"""Profile benchmark commands and display NVTX timing summaries."""
+
 import json
 import os
 import shutil
@@ -12,7 +14,10 @@ from subprocess import run
 
 
 class Profiler:
+    """Collect and display NVTX timings using Nsight Systems."""
+
     def __init__(self, tmp_path=None):
+        """Create temporary paths for profiling reports."""
         self.tmp_dir = tempfile.TemporaryDirectory(dir=tmp_path)
         self.nsys_file = os.path.join(self.tmp_dir.name, "report.nsys-rep")
         self.json_file = os.path.join(self.tmp_dir.name, "report.json")
@@ -20,11 +25,13 @@ class Profiler:
         os.makedirs(self.tmp_dir.name, exist_ok=True)
 
     def __del__(self):
+        """Remove temporary profiling files."""
         self.tmp_dir.cleanup()
         self.tmp_dir = None
 
     @staticmethod
     def _execute(command):
+        """Run a command with NVTX benchmarking enabled."""
         res = run(
             command,
             shell=False,
@@ -37,6 +44,7 @@ class Profiler:
             return res.stdout
 
     def _nsys_profile(self, command):
+        """Capture NVTX events for a command using Nsight Systems."""
         profile_command = [
             "nsys",
             "profile",
@@ -48,6 +56,7 @@ class Profiler:
         self._execute(profile_command)
 
     def _nsys_export2json(self):
+        """Export the captured Nsight Systems report as JSON."""
         export_command = [
             "nsys",
             "export",
@@ -60,6 +69,7 @@ class Profiler:
         self._execute(export_command)
 
     def _parse_json(self):
+        """Extract benchmark NVTX events from the exported report."""
         with open(self.json_file, "r") as json_file:
             json_content = json_file.read().replace("\n", ",")[:-1]
             json_content = '{"dict": [\n' + json_content + "\n]}"
@@ -71,6 +81,17 @@ class Profiler:
             ]
 
             def get_id(attribute, lookfor, nvtx_events):
+                """Find an attribute value for a named NVTX event.
+
+                Parameters
+                ----------
+                attribute : str
+                    Event attribute to retrieve.
+                lookfor : str
+                    Event text to match.
+                nvtx_events : list of dict
+                    NVTX events to search.
+                """
                 idxs = [
                     p[attribute] for p in nvtx_events if p["Text"] == lookfor
                 ]
@@ -95,6 +116,7 @@ class Profiler:
             utils_category_id = get_id("Category", "utils", nvtx_events)
 
             def _process_nvtx_event(record):
+                """Normalize an NVTX event's timing, domain, and category."""
                 new_record = {
                     "measurement": record["Text"],
                     "start": int(record["Timestamp"]),
@@ -122,11 +144,19 @@ class Profiler:
 
     @staticmethod
     def _display_results(results):
+        """Print nested NVTX timings and aggregated utility durations."""
         nvtx_events = [r for r in results if "runtime" in r]
         nvtx_events.sort(key=lambda r: r["start"])
         max_length = max([len(r["measurement"]) for r in nvtx_events]) + 16
 
         def aggregate(records):
+            """Sum event durations by measurement name.
+
+            Parameters
+            ----------
+            records : list of dict
+                Timing records to aggregate.
+            """
             agg = {}
             for r in records:
                 measurement = r["measurement"]
@@ -144,6 +174,13 @@ class Profiler:
             return agg
 
         def nesting_hierarchy(records):
+            """Annotate event records with their nesting depth.
+
+            Parameters
+            ----------
+            records : list of dict
+                Timing records ordered by start time.
+            """
             ends = []
             for r in records:
                 ends = [e for e in ends if r["start"] < e]
@@ -152,6 +189,15 @@ class Profiler:
             return records
 
         def display(measurement, runtime):
+            """Print a measurement duration in seconds.
+
+            Parameters
+            ----------
+            measurement : str
+                Measurement label.
+            runtime : int
+                Duration in nanoseconds.
+            """
             measurement = measurement.ljust(max_length + 4)
             runtime = round(int(runtime) / 10**9, 4)
             msg = "{measurement} : {runtime:8.4f} s"
@@ -200,6 +246,13 @@ class Profiler:
                 print("\n")
 
     def profile(self, command):
+        """Profile a command and print its NVTX timing summary.
+
+        Parameters
+        ----------
+        command : str
+            Command to profile, split on spaces into arguments.
+        """
         self._nsys_profile(command)
         self._nsys_export2json()
         results = self._parse_json()
@@ -209,6 +262,7 @@ class Profiler:
 if __name__ == "__main__":
 
     def check_version():
+        """Require a supported Nsight Systems version."""
         stdout = Profiler._execute(["nsys", "--version"])
         full_version = stdout.decode("utf-8").split(" ")[-1]
         year, month = full_version.split(".")[:2]
