@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: Copyright (c) 2025-2026, NVIDIA CORPORATION.
+# SPDX-FileCopyrightText: Copyright (c) 2025-2026, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 import importlib
 import importlib.metadata
@@ -64,10 +64,11 @@ def test_acceleration_caller_exclusions(module, excluded):
 
 @pytest.mark.parametrize("estimator", ["PCA", "UMAP", "HDBSCAN"])
 def test_benchmark_loads_upstream_proxy(estimator):
-    from cuml.benchmark.backends import get_backend
+    from cuml.benchmark.providers import get_provider
 
-    backend = get_backend("cuml.accel")
-    spec = backend.estimator_spec(estimator)
+    provider = get_provider("cuml.accel")
+    backend = provider.backend
+    spec = provider.estimator_spec(estimator)
     proxy = backend.load_estimator(spec)
     assert cuml.accel.is_proxy(proxy)
 
