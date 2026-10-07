@@ -1,11 +1,23 @@
 # Synchronizing the cuml.accel benchmark page
 
 The checked-in `benchmark-data.json` is the compact input for the Sphinx page.
-The current reference artifact was produced by `cumlbench-dash`. Fresh
+The current artifact contains the local `accel-performance` measurements from
+2026-10-07 (cuML 26.12.0 and scikit-learn 1.9.1), replacing the earlier
+`cumlbench-dash` reference. All 168 GPU cases and 166 CPU cases completed;
+two CPU UMAP transforms timed out at their 1800-second complete-case limits.
+Their CPU medians remain null, and rendering shows timeouts without speedup
+bounds. Five CPU cases were retained from an interrupted first attempt and
+the remainder completed using resume. Fresh
 measurements can be produced locally using the accel performance suite and
 the driver below; raw benchmark observations stay outside this repository. The file stores the benchmark system and package versions
 alongside case labels, shapes, median timings, CPU timeout limits when
 applicable, and PCA component counts that cannot be derived from labels.
+Complete-case deadlines are not per-operation timing bounds and must not be
+used to infer speedups. The strict driver below still requires every case to
+succeed before exporting; the current partial-success artifact was assembled
+from validated raw observations, with failures explicitly retained as null CPU
+timings and complete-case limits. Numerical CPU/GPU parity was not checked.
+
 Speedups, classifications, summaries, input sizes, and display units are
 derived while rendering.
 

@@ -454,12 +454,10 @@ def _prepare_publication(data: dict[str, Any]) -> dict[str, Any]:
                 "input_bytes": source["rows"] * source["features"] * 4,
                 "cpu_median_wall_time_sec": cpu_time,
                 "gpu_median_wall_time_sec": gpu_time,
-                "speedup": (
-                    cpu_time / gpu_time
-                    if cpu_time is not None
-                    else timeout / gpu_time
-                ),
-                "speedup_is_lower_bound": cpu_time is None,
+                # A complete-case deadline includes preparation and multiple
+                # calls, so it cannot bound a single-operation speedup.
+                "speedup": cpu_time / gpu_time if cpu_time is not None else None,
+                "speedup_is_lower_bound": False,
                 "timeout_side": "cpu" if cpu_time is None else None,
                 "timeout_limit_sec": timeout,
             }
@@ -469,7 +467,7 @@ def _prepare_publication(data: dict[str, Any]) -> dict[str, Any]:
         "records": records,
         "system": data["system"],
         "packages": data["packages"],
-        "methodology": {"id": "mlbench-accel-performance"},
+        "methodology": {"id": "cuml-benchmark-observations-v3"},
         "validation": {"successful_accelerated_execution": "gpu_only"},
     }
     prepared["summary"] = _summarize(records)
@@ -642,7 +640,7 @@ def render_heatmap(records: list[dict[str, Any]], phase: str) -> str:
     )
     desc = (
         f"Heatmap of {len(operations)} operations across five workloads, ranked by median exact speedup. "
-        "Each exact cell is labeled with CPU wall time divided by accelerated wall time; patterned cells mark CPU-timeout lower bounds and unavailable results."
+        "Each exact cell is labeled with CPU wall time divided by accelerated wall time; patterned cells mark CPU timeouts and unavailable results."
     )
     lower_bound_colors = {
         _speedup_color(record["speedup"])

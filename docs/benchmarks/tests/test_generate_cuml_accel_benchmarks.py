@@ -45,6 +45,24 @@ def test_benchmark_files_can_be_rendered() -> None:
         assert root.attrib["role"] == "img"
 
 
+def test_complete_case_timeout_has_no_speedup_bound() -> None:
+    data, template = _inputs()
+    source = data["records"][0]
+    source["cpu_median_sec"] = None
+    source["cpu_timeout_sec"] = 1800
+
+    prepared = generator.prepare_publication_data(data)
+    record = prepared["records"][0]
+    assert record["speedup"] is None
+    assert not record["speedup_is_lower_bound"]
+    assert generator._status_text(record) == "CPU timeout"
+    assert generator._detail_status_text(record) == "—"
+    files = generator.render_files(data, template)
+    heatmap = files[generator.DEFAULT_STATIC / "training-heatmap.svg"]
+    assert "CPU timeout" in heatmap
+    assert "≥" not in heatmap
+
+
 def test_generated_files_are_current() -> None:
     data, template = _inputs()
 

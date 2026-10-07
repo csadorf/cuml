@@ -1,4 +1,1200 @@
 {
+  "packages": {
+    "cuml": "26.12.0",
+    "hdbscan": "0.8.44",
+    "scikit-learn": "1.9.1",
+    "umap-learn": "0.5.12"
+  },
+  "records": [
+    {
+      "case_label": "dbscan.fit_predict.large.balanced",
+      "cpu_median_sec": 0.18410772690549493,
+      "features": 32,
+      "gpu_median_sec": 0.016546988394111395,
+      "rows": 32000
+    },
+    {
+      "case_label": "dbscan.fit_predict.medium.balanced",
+      "cpu_median_sec": 0.029798395931720734,
+      "features": 32,
+      "gpu_median_sec": 0.0021744100376963615,
+      "rows": 8000
+    },
+    {
+      "case_label": "dbscan.fit_predict.medium.thin",
+      "cpu_median_sec": 0.07452770601958036,
+      "features": 8,
+      "gpu_median_sec": 0.0023544146679341793,
+      "rows": 8000
+    },
+    {
+      "case_label": "dbscan.fit_predict.medium.wide",
+      "cpu_median_sec": 0.08567836415022612,
+      "features": 256,
+      "gpu_median_sec": 0.0036755423061549664,
+      "rows": 8000
+    },
+    {
+      "case_label": "dbscan.fit_predict.small.balanced",
+      "cpu_median_sec": 0.005713069345802069,
+      "features": 32,
+      "gpu_median_sec": 0.0010644248686730862,
+      "rows": 2000
+    },
+    {
+      "case_label": "elastic_net.fit.large.balanced",
+      "cpu_median_sec": 4.345893741119653,
+      "features": 128,
+      "gpu_median_sec": 3.3669548118487,
+      "rows": 5000000
+    },
+    {
+      "case_label": "elastic_net.fit.medium.balanced",
+      "cpu_median_sec": 0.5262733837589622,
+      "features": 128,
+      "gpu_median_sec": 0.33952984493225813,
+      "rows": 500000
+    },
+    {
+      "case_label": "elastic_net.fit.medium.thin",
+      "cpu_median_sec": 0.2165062320418656,
+      "features": 16,
+      "gpu_median_sec": 0.04218825092539191,
+      "rows": 1600000
+    },
+    {
+      "case_label": "elastic_net.fit.medium.wide",
+      "cpu_median_sec": 3.045106108766049,
+      "features": 1024,
+      "gpu_median_sec": 2.6314938059076667,
+      "rows": 240000
+    },
+    {
+      "case_label": "elastic_net.fit.small.balanced",
+      "cpu_median_sec": 0.03197226207703352,
+      "features": 128,
+      "gpu_median_sec": 0.014270310755819082,
+      "rows": 50000
+    },
+    {
+      "case_label": "elastic_net.predict.large.balanced",
+      "cpu_median_sec": 0.12267284467816353,
+      "features": 128,
+      "gpu_median_sec": 0.20593469496816397,
+      "rows": 5000000
+    },
+    {
+      "case_label": "elastic_net.predict.medium.balanced",
+      "cpu_median_sec": 0.026774303056299686,
+      "features": 128,
+      "gpu_median_sec": 0.04088576324284077,
+      "rows": 980000
+    },
+    {
+      "case_label": "elastic_net.predict.medium.thin",
+      "cpu_median_sec": 0.03016515588387847,
+      "features": 16,
+      "gpu_median_sec": 0.042208192870020866,
+      "rows": 7800000
+    },
+    {
+      "case_label": "elastic_net.predict.medium.wide",
+      "cpu_median_sec": 0.10012855613604188,
+      "features": 1024,
+      "gpu_median_sec": 0.1609953329898417,
+      "rows": 490000
+    },
+    {
+      "case_label": "elastic_net.predict.small.balanced",
+      "cpu_median_sec": 0.0055619580671191216,
+      "features": 128,
+      "gpu_median_sec": 0.008471046108752489,
+      "rows": 200000
+    },
+    {
+      "case_label": "hdbscan.fit_predict.large.balanced",
+      "cpu_median_sec": 1.2536863363347948,
+      "features": 32,
+      "gpu_median_sec": 0.03856909601017833,
+      "rows": 32000
+    },
+    {
+      "case_label": "hdbscan.fit_predict.medium.balanced",
+      "cpu_median_sec": 0.6356436903588474,
+      "features": 32,
+      "gpu_median_sec": 0.011787069030106068,
+      "rows": 8000
+    },
+    {
+      "case_label": "hdbscan.fit_predict.medium.thin",
+      "cpu_median_sec": 0.12665284471586347,
+      "features": 8,
+      "gpu_median_sec": 0.01079621585085988,
+      "rows": 8000
+    },
+    {
+      "case_label": "hdbscan.fit_predict.medium.wide",
+      "cpu_median_sec": 6.131021363195032,
+      "features": 256,
+      "gpu_median_sec": 0.01805631211027503,
+      "rows": 8000
+    },
+    {
+      "case_label": "hdbscan.fit_predict.small.balanced",
+      "cpu_median_sec": 0.06092972820624709,
+      "features": 32,
+      "gpu_median_sec": 0.007756724022328854,
+      "rows": 2000
+    },
+    {
+      "case_label": "k_neighbors_classifier.predict.large.balanced",
+      "cpu_median_sec": 0.34877201030030847,
+      "features": 128,
+      "gpu_median_sec": 0.017649201210588217,
+      "rows": 32000
+    },
+    {
+      "case_label": "k_neighbors_classifier.predict.medium.balanced",
+      "cpu_median_sec": 0.05008562235161662,
+      "features": 128,
+      "gpu_median_sec": 0.002392434049397707,
+      "rows": 8000
+    },
+    {
+      "case_label": "k_neighbors_classifier.predict.medium.thin",
+      "cpu_median_sec": 0.022930541075766087,
+      "features": 16,
+      "gpu_median_sec": 0.0010845959186553955,
+      "rows": 8000
+    },
+    {
+      "case_label": "k_neighbors_classifier.predict.medium.wide",
+      "cpu_median_sec": 0.25910596875473857,
+      "features": 1024,
+      "gpu_median_sec": 0.011432477738708258,
+      "rows": 8000
+    },
+    {
+      "case_label": "k_neighbors_classifier.predict.small.balanced",
+      "cpu_median_sec": 0.021906943060457706,
+      "features": 128,
+      "gpu_median_sec": 0.0010177441872656345,
+      "rows": 2000
+    },
+    {
+      "case_label": "k_neighbors_regressor.predict.large.balanced",
+      "cpu_median_sec": 0.35996350971981883,
+      "features": 128,
+      "gpu_median_sec": 0.017189508769661188,
+      "rows": 32000
+    },
+    {
+      "case_label": "k_neighbors_regressor.predict.medium.balanced",
+      "cpu_median_sec": 0.049578702077269554,
+      "features": 128,
+      "gpu_median_sec": 0.0019053989090025425,
+      "rows": 8000
+    },
+    {
+      "case_label": "k_neighbors_regressor.predict.medium.thin",
+      "cpu_median_sec": 0.038456080947071314,
+      "features": 16,
+      "gpu_median_sec": 0.0008063912391662598,
+      "rows": 8000
+    },
+    {
+      "case_label": "k_neighbors_regressor.predict.medium.wide",
+      "cpu_median_sec": 0.2524428376927972,
+      "features": 1024,
+      "gpu_median_sec": 0.0108287762850523,
+      "rows": 8000
+    },
+    {
+      "case_label": "k_neighbors_regressor.predict.small.balanced",
+      "cpu_median_sec": 0.011421397794038057,
+      "features": 128,
+      "gpu_median_sec": 0.0008339439518749714,
+      "rows": 2000
+    },
+    {
+      "case_label": "kernel_density.score_samples.large.balanced",
+      "cpu_median_sec": 194.35062958998606,
+      "features": 128,
+      "gpu_median_sec": 0.014780800323933363,
+      "rows": 32000
+    },
+    {
+      "case_label": "kernel_density.score_samples.medium.balanced",
+      "cpu_median_sec": 9.674952181056142,
+      "features": 128,
+      "gpu_median_sec": 0.00237445579841733,
+      "rows": 8000
+    },
+    {
+      "case_label": "kernel_density.score_samples.medium.thin",
+      "cpu_median_sec": 2.5678786928765476,
+      "features": 16,
+      "gpu_median_sec": 0.0006754808127880096,
+      "rows": 8000
+    },
+    {
+      "case_label": "kernel_density.score_samples.medium.wide",
+      "cpu_median_sec": 72.29802269209176,
+      "features": 1024,
+      "gpu_median_sec": 0.011044325307011604,
+      "rows": 8000
+    },
+    {
+      "case_label": "kernel_density.score_samples.small.balanced",
+      "cpu_median_sec": 0.6125431722030044,
+      "features": 128,
+      "gpu_median_sec": 0.0010072579607367516,
+      "rows": 2000
+    },
+    {
+      "case_label": "kmeans.fit_predict.large.balanced",
+      "cpu_median_sec": 14.23988613113761,
+      "features": 128,
+      "gpu_median_sec": 0.3987874798476696,
+      "rows": 5000000
+    },
+    {
+      "case_label": "kmeans.fit_predict.medium.balanced",
+      "cpu_median_sec": 0.5927525646984577,
+      "features": 128,
+      "gpu_median_sec": 0.04865533811971545,
+      "rows": 500000
+    },
+    {
+      "case_label": "kmeans.fit_predict.medium.thin",
+      "cpu_median_sec": 0.5506711341440678,
+      "features": 16,
+      "gpu_median_sec": 0.035423502791672945,
+      "rows": 1600000
+    },
+    {
+      "case_label": "kmeans.fit_predict.medium.wide",
+      "cpu_median_sec": 7.552283745724708,
+      "features": 1024,
+      "gpu_median_sec": 0.14913589507341385,
+      "rows": 240000
+    },
+    {
+      "case_label": "kmeans.fit_predict.small.balanced",
+      "cpu_median_sec": 0.09054160071536899,
+      "features": 128,
+      "gpu_median_sec": 0.011494081001728773,
+      "rows": 50000
+    },
+    {
+      "case_label": "kmeans.predict.large.balanced",
+      "cpu_median_sec": 0.13548019481822848,
+      "features": 128,
+      "gpu_median_sec": 0.22418393613770604,
+      "rows": 5000000
+    },
+    {
+      "case_label": "kmeans.predict.medium.balanced",
+      "cpu_median_sec": 0.029168044216930866,
+      "features": 128,
+      "gpu_median_sec": 0.04600767511874437,
+      "rows": 980000
+    },
+    {
+      "case_label": "kmeans.predict.medium.thin",
+      "cpu_median_sec": 0.07302895979955792,
+      "features": 16,
+      "gpu_median_sec": 0.05789286410436034,
+      "rows": 7800000
+    },
+    {
+      "case_label": "kmeans.predict.medium.wide",
+      "cpu_median_sec": 0.08867999631911516,
+      "features": 1024,
+      "gpu_median_sec": 0.17041554022580385,
+      "rows": 490000
+    },
+    {
+      "case_label": "kmeans.predict.small.balanced",
+      "cpu_median_sec": 0.005896365735679865,
+      "features": 128,
+      "gpu_median_sec": 0.010063017252832651,
+      "rows": 200000
+    },
+    {
+      "case_label": "lasso.fit.large.balanced",
+      "cpu_median_sec": 4.267218308988959,
+      "features": 128,
+      "gpu_median_sec": 3.36669499007985,
+      "rows": 5000000
+    },
+    {
+      "case_label": "lasso.fit.medium.balanced",
+      "cpu_median_sec": 0.46733093401417136,
+      "features": 128,
+      "gpu_median_sec": 0.33908860106021166,
+      "rows": 500000
+    },
+    {
+      "case_label": "lasso.fit.medium.thin",
+      "cpu_median_sec": 0.2357369363307953,
+      "features": 16,
+      "gpu_median_sec": 0.04370963713154197,
+      "rows": 1600000
+    },
+    {
+      "case_label": "lasso.fit.medium.wide",
+      "cpu_median_sec": 3.1309134638868272,
+      "features": 1024,
+      "gpu_median_sec": 2.6031867200508714,
+      "rows": 240000
+    },
+    {
+      "case_label": "lasso.fit.small.balanced",
+      "cpu_median_sec": 0.02938436297699809,
+      "features": 128,
+      "gpu_median_sec": 0.014608407858759165,
+      "rows": 50000
+    },
+    {
+      "case_label": "lasso.predict.large.balanced",
+      "cpu_median_sec": 0.12324453704059124,
+      "features": 128,
+      "gpu_median_sec": 0.2063438557088375,
+      "rows": 5000000
+    },
+    {
+      "case_label": "lasso.predict.medium.balanced",
+      "cpu_median_sec": 0.026773625053465366,
+      "features": 128,
+      "gpu_median_sec": 0.04101945785805583,
+      "rows": 980000
+    },
+    {
+      "case_label": "lasso.predict.medium.thin",
+      "cpu_median_sec": 0.029989406932145357,
+      "features": 16,
+      "gpu_median_sec": 0.043150852899998426,
+      "rows": 7800000
+    },
+    {
+      "case_label": "lasso.predict.medium.wide",
+      "cpu_median_sec": 0.10076726274564862,
+      "features": 1024,
+      "gpu_median_sec": 0.16144669614732265,
+      "rows": 490000
+    },
+    {
+      "case_label": "lasso.predict.small.balanced",
+      "cpu_median_sec": 0.007634520996361971,
+      "features": 128,
+      "gpu_median_sec": 0.008541673887521029,
+      "rows": 200000
+    },
+    {
+      "case_label": "linear_regression.fit.large.balanced",
+      "cpu_median_sec": 11.118978616781533,
+      "features": 128,
+      "gpu_median_sec": 1.1524546928703785,
+      "rows": 5000000
+    },
+    {
+      "case_label": "linear_regression.fit.medium.balanced",
+      "cpu_median_sec": 0.9878237629309297,
+      "features": 128,
+      "gpu_median_sec": 0.05227738991379738,
+      "rows": 500000
+    },
+    {
+      "case_label": "linear_regression.fit.medium.thin",
+      "cpu_median_sec": 0.24810061417520046,
+      "features": 16,
+      "gpu_median_sec": 0.0191536289639771,
+      "rows": 1600000
+    },
+    {
+      "case_label": "linear_regression.fit.medium.wide",
+      "cpu_median_sec": 5.428707737941295,
+      "features": 1024,
+      "gpu_median_sec": 0.12372995214536786,
+      "rows": 240000
+    },
+    {
+      "case_label": "linear_regression.fit.small.balanced",
+      "cpu_median_sec": 0.058429833967238665,
+      "features": 128,
+      "gpu_median_sec": 0.007974416948854923,
+      "rows": 50000
+    },
+    {
+      "case_label": "linear_regression.predict.large.balanced",
+      "cpu_median_sec": 0.1239355537109077,
+      "features": 128,
+      "gpu_median_sec": 0.20550308376550674,
+      "rows": 5000000
+    },
+    {
+      "case_label": "linear_regression.predict.medium.balanced",
+      "cpu_median_sec": 0.029559688176959753,
+      "features": 128,
+      "gpu_median_sec": 0.040894798934459686,
+      "rows": 980000
+    },
+    {
+      "case_label": "linear_regression.predict.medium.thin",
+      "cpu_median_sec": 0.03033725591376424,
+      "features": 16,
+      "gpu_median_sec": 0.04220826365053654,
+      "rows": 7800000
+    },
+    {
+      "case_label": "linear_regression.predict.medium.wide",
+      "cpu_median_sec": 0.09984283428639174,
+      "features": 1024,
+      "gpu_median_sec": 0.16110750986263156,
+      "rows": 490000
+    },
+    {
+      "case_label": "linear_regression.predict.small.balanced",
+      "cpu_median_sec": 0.006755627691745758,
+      "features": 128,
+      "gpu_median_sec": 0.008445336949080229,
+      "rows": 200000
+    },
+    {
+      "case_label": "logistic_regression.fit.large.balanced",
+      "cpu_median_sec": 2.841076800134033,
+      "features": 128,
+      "gpu_median_sec": 0.48929385794326663,
+      "rows": 5000000
+    },
+    {
+      "case_label": "logistic_regression.fit.medium.balanced",
+      "cpu_median_sec": 0.4194106599316001,
+      "features": 128,
+      "gpu_median_sec": 0.07042082585394382,
+      "rows": 500000
+    },
+    {
+      "case_label": "logistic_regression.fit.medium.thin",
+      "cpu_median_sec": 0.7363783442415297,
+      "features": 16,
+      "gpu_median_sec": 0.032459236681461334,
+      "rows": 1600000
+    },
+    {
+      "case_label": "logistic_regression.fit.medium.wide",
+      "cpu_median_sec": 0.5194216081872582,
+      "features": 1024,
+      "gpu_median_sec": 0.11274652974680066,
+      "rows": 240000
+    },
+    {
+      "case_label": "logistic_regression.fit.small.balanced",
+      "cpu_median_sec": 0.03843654505908489,
+      "features": 128,
+      "gpu_median_sec": 0.014266815967857838,
+      "rows": 50000
+    },
+    {
+      "case_label": "logistic_regression.predict.large.balanced",
+      "cpu_median_sec": 0.13407672895118594,
+      "features": 128,
+      "gpu_median_sec": 0.20839505083858967,
+      "rows": 5000000
+    },
+    {
+      "case_label": "logistic_regression.predict.medium.balanced",
+      "cpu_median_sec": 0.027943579014390707,
+      "features": 128,
+      "gpu_median_sec": 0.041258834302425385,
+      "rows": 980000
+    },
+    {
+      "case_label": "logistic_regression.predict.medium.thin",
+      "cpu_median_sec": 0.04886980028823018,
+      "features": 16,
+      "gpu_median_sec": 0.04695987002924085,
+      "rows": 7800000
+    },
+    {
+      "case_label": "logistic_regression.predict.medium.wide",
+      "cpu_median_sec": 0.11501405294984579,
+      "features": 1024,
+      "gpu_median_sec": 0.16144860116764903,
+      "rows": 490000
+    },
+    {
+      "case_label": "logistic_regression.predict.small.balanced",
+      "cpu_median_sec": 0.005361918825656176,
+      "features": 128,
+      "gpu_median_sec": 0.008645741734653711,
+      "rows": 200000
+    },
+    {
+      "case_label": "nearest_neighbors.kneighbors.large.balanced",
+      "cpu_median_sec": 0.35644056601449847,
+      "features": 128,
+      "gpu_median_sec": 0.01738719129934907,
+      "rows": 32000
+    },
+    {
+      "case_label": "nearest_neighbors.kneighbors.medium.balanced",
+      "cpu_median_sec": 0.04045405611395836,
+      "features": 128,
+      "gpu_median_sec": 0.002263376023620367,
+      "rows": 8000
+    },
+    {
+      "case_label": "nearest_neighbors.kneighbors.medium.thin",
+      "cpu_median_sec": 0.03812595037743449,
+      "features": 16,
+      "gpu_median_sec": 0.0007545817643404007,
+      "rows": 8000
+    },
+    {
+      "case_label": "nearest_neighbors.kneighbors.medium.wide",
+      "cpu_median_sec": 0.25152718974277377,
+      "features": 1024,
+      "gpu_median_sec": 0.010886834934353828,
+      "rows": 8000
+    },
+    {
+      "case_label": "nearest_neighbors.kneighbors.small.balanced",
+      "cpu_median_sec": 0.02127787796780467,
+      "features": 128,
+      "gpu_median_sec": 0.0007323692552745342,
+      "rows": 2000
+    },
+    {
+      "case_label": "pca.fit_transform.large.balanced",
+      "components": 256,
+      "cpu_median_sec": 18.106037478893995,
+      "features": 1024,
+      "gpu_median_sec": 21.591369988862425,
+      "rows": 1000000
+    },
+    {
+      "case_label": "pca.fit_transform.medium.balanced",
+      "components": 256,
+      "cpu_median_sec": 2.190585582051426,
+      "features": 1024,
+      "gpu_median_sec": 1.9504673220217228,
+      "rows": 100000
+    },
+    {
+      "case_label": "pca.fit_transform.medium.thin",
+      "components": 32,
+      "cpu_median_sec": 0.0626016603782773,
+      "features": 128,
+      "gpu_median_sec": 0.27729141199961305,
+      "rows": 200000
+    },
+    {
+      "case_label": "pca.fit_transform.medium.wide",
+      "components": 1024,
+      "cpu_median_sec": 7.471830371301621,
+      "features": 4096,
+      "gpu_median_sec": 3.2898272071033716,
+      "rows": 61000
+    },
+    {
+      "case_label": "pca.fit_transform.rank128.medium.wide",
+      "cpu_median_sec": 1.6125822700560093,
+      "features": 4096,
+      "gpu_median_sec": 3.2205489557236433,
+      "rows": 61000
+    },
+    {
+      "case_label": "pca.fit_transform.rank256.medium.wide",
+      "cpu_median_sec": 2.46217876393348,
+      "features": 4096,
+      "gpu_median_sec": 3.226491232868284,
+      "rows": 61000
+    },
+    {
+      "case_label": "pca.fit_transform.rank512.medium.wide",
+      "cpu_median_sec": 3.8587192809209228,
+      "features": 4096,
+      "gpu_median_sec": 3.226186251267791,
+      "rows": 61000
+    },
+    {
+      "case_label": "pca.fit_transform.small.balanced",
+      "components": 256,
+      "cpu_median_sec": 0.3521723002195358,
+      "features": 1024,
+      "gpu_median_sec": 0.11704521579667926,
+      "rows": 10000
+    },
+    {
+      "case_label": "pca.transform.large.balanced",
+      "components": 256,
+      "cpu_median_sec": 0.9429276869632304,
+      "features": 1024,
+      "gpu_median_sec": 25.765921307727695,
+      "rows": 2400000
+    },
+    {
+      "case_label": "pca.transform.medium.balanced",
+      "components": 256,
+      "cpu_median_sec": 0.2317523336969316,
+      "features": 1024,
+      "gpu_median_sec": 5.28445958904922,
+      "rows": 490000
+    },
+    {
+      "case_label": "pca.transform.medium.thin",
+      "components": 32,
+      "cpu_median_sec": 0.05719680292531848,
+      "features": 128,
+      "gpu_median_sec": 0.6646631290204823,
+      "rows": 980000
+    },
+    {
+      "case_label": "pca.transform.medium.wide",
+      "components": 1024,
+      "cpu_median_sec": 0.47244910430163145,
+      "features": 4096,
+      "gpu_median_sec": 5.035485691856593,
+      "rows": 120000
+    },
+    {
+      "case_label": "pca.transform.small.balanced",
+      "components": 256,
+      "cpu_median_sec": 0.028652208857238293,
+      "features": 1024,
+      "gpu_median_sec": 0.2752531790174544,
+      "rows": 50000
+    },
+    {
+      "case_label": "random_forest_classifier.fit.large.balanced",
+      "cpu_median_sec": 35.06376346293837,
+      "features": 128,
+      "gpu_median_sec": 0.9923622068017721,
+      "rows": 2000000
+    },
+    {
+      "case_label": "random_forest_classifier.fit.medium.balanced",
+      "cpu_median_sec": 2.7597709968686104,
+      "features": 128,
+      "gpu_median_sec": 0.21760085923597217,
+      "rows": 250000
+    },
+    {
+      "case_label": "random_forest_classifier.fit.medium.thin",
+      "cpu_median_sec": 8.989096431992948,
+      "features": 16,
+      "gpu_median_sec": 0.493497584015131,
+      "rows": 1600000
+    },
+    {
+      "case_label": "random_forest_classifier.fit.medium.wide",
+      "cpu_median_sec": 9.523977082688361,
+      "features": 1024,
+      "gpu_median_sec": 0.6991760358214378,
+      "rows": 240000
+    },
+    {
+      "case_label": "random_forest_classifier.fit.small.balanced",
+      "cpu_median_sec": 0.47823134204372764,
+      "features": 128,
+      "gpu_median_sec": 0.13389687100425363,
+      "rows": 50000
+    },
+    {
+      "case_label": "random_forest_classifier.predict.large.balanced",
+      "cpu_median_sec": 0.6468404033221304,
+      "features": 128,
+      "gpu_median_sec": 0.2951466632075608,
+      "rows": 5000000
+    },
+    {
+      "case_label": "random_forest_classifier.predict.medium.balanced",
+      "cpu_median_sec": 0.1214031670242548,
+      "features": 128,
+      "gpu_median_sec": 0.05919394502416253,
+      "rows": 980000
+    },
+    {
+      "case_label": "random_forest_classifier.predict.medium.thin",
+      "cpu_median_sec": 0.7611499312333763,
+      "features": 16,
+      "gpu_median_sec": 0.07163429167121649,
+      "rows": 7800000
+    },
+    {
+      "case_label": "random_forest_classifier.predict.medium.wide",
+      "cpu_median_sec": 0.19869819562882185,
+      "features": 1024,
+      "gpu_median_sec": 0.23057107580825686,
+      "rows": 490000
+    },
+    {
+      "case_label": "random_forest_classifier.predict.small.balanced",
+      "cpu_median_sec": 0.02919862000271678,
+      "features": 128,
+      "gpu_median_sec": 0.012330347672104836,
+      "rows": 200000
+    },
+    {
+      "case_label": "random_forest_regressor.fit.large.balanced",
+      "cpu_median_sec": 229.81252339994535,
+      "features": 128,
+      "gpu_median_sec": 8.523355092387646,
+      "rows": 2000000
+    },
+    {
+      "case_label": "random_forest_regressor.fit.medium.balanced",
+      "cpu_median_sec": 19.165094666182995,
+      "features": 128,
+      "gpu_median_sec": 1.8866233471781015,
+      "rows": 250000
+    },
+    {
+      "case_label": "random_forest_regressor.fit.medium.thin",
+      "cpu_median_sec": 22.13596202293411,
+      "features": 16,
+      "gpu_median_sec": 1.5900453380309045,
+      "rows": 1600000
+    },
+    {
+      "case_label": "random_forest_regressor.fit.medium.wide",
+      "cpu_median_sec": 163.4763826248236,
+      "features": 1024,
+      "gpu_median_sec": 11.410275945905596,
+      "rows": 240000
+    },
+    {
+      "case_label": "random_forest_regressor.fit.small.balanced",
+      "cpu_median_sec": 3.143421997781843,
+      "features": 128,
+      "gpu_median_sec": 0.7124803508631885,
+      "rows": 50000
+    },
+    {
+      "case_label": "random_forest_regressor.predict.large.balanced",
+      "cpu_median_sec": 1.1985489623621106,
+      "features": 128,
+      "gpu_median_sec": 0.29459061101078987,
+      "rows": 5000000
+    },
+    {
+      "case_label": "random_forest_regressor.predict.medium.balanced",
+      "cpu_median_sec": 0.18505453411489725,
+      "features": 128,
+      "gpu_median_sec": 0.0587018639780581,
+      "rows": 980000
+    },
+    {
+      "case_label": "random_forest_regressor.predict.medium.thin",
+      "cpu_median_sec": 1.0721423947252333,
+      "features": 16,
+      "gpu_median_sec": 0.06995730800554156,
+      "rows": 7800000
+    },
+    {
+      "case_label": "random_forest_regressor.predict.medium.wide",
+      "cpu_median_sec": 0.25846684677526355,
+      "features": 1024,
+      "gpu_median_sec": 0.23047489020973444,
+      "rows": 490000
+    },
+    {
+      "case_label": "random_forest_regressor.predict.small.balanced",
+      "cpu_median_sec": 0.03889820026233792,
+      "features": 128,
+      "gpu_median_sec": 0.012081656139343977,
+      "rows": 200000
+    },
+    {
+      "case_label": "ridge.fit.large.balanced",
+      "cpu_median_sec": 1.654407813679427,
+      "features": 128,
+      "gpu_median_sec": 0.5458347699604928,
+      "rows": 5000000
+    },
+    {
+      "case_label": "ridge.fit.medium.balanced",
+      "cpu_median_sec": 0.21594791812822223,
+      "features": 128,
+      "gpu_median_sec": 0.055786808021366596,
+      "rows": 500000
+    },
+    {
+      "case_label": "ridge.fit.medium.thin",
+      "cpu_median_sec": 0.1076391669921577,
+      "features": 16,
+      "gpu_median_sec": 0.021053310949355364,
+      "rows": 1600000
+    },
+    {
+      "case_label": "ridge.fit.medium.wide",
+      "cpu_median_sec": 0.6179397809319198,
+      "features": 1024,
+      "gpu_median_sec": 0.14285530988126993,
+      "rows": 240000
+    },
+    {
+      "case_label": "ridge.fit.small.balanced",
+      "cpu_median_sec": 0.016508827917277813,
+      "features": 128,
+      "gpu_median_sec": 0.00756795983761549,
+      "rows": 50000
+    },
+    {
+      "case_label": "ridge.predict.large.balanced",
+      "cpu_median_sec": 0.12279411824420094,
+      "features": 128,
+      "gpu_median_sec": 0.20598847698420286,
+      "rows": 5000000
+    },
+    {
+      "case_label": "ridge.predict.medium.balanced",
+      "cpu_median_sec": 0.02943009976297617,
+      "features": 128,
+      "gpu_median_sec": 0.040850050281733274,
+      "rows": 980000
+    },
+    {
+      "case_label": "ridge.predict.medium.thin",
+      "cpu_median_sec": 0.029850882943719625,
+      "features": 16,
+      "gpu_median_sec": 0.04247656464576721,
+      "rows": 7800000
+    },
+    {
+      "case_label": "ridge.predict.medium.wide",
+      "cpu_median_sec": 0.10746608022600412,
+      "features": 1024,
+      "gpu_median_sec": 0.16065738815814257,
+      "rows": 490000
+    },
+    {
+      "case_label": "ridge.predict.small.balanced",
+      "cpu_median_sec": 0.0049213930033147335,
+      "features": 128,
+      "gpu_median_sec": 0.008457839023321867,
+      "rows": 200000
+    },
+    {
+      "case_label": "standard_scaler.fit_transform.large.balanced",
+      "cpu_median_sec": 2.361249783076346,
+      "features": 128,
+      "gpu_median_sec": 1.0634829769842327,
+      "rows": 5000000
+    },
+    {
+      "case_label": "standard_scaler.fit_transform.medium.balanced",
+      "cpu_median_sec": 0.2390359747223556,
+      "features": 128,
+      "gpu_median_sec": 0.11134051391854882,
+      "rows": 500000
+    },
+    {
+      "case_label": "standard_scaler.fit_transform.medium.thin",
+      "cpu_median_sec": 0.162377021741122,
+      "features": 16,
+      "gpu_median_sec": 0.08903728472068906,
+      "rows": 1600000
+    },
+    {
+      "case_label": "standard_scaler.fit_transform.medium.wide",
+      "cpu_median_sec": 0.8682375927455723,
+      "features": 1024,
+      "gpu_median_sec": 0.25805432023480535,
+      "rows": 240000
+    },
+    {
+      "case_label": "standard_scaler.fit_transform.small.balanced",
+      "cpu_median_sec": 0.023320727981626987,
+      "features": 128,
+      "gpu_median_sec": 0.01068916730582714,
+      "rows": 50000
+    },
+    {
+      "case_label": "standard_scaler.transform.large.balanced",
+      "cpu_median_sec": 0.5525497868657112,
+      "features": 128,
+      "gpu_median_sec": 0.4226520308293402,
+      "rows": 5000000
+    },
+    {
+      "case_label": "standard_scaler.transform.medium.balanced",
+      "cpu_median_sec": 0.10866513196378946,
+      "features": 128,
+      "gpu_median_sec": 0.08474725112318993,
+      "rows": 980000
+    },
+    {
+      "case_label": "standard_scaler.transform.medium.thin",
+      "cpu_median_sec": 0.14494769321754575,
+      "features": 16,
+      "gpu_median_sec": 0.08424074715003371,
+      "rows": 7800000
+    },
+    {
+      "case_label": "standard_scaler.transform.medium.wide",
+      "cpu_median_sec": 0.4331252248957753,
+      "features": 1024,
+      "gpu_median_sec": 0.3368242848664522,
+      "rows": 490000
+    },
+    {
+      "case_label": "standard_scaler.transform.small.balanced",
+      "cpu_median_sec": 0.023075591772794724,
+      "features": 128,
+      "gpu_median_sec": 0.01800907775759697,
+      "rows": 200000
+    },
+    {
+      "case_label": "svc.fit.large.balanced",
+      "cpu_median_sec": 7.472109222784638,
+      "features": 64,
+      "gpu_median_sec": 0.0783283757045865,
+      "rows": 32000
+    },
+    {
+      "case_label": "svc.fit.medium.balanced",
+      "cpu_median_sec": 0.44579679425805807,
+      "features": 64,
+      "gpu_median_sec": 0.030167661141604185,
+      "rows": 8000
+    },
+    {
+      "case_label": "svc.fit.medium.thin",
+      "cpu_median_sec": 0.17788976104930043,
+      "features": 8,
+      "gpu_median_sec": 0.023831892758607864,
+      "rows": 8000
+    },
+    {
+      "case_label": "svc.fit.medium.wide",
+      "cpu_median_sec": 4.06594971800223,
+      "features": 512,
+      "gpu_median_sec": 0.061452267691493034,
+      "rows": 8000
+    },
+    {
+      "case_label": "svc.fit.small.balanced",
+      "cpu_median_sec": 0.044755405746400356,
+      "features": 64,
+      "gpu_median_sec": 0.021117316093295813,
+      "rows": 2000
+    },
+    {
+      "case_label": "svc.predict.large.balanced",
+      "cpu_median_sec": 6.5537340878508985,
+      "features": 64,
+      "gpu_median_sec": 0.017638261895626783,
+      "rows": 32000
+    },
+    {
+      "case_label": "svc.predict.medium.balanced",
+      "cpu_median_sec": 0.6136796390637755,
+      "features": 64,
+      "gpu_median_sec": 0.0027327039279043674,
+      "rows": 8000
+    },
+    {
+      "case_label": "svc.predict.medium.thin",
+      "cpu_median_sec": 0.2725750980898738,
+      "features": 8,
+      "gpu_median_sec": 0.0014011096209287643,
+      "rows": 8000
+    },
+    {
+      "case_label": "svc.predict.medium.wide",
+      "cpu_median_sec": 5.691502848174423,
+      "features": 512,
+      "gpu_median_sec": 0.019583624321967363,
+      "rows": 8000
+    },
+    {
+      "case_label": "svc.predict.small.balanced",
+      "cpu_median_sec": 0.05467739515006542,
+      "features": 64,
+      "gpu_median_sec": 0.0008273636922240257,
+      "rows": 2000
+    },
+    {
+      "case_label": "target_encoder.fit_transform.large.balanced",
+      "cpu_median_sec": 25.24793223803863,
+      "features": 32,
+      "gpu_median_sec": 3.0297767063602805,
+      "rows": 7800000
+    },
+    {
+      "case_label": "target_encoder.fit_transform.medium.balanced",
+      "cpu_median_sec": 2.4850085312500596,
+      "features": 32,
+      "gpu_median_sec": 1.5467320089228451,
+      "rows": 780000
+    },
+    {
+      "case_label": "target_encoder.fit_transform.medium.thin",
+      "cpu_median_sec": 2.040936667006463,
+      "features": 8,
+      "gpu_median_sec": 0.44195200502872467,
+      "rows": 3100000
+    },
+    {
+      "case_label": "target_encoder.fit_transform.medium.wide",
+      "cpu_median_sec": 3.234268897213042,
+      "features": 128,
+      "gpu_median_sec": 6.427236077841371,
+      "rows": 250000
+    },
+    {
+      "case_label": "target_encoder.fit_transform.small.balanced",
+      "cpu_median_sec": 0.6218936811201274,
+      "features": 32,
+      "gpu_median_sec": 1.260442134924233,
+      "rows": 200000
+    },
+    {
+      "case_label": "target_encoder.transform.large.balanced",
+      "cpu_median_sec": 18.388708047103137,
+      "features": 32,
+      "gpu_median_sec": 3.161457689013332,
+      "rows": 16000000
+    },
+    {
+      "case_label": "target_encoder.transform.medium.balanced",
+      "cpu_median_sec": 4.353765060193837,
+      "features": 32,
+      "gpu_median_sec": 1.0784558039158583,
+      "rows": 3900000
+    },
+    {
+      "case_label": "target_encoder.transform.medium.thin",
+      "cpu_median_sec": 3.3752290750853717,
+      "features": 8,
+      "gpu_median_sec": 0.4627472320571542,
+      "rows": 16000000
+    },
+    {
+      "case_label": "target_encoder.transform.medium.wide",
+      "cpu_median_sec": 4.835158691741526,
+      "features": 128,
+      "gpu_median_sec": 6.670441661961377,
+      "rows": 980000
+    },
+    {
+      "case_label": "target_encoder.transform.small.balanced",
+      "cpu_median_sec": 0.8673535226844251,
+      "features": 32,
+      "gpu_median_sec": 0.5443575759418309,
+      "rows": 780000
+    },
+    {
+      "case_label": "tsne.fit_transform.large.balanced",
+      "cpu_median_sec": 45.22845861874521,
+      "features": 64,
+      "gpu_median_sec": 1.0251114210113883,
+      "rows": 50000
+    },
+    {
+      "case_label": "tsne.fit_transform.medium.balanced",
+      "cpu_median_sec": 8.631882198154926,
+      "features": 64,
+      "gpu_median_sec": 0.6135884271934628,
+      "rows": 10000
+    },
+    {
+      "case_label": "tsne.fit_transform.medium.thin",
+      "cpu_median_sec": 9.079613468144089,
+      "features": 8,
+      "gpu_median_sec": 0.5046934098936617,
+      "rows": 10000
+    },
+    {
+      "case_label": "tsne.fit_transform.medium.wide",
+      "cpu_median_sec": 9.550092661287636,
+      "features": 512,
+      "gpu_median_sec": 0.6318568778224289,
+      "rows": 10000
+    },
+    {
+      "case_label": "tsne.fit_transform.small.balanced",
+      "cpu_median_sec": 1.6619876283220947,
+      "features": 64,
+      "gpu_median_sec": 0.4188374923542142,
+      "rows": 2000
+    },
+    {
+      "case_label": "umap.fit_transform.large.balanced",
+      "cpu_median_sec": 14.923252245411277,
+      "features": 64,
+      "gpu_median_sec": 0.291691267862916,
+      "rows": 50000
+    },
+    {
+      "case_label": "umap.fit_transform.medium.balanced",
+      "cpu_median_sec": 6.5014430857263505,
+      "features": 64,
+      "gpu_median_sec": 0.3135012402199209,
+      "rows": 10000
+    },
+    {
+      "case_label": "umap.fit_transform.medium.thin",
+      "cpu_median_sec": 5.89469156274572,
+      "features": 8,
+      "gpu_median_sec": 0.10889794025570154,
+      "rows": 10000
+    },
+    {
+      "case_label": "umap.fit_transform.medium.wide",
+      "cpu_median_sec": 6.913173668086529,
+      "features": 512,
+      "gpu_median_sec": 0.337767172139138,
+      "rows": 10000
+    },
+    {
+      "case_label": "umap.fit_transform.small.balanced",
+      "cpu_median_sec": 2.840079333167523,
+      "features": 64,
+      "gpu_median_sec": 0.1100403149612248,
+      "rows": 2000
+    },
+    {
+      "case_label": "umap.transform.large.balanced",
+      "cpu_median_sec": 830.7430464280769,
+      "features": 64,
+      "gpu_median_sec": 5.359297964721918,
+      "rows": 7800000
+    },
+    {
+      "case_label": "umap.transform.medium.balanced",
+      "cpu_median_sec": 203.38379268022254,
+      "features": 64,
+      "gpu_median_sec": 0.75604436872527,
+      "rows": 2000000
+    },
+    {
+      "case_label": "umap.transform.medium.thin",
+      "cpu_median_sec": null,
+      "cpu_timeout_sec": 1800.0,
+      "features": 8,
+      "gpu_median_sec": 1.8489198246970773,
+      "rows": 16000000
+    },
+    {
+      "case_label": "umap.transform.medium.wide",
+      "cpu_median_sec": 48.50740514090285,
+      "features": 512,
+      "gpu_median_sec": 0.6484928522258997,
+      "rows": 240000
+    },
+    {
+      "case_label": "umap.transform.small.balanced",
+      "cpu_median_sec": null,
+      "cpu_timeout_sec": 1800.0,
+      "features": 64,
+      "gpu_median_sec": 0.12478403002023697,
+      "rows": 390000
+    }
+  ],
   "schema_version": 1,
   "system": {
     "components": [
@@ -28,1206 +1224,5 @@
         "type": "gpu"
       }
     ]
-  },
-  "packages": {
-    "cuml": "26.10.0a69",
-    "hdbscan": "0.8.44",
-    "scikit-learn": "1.9.0",
-    "umap-learn": "0.5.12"
-  },
-  "records": [
-    {
-      "case_label": "dbscan.fit_predict.large.balanced",
-      "cpu_median_sec": 0.16854668105952442,
-      "features": 32,
-      "gpu_median_sec": 0.013870927970856428,
-      "rows": 32000
-    },
-    {
-      "case_label": "dbscan.fit_predict.medium.balanced",
-      "cpu_median_sec": 0.0194731600349769,
-      "features": 32,
-      "gpu_median_sec": 0.00189839000813663,
-      "rows": 8000
-    },
-    {
-      "case_label": "dbscan.fit_predict.medium.thin",
-      "cpu_median_sec": 0.07049114408437163,
-      "features": 8,
-      "gpu_median_sec": 0.002010511001572013,
-      "rows": 8000
-    },
-    {
-      "case_label": "dbscan.fit_predict.medium.wide",
-      "cpu_median_sec": 0.06241097999736667,
-      "features": 256,
-      "gpu_median_sec": 0.003141007968224585,
-      "rows": 8000
-    },
-    {
-      "case_label": "dbscan.fit_predict.small.balanced",
-      "cpu_median_sec": 0.005656971945427358,
-      "features": 32,
-      "gpu_median_sec": 0.0011317180469632149,
-      "rows": 2000
-    },
-    {
-      "case_label": "elastic_net.fit.large.balanced",
-      "cpu_median_sec": 3.67043051996734,
-      "features": 128,
-      "gpu_median_sec": 3.1951437880052254,
-      "rows": 5000000
-    },
-    {
-      "case_label": "elastic_net.fit.medium.balanced",
-      "cpu_median_sec": 0.388369285967201,
-      "features": 128,
-      "gpu_median_sec": 0.31479937001131475,
-      "rows": 500000
-    },
-    {
-      "case_label": "elastic_net.fit.medium.thin",
-      "cpu_median_sec": 0.2166903370525688,
-      "features": 16,
-      "gpu_median_sec": 0.04765953903552145,
-      "rows": 1562500
-    },
-    {
-      "case_label": "elastic_net.fit.medium.wide",
-      "cpu_median_sec": 2.6610643229214475,
-      "features": 1024,
-      "gpu_median_sec": 2.4726768659893423,
-      "rows": 244140
-    },
-    {
-      "case_label": "elastic_net.fit.small.balanced",
-      "cpu_median_sec": 0.024406563956290483,
-      "features": 128,
-      "gpu_median_sec": 0.016190990107133985,
-      "rows": 50000
-    },
-    {
-      "case_label": "elastic_net.predict.large.balanced",
-      "cpu_median_sec": 0.12155798799358308,
-      "features": 128,
-      "gpu_median_sec": 0.20715383300557733,
-      "rows": 5000000
-    },
-    {
-      "case_label": "elastic_net.predict.medium.balanced",
-      "cpu_median_sec": 0.029918016982264817,
-      "features": 128,
-      "gpu_median_sec": 0.04111160396132618,
-      "rows": 976563
-    },
-    {
-      "case_label": "elastic_net.predict.medium.thin",
-      "cpu_median_sec": 0.031154530006460845,
-      "features": 16,
-      "gpu_median_sec": 0.044266645913012326,
-      "rows": 7812500
-    },
-    {
-      "case_label": "elastic_net.predict.medium.wide",
-      "cpu_median_sec": 0.1030189769808203,
-      "features": 1024,
-      "gpu_median_sec": 0.15997337095905095,
-      "rows": 488281
-    },
-    {
-      "case_label": "elastic_net.predict.small.balanced",
-      "cpu_median_sec": 0.0060823679668828845,
-      "features": 128,
-      "gpu_median_sec": 0.008330122916959226,
-      "rows": 195313
-    },
-    {
-      "case_label": "hdbscan.fit_predict.large.balanced",
-      "cpu_median_sec": 1.0858756100060418,
-      "features": 32,
-      "gpu_median_sec": 0.03427623608149588,
-      "rows": 32000
-    },
-    {
-      "case_label": "hdbscan.fit_predict.medium.balanced",
-      "cpu_median_sec": 0.21120099199470133,
-      "features": 32,
-      "gpu_median_sec": 0.010586661053821445,
-      "rows": 8000
-    },
-    {
-      "case_label": "hdbscan.fit_predict.medium.thin",
-      "cpu_median_sec": 0.10502412996720523,
-      "features": 8,
-      "gpu_median_sec": 0.010235595051199198,
-      "rows": 8000
-    },
-    {
-      "case_label": "hdbscan.fit_predict.medium.wide",
-      "cpu_median_sec": 4.763224644004367,
-      "features": 256,
-      "gpu_median_sec": 0.014670828939415514,
-      "rows": 8000
-    },
-    {
-      "case_label": "hdbscan.fit_predict.small.balanced",
-      "cpu_median_sec": 0.04026665596757084,
-      "features": 32,
-      "gpu_median_sec": 0.0073727419367060065,
-      "rows": 2000
-    },
-    {
-      "case_label": "k_neighbors_classifier.predict.large.balanced",
-      "cpu_median_sec": 0.38947678497061133,
-      "features": 128,
-      "gpu_median_sec": 0.017764343065209687,
-      "rows": 32000
-    },
-    {
-      "case_label": "k_neighbors_classifier.predict.medium.balanced",
-      "cpu_median_sec": 0.045101776951923966,
-      "features": 128,
-      "gpu_median_sec": 0.002195319044403732,
-      "rows": 8000
-    },
-    {
-      "case_label": "k_neighbors_classifier.predict.medium.thin",
-      "cpu_median_sec": 0.025781395961530507,
-      "features": 16,
-      "gpu_median_sec": 0.000957711017690599,
-      "rows": 8000
-    },
-    {
-      "case_label": "k_neighbors_classifier.predict.medium.wide",
-      "cpu_median_sec": 0.24449847196228802,
-      "features": 1024,
-      "gpu_median_sec": 0.011315232957713306,
-      "rows": 8000
-    },
-    {
-      "case_label": "k_neighbors_classifier.predict.small.balanced",
-      "cpu_median_sec": 0.013685717014595866,
-      "features": 128,
-      "gpu_median_sec": 0.0009563000639900565,
-      "rows": 2000
-    },
-    {
-      "case_label": "k_neighbors_regressor.predict.large.balanced",
-      "cpu_median_sec": 0.3572492439998314,
-      "features": 128,
-      "gpu_median_sec": 0.017044284963048995,
-      "rows": 32000
-    },
-    {
-      "case_label": "k_neighbors_regressor.predict.medium.balanced",
-      "cpu_median_sec": 0.04278143402189016,
-      "features": 128,
-      "gpu_median_sec": 0.0019378759898245335,
-      "rows": 8000
-    },
-    {
-      "case_label": "k_neighbors_regressor.predict.medium.thin",
-      "cpu_median_sec": 0.035365911084227264,
-      "features": 16,
-      "gpu_median_sec": 0.0006554500432685018,
-      "rows": 8000
-    },
-    {
-      "case_label": "k_neighbors_regressor.predict.medium.wide",
-      "cpu_median_sec": 0.23556176503188908,
-      "features": 1024,
-      "gpu_median_sec": 0.010956114972941577,
-      "rows": 8000
-    },
-    {
-      "case_label": "k_neighbors_regressor.predict.small.balanced",
-      "cpu_median_sec": 0.013444449054077268,
-      "features": 128,
-      "gpu_median_sec": 0.0007309349020943046,
-      "rows": 2000
-    },
-    {
-      "case_label": "kernel_density.score_samples.large.balanced",
-      "cpu_median_sec": 190.20593524503056,
-      "features": 128,
-      "gpu_median_sec": 0.014666627044789493,
-      "rows": 32000
-    },
-    {
-      "case_label": "kernel_density.score_samples.medium.balanced",
-      "cpu_median_sec": 9.621954269008711,
-      "features": 128,
-      "gpu_median_sec": 0.0019470899133011699,
-      "rows": 8000
-    },
-    {
-      "case_label": "kernel_density.score_samples.medium.thin",
-      "cpu_median_sec": 2.582561893039383,
-      "features": 16,
-      "gpu_median_sec": 0.000590711017139256,
-      "rows": 8000
-    },
-    {
-      "case_label": "kernel_density.score_samples.medium.wide",
-      "cpu_median_sec": null,
-      "cpu_timeout_sec": 101.72236767640187,
-      "features": 1024,
-      "gpu_median_sec": 0.01079191593453288,
-      "rows": 8000
-    },
-    {
-      "case_label": "kernel_density.score_samples.small.balanced",
-      "cpu_median_sec": 0.6087077660486102,
-      "features": 128,
-      "gpu_median_sec": 0.0010167210130020976,
-      "rows": 2000
-    },
-    {
-      "case_label": "kmeans.fit_predict.large.balanced",
-      "cpu_median_sec": 13.524849609937519,
-      "features": 128,
-      "gpu_median_sec": 1.303335765027441,
-      "rows": 5000000
-    },
-    {
-      "case_label": "kmeans.fit_predict.medium.balanced",
-      "cpu_median_sec": 0.526230665971525,
-      "features": 128,
-      "gpu_median_sec": 0.14335332298651338,
-      "rows": 500000
-    },
-    {
-      "case_label": "kmeans.fit_predict.medium.thin",
-      "cpu_median_sec": 0.49293427006341517,
-      "features": 16,
-      "gpu_median_sec": 0.08183399611152709,
-      "rows": 1562500
-    },
-    {
-      "case_label": "kmeans.fit_predict.medium.wide",
-      "cpu_median_sec": 6.799652172951028,
-      "features": 1024,
-      "gpu_median_sec": 0.4774908530525863,
-      "rows": 244140
-    },
-    {
-      "case_label": "kmeans.fit_predict.small.balanced",
-      "cpu_median_sec": 0.06653963995631784,
-      "features": 128,
-      "gpu_median_sec": 0.024054031004197896,
-      "rows": 50000
-    },
-    {
-      "case_label": "kmeans.predict.large.balanced",
-      "cpu_median_sec": 0.13526150200050324,
-      "features": 128,
-      "gpu_median_sec": 0.21380952303297818,
-      "rows": 5000000
-    },
-    {
-      "case_label": "kmeans.predict.medium.balanced",
-      "cpu_median_sec": 0.029695932986214757,
-      "features": 128,
-      "gpu_median_sec": 0.042566312942653894,
-      "rows": 976563
-    },
-    {
-      "case_label": "kmeans.predict.medium.thin",
-      "cpu_median_sec": 0.07274423900526017,
-      "features": 16,
-      "gpu_median_sec": 0.05191576399374753,
-      "rows": 7812500
-    },
-    {
-      "case_label": "kmeans.predict.medium.wide",
-      "cpu_median_sec": 0.08480005210731179,
-      "features": 1024,
-      "gpu_median_sec": 0.16249923594295979,
-      "rows": 488281
-    },
-    {
-      "case_label": "kmeans.predict.small.balanced",
-      "cpu_median_sec": 0.005405011004768312,
-      "features": 128,
-      "gpu_median_sec": 0.009147000964730978,
-      "rows": 195313
-    },
-    {
-      "case_label": "lasso.fit.large.balanced",
-      "cpu_median_sec": 3.7461128869326785,
-      "features": 128,
-      "gpu_median_sec": 3.1889823370147496,
-      "rows": 5000000
-    },
-    {
-      "case_label": "lasso.fit.medium.balanced",
-      "cpu_median_sec": 0.39822190103586763,
-      "features": 128,
-      "gpu_median_sec": 0.32292874599806964,
-      "rows": 500000
-    },
-    {
-      "case_label": "lasso.fit.medium.thin",
-      "cpu_median_sec": 0.13021197996567935,
-      "features": 16,
-      "gpu_median_sec": 0.04672942904289812,
-      "rows": 1562500
-    },
-    {
-      "case_label": "lasso.fit.medium.wide",
-      "cpu_median_sec": 2.6237099620047957,
-      "features": 1024,
-      "gpu_median_sec": 2.452470695017837,
-      "rows": 244140
-    },
-    {
-      "case_label": "lasso.fit.small.balanced",
-      "cpu_median_sec": 0.022570813074707985,
-      "features": 128,
-      "gpu_median_sec": 0.016722876927815378,
-      "rows": 50000
-    },
-    {
-      "case_label": "lasso.predict.large.balanced",
-      "cpu_median_sec": 0.12155108200386167,
-      "features": 128,
-      "gpu_median_sec": 0.20802557095885277,
-      "rows": 5000000
-    },
-    {
-      "case_label": "lasso.predict.medium.balanced",
-      "cpu_median_sec": 0.02839861693792045,
-      "features": 128,
-      "gpu_median_sec": 0.04105891892686486,
-      "rows": 976563
-    },
-    {
-      "case_label": "lasso.predict.medium.thin",
-      "cpu_median_sec": 0.031610850943252444,
-      "features": 16,
-      "gpu_median_sec": 0.04427280998788774,
-      "rows": 7812500
-    },
-    {
-      "case_label": "lasso.predict.medium.wide",
-      "cpu_median_sec": 0.09963903296738863,
-      "features": 1024,
-      "gpu_median_sec": 0.1605111981043592,
-      "rows": 488281
-    },
-    {
-      "case_label": "lasso.predict.small.balanced",
-      "cpu_median_sec": 0.005583481979556382,
-      "features": 128,
-      "gpu_median_sec": 0.008310189936310053,
-      "rows": 195313
-    },
-    {
-      "case_label": "linear_regression.fit.large.balanced",
-      "cpu_median_sec": 10.619557366007939,
-      "features": 128,
-      "gpu_median_sec": 1.0365982600487769,
-      "rows": 5000000
-    },
-    {
-      "case_label": "linear_regression.fit.medium.balanced",
-      "cpu_median_sec": 0.8052661130204797,
-      "features": 128,
-      "gpu_median_sec": 0.04629754100460559,
-      "rows": 500000
-    },
-    {
-      "case_label": "linear_regression.fit.medium.thin",
-      "cpu_median_sec": 0.22295756998937577,
-      "features": 16,
-      "gpu_median_sec": 0.01696313195861876,
-      "rows": 1562500
-    },
-    {
-      "case_label": "linear_regression.fit.medium.wide",
-      "cpu_median_sec": 4.994095299975015,
-      "features": 1024,
-      "gpu_median_sec": 0.11301622597966343,
-      "rows": 244140
-    },
-    {
-      "case_label": "linear_regression.fit.small.balanced",
-      "cpu_median_sec": 0.05485638708341867,
-      "features": 128,
-      "gpu_median_sec": 0.007311292923986912,
-      "rows": 50000
-    },
-    {
-      "case_label": "linear_regression.predict.large.balanced",
-      "cpu_median_sec": 0.12193523102905601,
-      "features": 128,
-      "gpu_median_sec": 0.20717806299217045,
-      "rows": 5000000
-    },
-    {
-      "case_label": "linear_regression.predict.medium.balanced",
-      "cpu_median_sec": 0.029983093962073326,
-      "features": 128,
-      "gpu_median_sec": 0.04098336701281369,
-      "rows": 976563
-    },
-    {
-      "case_label": "linear_regression.predict.medium.thin",
-      "cpu_median_sec": 0.03147436399012804,
-      "features": 16,
-      "gpu_median_sec": 0.04392966802697629,
-      "rows": 7812500
-    },
-    {
-      "case_label": "linear_regression.predict.medium.wide",
-      "cpu_median_sec": 0.1001930630300194,
-      "features": 1024,
-      "gpu_median_sec": 0.16025498206727207,
-      "rows": 488281
-    },
-    {
-      "case_label": "linear_regression.predict.small.balanced",
-      "cpu_median_sec": 0.00861329201143235,
-      "features": 128,
-      "gpu_median_sec": 0.008496352937072515,
-      "rows": 195313
-    },
-    {
-      "case_label": "logistic_regression.fit.large.balanced",
-      "cpu_median_sec": 3.3176478400127962,
-      "features": 128,
-      "gpu_median_sec": 0.26617430604528636,
-      "rows": 5000000
-    },
-    {
-      "case_label": "logistic_regression.fit.medium.balanced",
-      "cpu_median_sec": 0.3695489940000698,
-      "features": 128,
-      "gpu_median_sec": 0.02963425195775926,
-      "rows": 500000
-    },
-    {
-      "case_label": "logistic_regression.fit.medium.thin",
-      "cpu_median_sec": 0.6836088570998982,
-      "features": 16,
-      "gpu_median_sec": 0.017995247966609895,
-      "rows": 1562500
-    },
-    {
-      "case_label": "logistic_regression.fit.medium.wide",
-      "cpu_median_sec": 0.5330087899928913,
-      "features": 1024,
-      "gpu_median_sec": 0.0966071670409292,
-      "rows": 244140
-    },
-    {
-      "case_label": "logistic_regression.fit.small.balanced",
-      "cpu_median_sec": 0.029428741079755127,
-      "features": 128,
-      "gpu_median_sec": 0.006344435038045049,
-      "rows": 50000
-    },
-    {
-      "case_label": "logistic_regression.predict.large.balanced",
-      "cpu_median_sec": 0.12946421199012548,
-      "features": 128,
-      "gpu_median_sec": 0.20736966805998236,
-      "rows": 5000000
-    },
-    {
-      "case_label": "logistic_regression.predict.medium.balanced",
-      "cpu_median_sec": 0.03084875992499292,
-      "features": 128,
-      "gpu_median_sec": 0.04097559896763414,
-      "rows": 976563
-    },
-    {
-      "case_label": "logistic_regression.predict.medium.thin",
-      "cpu_median_sec": 0.04155475995503366,
-      "features": 16,
-      "gpu_median_sec": 0.04335149994585663,
-      "rows": 7812500
-    },
-    {
-      "case_label": "logistic_regression.predict.medium.wide",
-      "cpu_median_sec": 0.12790993007365614,
-      "features": 1024,
-      "gpu_median_sec": 0.1606795690022409,
-      "rows": 488281
-    },
-    {
-      "case_label": "logistic_regression.predict.small.balanced",
-      "cpu_median_sec": 0.004982228041626513,
-      "features": 128,
-      "gpu_median_sec": 0.008425503969192505,
-      "rows": 195313
-    },
-    {
-      "case_label": "nearest_neighbors.kneighbors.large.balanced",
-      "cpu_median_sec": 0.3636780340457335,
-      "features": 128,
-      "gpu_median_sec": 0.017333324998617172,
-      "rows": 32000
-    },
-    {
-      "case_label": "nearest_neighbors.kneighbors.medium.balanced",
-      "cpu_median_sec": 0.03858806588687003,
-      "features": 128,
-      "gpu_median_sec": 0.0021513920510187745,
-      "rows": 8000
-    },
-    {
-      "case_label": "nearest_neighbors.kneighbors.medium.thin",
-      "cpu_median_sec": 0.02836208592634648,
-      "features": 16,
-      "gpu_median_sec": 0.000668840017169714,
-      "rows": 8000
-    },
-    {
-      "case_label": "nearest_neighbors.kneighbors.medium.wide",
-      "cpu_median_sec": 0.2411515099229291,
-      "features": 1024,
-      "gpu_median_sec": 0.011103090015240014,
-      "rows": 8000
-    },
-    {
-      "case_label": "nearest_neighbors.kneighbors.small.balanced",
-      "cpu_median_sec": 0.014858077047392726,
-      "features": 128,
-      "gpu_median_sec": 0.0006700319936499,
-      "rows": 2000
-    },
-    {
-      "case_label": "pca.fit_transform.large.balanced",
-      "components": 256,
-      "cpu_median_sec": 16.650927017093636,
-      "features": 1024,
-      "gpu_median_sec": 20.00662136101164,
-      "rows": 1000000
-    },
-    {
-      "case_label": "pca.fit_transform.medium.balanced",
-      "components": 256,
-      "cpu_median_sec": 2.187433289946057,
-      "features": 1024,
-      "gpu_median_sec": 1.673788579995744,
-      "rows": 100000
-    },
-    {
-      "case_label": "pca.fit_transform.medium.thin",
-      "components": 32,
-      "cpu_median_sec": 0.11564374598674476,
-      "features": 128,
-      "gpu_median_sec": 0.256012532976456,
-      "rows": 195313
-    },
-    {
-      "case_label": "pca.fit_transform.medium.wide",
-      "components": 1024,
-      "cpu_median_sec": 8.137627047020942,
-      "features": 4096,
-      "gpu_median_sec": 3.1009125099517405,
-      "rows": 61035
-    },
-    {
-      "case_label": "pca.fit_transform.rank128.medium.wide",
-      "cpu_median_sec": 1.4154017000691965,
-      "features": 4096,
-      "gpu_median_sec": 2.9710439949994907,
-      "rows": 61035
-    },
-    {
-      "case_label": "pca.fit_transform.rank256.medium.wide",
-      "cpu_median_sec": 2.149515601922758,
-      "features": 4096,
-      "gpu_median_sec": 2.907450082944706,
-      "rows": 61035
-    },
-    {
-      "case_label": "pca.fit_transform.rank512.medium.wide",
-      "cpu_median_sec": 3.3350398250622675,
-      "features": 4096,
-      "gpu_median_sec": 2.9787410679273307,
-      "rows": 61035
-    },
-    {
-      "case_label": "pca.fit_transform.small.balanced",
-      "components": 256,
-      "cpu_median_sec": 0.34794123796746135,
-      "features": 1024,
-      "gpu_median_sec": 0.11456126300618052,
-      "rows": 10000
-    },
-    {
-      "case_label": "pca.transform.large.balanced",
-      "components": 256,
-      "cpu_median_sec": 0.9820367218926549,
-      "features": 1024,
-      "gpu_median_sec": 26.835695981048048,
-      "rows": 2441406
-    },
-    {
-      "case_label": "pca.transform.medium.balanced",
-      "components": 256,
-      "cpu_median_sec": 0.23787603992968798,
-      "features": 1024,
-      "gpu_median_sec": 5.444070767960511,
-      "rows": 488281
-    },
-    {
-      "case_label": "pca.transform.medium.thin",
-      "components": 32,
-      "cpu_median_sec": 0.06960121693555266,
-      "features": 128,
-      "gpu_median_sec": 0.700887780985795,
-      "rows": 976563
-    },
-    {
-      "case_label": "pca.transform.medium.wide",
-      "components": 1024,
-      "cpu_median_sec": 0.43648333696182817,
-      "features": 4096,
-      "gpu_median_sec": 5.272863166057505,
-      "rows": 122070
-    },
-    {
-      "case_label": "pca.transform.small.balanced",
-      "components": 256,
-      "cpu_median_sec": 0.029325037030503154,
-      "features": 1024,
-      "gpu_median_sec": 0.2894672000547871,
-      "rows": 50000
-    },
-    {
-      "case_label": "random_forest_classifier.fit.large.balanced",
-      "cpu_median_sec": 28.55790055100806,
-      "features": 128,
-      "gpu_median_sec": 1.1158245970727876,
-      "rows": 1953125
-    },
-    {
-      "case_label": "random_forest_classifier.fit.medium.balanced",
-      "cpu_median_sec": 2.251418935949914,
-      "features": 128,
-      "gpu_median_sec": 0.2849485808983445,
-      "rows": 250000
-    },
-    {
-      "case_label": "random_forest_classifier.fit.medium.thin",
-      "cpu_median_sec": 7.814419436035678,
-      "features": 16,
-      "gpu_median_sec": 0.7785865219775587,
-      "rows": 1562500
-    },
-    {
-      "case_label": "random_forest_classifier.fit.medium.wide",
-      "cpu_median_sec": 7.947469017002732,
-      "features": 1024,
-      "gpu_median_sec": 0.7911731590284035,
-      "rows": 244140
-    },
-    {
-      "case_label": "random_forest_classifier.fit.small.balanced",
-      "cpu_median_sec": 0.4394161750096828,
-      "features": 128,
-      "gpu_median_sec": 0.14033247297629714,
-      "rows": 50000
-    },
-    {
-      "case_label": "random_forest_classifier.predict.large.balanced",
-      "cpu_median_sec": 0.8048427280737087,
-      "features": 128,
-      "gpu_median_sec": 0.2979125459678471,
-      "rows": 5000000
-    },
-    {
-      "case_label": "random_forest_classifier.predict.medium.balanced",
-      "cpu_median_sec": 0.14128723903559148,
-      "features": 128,
-      "gpu_median_sec": 0.059290974983014166,
-      "rows": 976563
-    },
-    {
-      "case_label": "random_forest_classifier.predict.medium.thin",
-      "cpu_median_sec": 0.888597073033452,
-      "features": 16,
-      "gpu_median_sec": 0.07403409504331648,
-      "rows": 7812500
-    },
-    {
-      "case_label": "random_forest_classifier.predict.medium.wide",
-      "cpu_median_sec": 0.20680657599586993,
-      "features": 1024,
-      "gpu_median_sec": 0.22910170897375792,
-      "rows": 488281
-    },
-    {
-      "case_label": "random_forest_classifier.predict.small.balanced",
-      "cpu_median_sec": 0.02928345208056271,
-      "features": 128,
-      "gpu_median_sec": 0.012366725015453994,
-      "rows": 195313
-    },
-    {
-      "case_label": "random_forest_regressor.fit.large.balanced",
-      "cpu_median_sec": 208.22458670195192,
-      "features": 128,
-      "gpu_median_sec": 7.596119820023887,
-      "rows": 1953125
-    },
-    {
-      "case_label": "random_forest_regressor.fit.medium.balanced",
-      "cpu_median_sec": 17.663872535922565,
-      "features": 128,
-      "gpu_median_sec": 1.802176728961058,
-      "rows": 250000
-    },
-    {
-      "case_label": "random_forest_regressor.fit.medium.thin",
-      "cpu_median_sec": 19.816398704075254,
-      "features": 16,
-      "gpu_median_sec": 1.6272683509159833,
-      "rows": 1562500
-    },
-    {
-      "case_label": "random_forest_regressor.fit.medium.wide",
-      "cpu_median_sec": null,
-      "cpu_timeout_sec": 101.72236767640187,
-      "features": 1024,
-      "gpu_median_sec": 10.61079611000605,
-      "rows": 244140
-    },
-    {
-      "case_label": "random_forest_regressor.fit.small.balanced",
-      "cpu_median_sec": 2.951673660078086,
-      "features": 128,
-      "gpu_median_sec": 0.7166377539979294,
-      "rows": 50000
-    },
-    {
-      "case_label": "random_forest_regressor.predict.large.balanced",
-      "cpu_median_sec": 1.2801655790535733,
-      "features": 128,
-      "gpu_median_sec": 0.2934990670764819,
-      "rows": 5000000
-    },
-    {
-      "case_label": "random_forest_regressor.predict.medium.balanced",
-      "cpu_median_sec": 0.19392986001912504,
-      "features": 128,
-      "gpu_median_sec": 0.05870294896885753,
-      "rows": 976563
-    },
-    {
-      "case_label": "random_forest_regressor.predict.medium.thin",
-      "cpu_median_sec": 1.092334296903573,
-      "features": 16,
-      "gpu_median_sec": 0.07034123002085835,
-      "rows": 7812500
-    },
-    {
-      "case_label": "random_forest_regressor.predict.medium.wide",
-      "cpu_median_sec": 0.2247099980013445,
-      "features": 1024,
-      "gpu_median_sec": 0.2291561469901353,
-      "rows": 488281
-    },
-    {
-      "case_label": "random_forest_regressor.predict.small.balanced",
-      "cpu_median_sec": 0.03849606204312295,
-      "features": 128,
-      "gpu_median_sec": 0.011931297020055354,
-      "rows": 195313
-    },
-    {
-      "case_label": "ridge.fit.large.balanced",
-      "cpu_median_sec": 1.5422547629568726,
-      "features": 128,
-      "gpu_median_sec": 0.4899709529709071,
-      "rows": 5000000
-    },
-    {
-      "case_label": "ridge.fit.medium.balanced",
-      "cpu_median_sec": 0.22137773199938238,
-      "features": 128,
-      "gpu_median_sec": 0.0498309968970716,
-      "rows": 500000
-    },
-    {
-      "case_label": "ridge.fit.medium.thin",
-      "cpu_median_sec": 0.10595388105139136,
-      "features": 16,
-      "gpu_median_sec": 0.018422757973894477,
-      "rows": 1562500
-    },
-    {
-      "case_label": "ridge.fit.medium.wide",
-      "cpu_median_sec": 0.5379137740237638,
-      "features": 1024,
-      "gpu_median_sec": 0.12974359293002635,
-      "rows": 244140
-    },
-    {
-      "case_label": "ridge.fit.small.balanced",
-      "cpu_median_sec": 0.027615453000180423,
-      "features": 128,
-      "gpu_median_sec": 0.007149653974920511,
-      "rows": 50000
-    },
-    {
-      "case_label": "ridge.predict.large.balanced",
-      "cpu_median_sec": 0.1250803570728749,
-      "features": 128,
-      "gpu_median_sec": 0.20671470102388412,
-      "rows": 5000000
-    },
-    {
-      "case_label": "ridge.predict.medium.balanced",
-      "cpu_median_sec": 0.028671866049990058,
-      "features": 128,
-      "gpu_median_sec": 0.04106896696612239,
-      "rows": 976563
-    },
-    {
-      "case_label": "ridge.predict.medium.thin",
-      "cpu_median_sec": 0.030919242999516428,
-      "features": 16,
-      "gpu_median_sec": 0.04381491302046925,
-      "rows": 7812500
-    },
-    {
-      "case_label": "ridge.predict.medium.wide",
-      "cpu_median_sec": 0.09900929301511496,
-      "features": 1024,
-      "gpu_median_sec": 0.16049174300860614,
-      "rows": 488281
-    },
-    {
-      "case_label": "ridge.predict.small.balanced",
-      "cpu_median_sec": 0.00556013104505837,
-      "features": 128,
-      "gpu_median_sec": 0.00828160298988223,
-      "rows": 195313
-    },
-    {
-      "case_label": "standard_scaler.fit_transform.large.balanced",
-      "cpu_median_sec": 2.1039724230067804,
-      "features": 128,
-      "gpu_median_sec": 0.9581598960794508,
-      "rows": 5000000
-    },
-    {
-      "case_label": "standard_scaler.fit_transform.medium.balanced",
-      "cpu_median_sec": 0.21815039694774896,
-      "features": 128,
-      "gpu_median_sec": 0.10096367506776005,
-      "rows": 500000
-    },
-    {
-      "case_label": "standard_scaler.fit_transform.medium.thin",
-      "cpu_median_sec": 0.14203009800985456,
-      "features": 16,
-      "gpu_median_sec": 0.07675761892460287,
-      "rows": 1562500
-    },
-    {
-      "case_label": "standard_scaler.fit_transform.medium.wide",
-      "cpu_median_sec": 0.7879876650404185,
-      "features": 1024,
-      "gpu_median_sec": 0.23250070307403803,
-      "rows": 244140
-    },
-    {
-      "case_label": "standard_scaler.fit_transform.small.balanced",
-      "cpu_median_sec": 0.021707452018745244,
-      "features": 128,
-      "gpu_median_sec": 0.011603698949329555,
-      "rows": 50000
-    },
-    {
-      "case_label": "standard_scaler.transform.large.balanced",
-      "cpu_median_sec": 0.5662844489561394,
-      "features": 128,
-      "gpu_median_sec": 0.42308395099826157,
-      "rows": 5000000
-    },
-    {
-      "case_label": "standard_scaler.transform.medium.balanced",
-      "cpu_median_sec": 0.11262878600973636,
-      "features": 128,
-      "gpu_median_sec": 0.08391891000792384,
-      "rows": 976563
-    },
-    {
-      "case_label": "standard_scaler.transform.medium.thin",
-      "cpu_median_sec": 0.14313816605135798,
-      "features": 16,
-      "gpu_median_sec": 0.0842049770290032,
-      "rows": 7812500
-    },
-    {
-      "case_label": "standard_scaler.transform.medium.wide",
-      "cpu_median_sec": 0.4288262299960479,
-      "features": 1024,
-      "gpu_median_sec": 0.33161127904895693,
-      "rows": 488281
-    },
-    {
-      "case_label": "standard_scaler.transform.small.balanced",
-      "cpu_median_sec": 0.022363575058989227,
-      "features": 128,
-      "gpu_median_sec": 0.01783415803220123,
-      "rows": 195313
-    },
-    {
-      "case_label": "svc.fit.large.balanced",
-      "cpu_median_sec": 8.594956030952744,
-      "features": 64,
-      "gpu_median_sec": 0.07681126100942492,
-      "rows": 32000
-    },
-    {
-      "case_label": "svc.fit.medium.balanced",
-      "cpu_median_sec": 0.5026084299897775,
-      "features": 64,
-      "gpu_median_sec": 0.032016879064030945,
-      "rows": 8000
-    },
-    {
-      "case_label": "svc.fit.medium.thin",
-      "cpu_median_sec": 0.1453976930351928,
-      "features": 8,
-      "gpu_median_sec": 0.0215550271095708,
-      "rows": 8000
-    },
-    {
-      "case_label": "svc.fit.medium.wide",
-      "cpu_median_sec": 3.4218533909879625,
-      "features": 512,
-      "gpu_median_sec": 0.06050935992971063,
-      "rows": 8000
-    },
-    {
-      "case_label": "svc.fit.small.balanced",
-      "cpu_median_sec": 0.046410873997956514,
-      "features": 64,
-      "gpu_median_sec": 0.019597710925154388,
-      "rows": 2000
-    },
-    {
-      "case_label": "svc.predict.large.balanced",
-      "cpu_median_sec": 8.058797800098546,
-      "features": 64,
-      "gpu_median_sec": 0.020186729030683637,
-      "rows": 32000
-    },
-    {
-      "case_label": "svc.predict.medium.balanced",
-      "cpu_median_sec": 0.750626330031082,
-      "features": 64,
-      "gpu_median_sec": 0.0028019349556416273,
-      "rows": 8000
-    },
-    {
-      "case_label": "svc.predict.medium.thin",
-      "cpu_median_sec": 0.24515692004933953,
-      "features": 8,
-      "gpu_median_sec": 0.0013074340531602502,
-      "rows": 8000
-    },
-    {
-      "case_label": "svc.predict.medium.wide",
-      "cpu_median_sec": 6.359593803994358,
-      "features": 512,
-      "gpu_median_sec": 0.01882191700860858,
-      "rows": 8000
-    },
-    {
-      "case_label": "svc.predict.small.balanced",
-      "cpu_median_sec": 0.07456711400300264,
-      "features": 64,
-      "gpu_median_sec": 0.0008572080405429006,
-      "rows": 2000
-    },
-    {
-      "case_label": "target_encoder.fit_transform.large.balanced",
-      "cpu_median_sec": 25.59706386597827,
-      "features": 32,
-      "gpu_median_sec": 8.136184044997208,
-      "rows": 7812500
-    },
-    {
-      "case_label": "target_encoder.fit_transform.medium.balanced",
-      "cpu_median_sec": 2.527452763984911,
-      "features": 32,
-      "gpu_median_sec": 5.812218834995292,
-      "rows": 781250
-    },
-    {
-      "case_label": "target_encoder.fit_transform.medium.thin",
-      "cpu_median_sec": 1.7613757039653137,
-      "features": 8,
-      "gpu_median_sec": 1.48814138607122,
-      "rows": 3125000
-    },
-    {
-      "case_label": "target_encoder.fit_transform.medium.wide",
-      "cpu_median_sec": 3.271938015939668,
-      "features": 128,
-      "gpu_median_sec": 23.957113072043285,
-      "rows": 250000
-    },
-    {
-      "case_label": "target_encoder.fit_transform.small.balanced",
-      "cpu_median_sec": 0.5411441529868171,
-      "features": 32,
-      "gpu_median_sec": 5.352329042972997,
-      "rows": 195313
-    },
-    {
-      "case_label": "target_encoder.transform.large.balanced",
-      "cpu_median_sec": 23.619267632020637,
-      "features": 32,
-      "gpu_median_sec": 5.816466267919168,
-      "rows": 15625000
-    },
-    {
-      "case_label": "target_encoder.transform.medium.balanced",
-      "cpu_median_sec": 5.805767987971194,
-      "features": 32,
-      "gpu_median_sec": 1.7514341400237754,
-      "rows": 3906250
-    },
-    {
-      "case_label": "target_encoder.transform.medium.thin",
-      "cpu_median_sec": 3.6434561719652265,
-      "features": 8,
-      "gpu_median_sec": 0.5681798459263518,
-      "rows": 15625000
-    },
-    {
-      "case_label": "target_encoder.transform.medium.wide",
-      "cpu_median_sec": 6.198931579012424,
-      "features": 128,
-      "gpu_median_sec": 7.515021736966446,
-      "rows": 976563
-    },
-    {
-      "case_label": "target_encoder.transform.small.balanced",
-      "cpu_median_sec": 1.1513461580034345,
-      "features": 32,
-      "gpu_median_sec": 0.6790572500322014,
-      "rows": 781250
-    },
-    {
-      "case_label": "tsne.fit_transform.large.balanced",
-      "cpu_median_sec": 44.24366250692401,
-      "features": 64,
-      "gpu_median_sec": 0.9047265910776332,
-      "rows": 50000
-    },
-    {
-      "case_label": "tsne.fit_transform.medium.balanced",
-      "cpu_median_sec": 8.713267159997486,
-      "features": 64,
-      "gpu_median_sec": 0.5818367549218237,
-      "rows": 10000
-    },
-    {
-      "case_label": "tsne.fit_transform.medium.thin",
-      "cpu_median_sec": 8.881877057021484,
-      "features": 8,
-      "gpu_median_sec": 0.46808963001240045,
-      "rows": 10000
-    },
-    {
-      "case_label": "tsne.fit_transform.medium.wide",
-      "cpu_median_sec": 9.255220070946962,
-      "features": 512,
-      "gpu_median_sec": 0.6140728431055322,
-      "rows": 10000
-    },
-    {
-      "case_label": "tsne.fit_transform.small.balanced",
-      "cpu_median_sec": 1.6175911440514028,
-      "features": 64,
-      "gpu_median_sec": 0.39756856905296445,
-      "rows": 2000
-    },
-    {
-      "case_label": "umap.fit_transform.large.balanced",
-      "cpu_median_sec": 13.355245062033646,
-      "features": 64,
-      "gpu_median_sec": 0.25200452003628016,
-      "rows": 50000
-    },
-    {
-      "case_label": "umap.fit_transform.medium.balanced",
-      "cpu_median_sec": 5.879356393008493,
-      "features": 64,
-      "gpu_median_sec": 0.26479391497559845,
-      "rows": 10000
-    },
-    {
-      "case_label": "umap.fit_transform.medium.thin",
-      "cpu_median_sec": 5.271567855961621,
-      "features": 8,
-      "gpu_median_sec": 0.10884263704065233,
-      "rows": 10000
-    },
-    {
-      "case_label": "umap.fit_transform.medium.wide",
-      "cpu_median_sec": 6.290248081088066,
-      "features": 512,
-      "gpu_median_sec": 0.32538047002162784,
-      "rows": 10000
-    },
-    {
-      "case_label": "umap.fit_transform.small.balanced",
-      "cpu_median_sec": 2.433367830934003,
-      "features": 64,
-      "gpu_median_sec": 0.11218545096926391,
-      "rows": 2000
-    },
-    {
-      "case_label": "umap.transform.large.balanced",
-      "cpu_median_sec": null,
-      "cpu_timeout_sec": 849.6530181654072,
-      "features": 64,
-      "gpu_median_sec": 5.319945479976013,
-      "rows": 7812500
-    },
-    {
-      "case_label": "umap.transform.medium.balanced",
-      "cpu_median_sec": null,
-      "cpu_timeout_sec": 101.72236767640187,
-      "features": 64,
-      "gpu_median_sec": 0.7393499630270526,
-      "rows": 1953125
-    },
-    {
-      "case_label": "umap.transform.medium.thin",
-      "cpu_median_sec": null,
-      "cpu_timeout_sec": 101.72236767640187,
-      "features": 8,
-      "gpu_median_sec": 1.7832878340268508,
-      "rows": 15625000
-    },
-    {
-      "case_label": "umap.transform.medium.wide",
-      "cpu_median_sec": null,
-      "cpu_timeout_sec": 101.72236767640187,
-      "features": 512,
-      "gpu_median_sec": 0.6611020119162276,
-      "rows": 244141
-    },
-    {
-      "case_label": "umap.transform.small.balanced",
-      "cpu_median_sec": null,
-      "cpu_timeout_sec": 69.4655930911014,
-      "features": 64,
-      "gpu_median_sec": 0.13132311205845326,
-      "rows": 390625
-    }
-  ]
+  }
 }

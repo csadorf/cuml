@@ -26,14 +26,14 @@ Speedup by operation and workload
 
 Rows are ranked by the median exact speedup. Green indicates a measured gain,
 gray is centered at 1×, and warm colors indicate a slowdown. Hatching marks
-CPU-timeout lower bounds and unavailable results.
+CPU timeouts and unavailable results.
 
 .. rst-class:: benchmark-footnote
 
 A timeout indicates that the complete isolated CPU benchmark case—not a
-single estimator call—exceeded its wall-clock limit. When the GPU
-run completed, the displayed value is a conservative lower bound (``≥``), not
-an exact speedup.
+single estimator call—exceeded its wall-clock limit. These deadlines include
+preparation, warmup, and multiple measurements, so they cannot establish
+per-operation speedup bounds. Timed-out CPU cases have no measured speedup.
 
 Training and combined operations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -150,8 +150,12 @@ These benchmarks compare the corresponding CPU implementations with
 CPU measurements use the corresponding scikit-learn estimators, except for
 UMAP, which uses ``umap.UMAP`` from ``umap-learn``, and HDBSCAN, which uses
 ``hdbscan.HDBSCAN`` from ``hdbscan``. Each isolated case used one warmup, the
-median of three measured repetitions, operation-appropriate correctness
-validation, and a complete-case timeout.
+median of three measured repetitions, GPU dispatch verification, and a
+complete-case timeout. The data comes from the local ``accel-performance``
+suite; its generators and rounded shapes differ from the earlier reference
+study. Fitting uses the full row count rather than a 90% training partition.
+TargetEncoder uses eight uniform categories and binary targets rather than
+64 Zipf-distributed categories and continuous targets.
 
 .. dropdown:: Test system, validation, and timing policy
 
@@ -167,13 +171,14 @@ validation, and a complete-case timeout.
    **Scale and timeout policy.** Algorithm-family-calibrated small, medium, and
    large shapes. Each backend ran every case in a separate worker with a
    wall-clock limit. The limit covered process startup, data
-   preparation, estimator setup, one warmup, three measured repetitions, and
-   correctness validation.
+   preparation, estimator setup, one warmup, and three measured repetitions.
+   Two CPU UMAP transform cases exceeded their expanded 30-minute limits;
+   all 168 accelerated cases completed successfully.
 
    **Execution and correctness.** Successful accelerated measurements were
-   instrumented to verify GPU-only execution. The benchmark runner applied
-   each case's operation-appropriate parity check. A timeout means validation
-   could not complete.
+   instrumented during warmup to verify GPU-only execution with no CPU
+   fallback. The runner did not perform numerical CPU/GPU output-parity
+   checks. Timed-out cases lack a complete set of measured observations.
 
    **Packages.** @@PACKAGES@@.
 
