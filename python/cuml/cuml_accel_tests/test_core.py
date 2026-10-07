@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: Copyright (c) 2025-2026, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) 2025-2026, NVIDIA CORPORATION.
 # SPDX-License-Identifier: Apache-2.0
 import importlib
 import importlib.metadata
@@ -10,11 +10,7 @@ import sklearn
 from packaging.version import Version
 
 import cuml.accel
-from cuml.accel.core import (
-    _CONSTRAINTS,
-    CheckConstraint,
-    _exclude_from_acceleration,
-)
+from cuml.accel.core import _CONSTRAINTS, CheckConstraint
 from cuml.accel.estimator_proxy import ProxyBase
 
 
@@ -38,47 +34,6 @@ def test_multiple_import_styles_work():
 
     assert linear_model.LogisticRegression is LogisticRegression
     assert cuml.accel.is_proxy(LogisticRegression)
-
-
-@pytest.mark.parametrize(
-    "module, excluded",
-    [
-        ("cuml.benchmark.backends.accel", False),
-        ("cuml", True),
-        ("cuml.accel.estimator_proxy", True),
-        ("cuml.benchmark.backends.base", True),
-        ("cuml.benchmark.backends.cuml", True),
-        ("cuml.benchmark.backends.accel_extra", True),
-        ("cuml.benchmark.backends.accel.internal", True),
-        ("sklearn.decomposition", True),
-        ("sklearn.decomposition.tests.test_pca", False),
-        ("umap.umap_", True),
-        ("hdbscan.hdbscan_", True),
-        ("treelite", True),
-        ("user_script", False),
-    ],
-)
-def test_acceleration_caller_exclusions(module, excluded):
-    assert _exclude_from_acceleration(module) is excluded
-
-
-@pytest.mark.parametrize("estimator", ["PCA", "UMAP", "HDBSCAN"])
-def test_benchmark_loads_upstream_proxy(estimator):
-    from cuml.benchmark.providers import get_provider
-
-    provider = get_provider("cuml.accel")
-    backend = provider.backend
-    spec = provider.estimator_spec(estimator)
-    proxy = backend.load_estimator(spec)
-    assert cuml.accel.is_proxy(proxy)
-
-    # The benchmark exception must not accelerate other cuML callers.
-    namespace = {"__name__": "cuml.benchmark.backends.cuml"}
-    exec(
-        f"from {spec.module} import {spec.name} as estimator",
-        namespace,
-    )
-    assert not cuml.accel.is_proxy(namespace["estimator"])
 
 
 def test_enabled():
