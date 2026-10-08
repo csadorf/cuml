@@ -1675,6 +1675,38 @@ def test_dask_input_conversion(estimator):
         cp.testing.assert_array_equal(converted_y.compute(), cp.asarray(y))
 
 
+@pytest.mark.parametrize("distributed", [False, True])
+def test_distributed_effective_parameters_are_an_object(distributed):
+    parameters = (
+        [{"n_estimators": 2}, {"n_estimators": 2}]
+        if distributed
+        else {"n_estimators": 2}
+    )
+
+    class Estimator:
+        def __init__(self, **kwargs):
+            pass
+
+        def get_params(self, deep=False):
+            assert deep is False
+            return parameters
+
+    prepared = harness._PreparedCase(Estimator, (), None)
+    case = resolve_case(_request(), PROFILE)
+    result = {"parameters": {"effective": {}}}
+    harness._construct_estimator(
+        get_backend("cuml.dask"), prepared, case, None, result
+    )
+    expected = parameters[0] if distributed else parameters
+    assert result["parameters"]["effective"] == expected
+
+
+def test_default_backend_effective_parameters():
+    parameters = {"n_estimators": 2}
+    estimator = SimpleNamespace(get_params=lambda **kwargs: parameters)
+    assert Backend().effective_parameters(estimator) is parameters
+
+
 def test_dask_dbscan_uses_local_input():
     case = resolve_case(_request(estimator="DBSCAN"), PROFILE)
     X = np.zeros((64, 8), dtype=np.float32)

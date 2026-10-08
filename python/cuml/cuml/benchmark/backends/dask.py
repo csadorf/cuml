@@ -80,6 +80,33 @@ class DaskBackend(CumlBackend):
         """
         return estimator_class(**{**parameters, "client": runtime})
 
+    def effective_parameters(self, estimator: Any) -> dict[str, Any]:
+        """Normalize distributed estimator parameters for result metadata.
+
+        Parameters
+        ----------
+        estimator : Any
+            Constructed distributed estimator exposing get_params.
+        """
+        parameters = super().effective_parameters(estimator)
+        # Dask random forests return a list of per-worker parameter mappings,
+        # unlike the dictionary expected by the estimator API and result schema.
+        # The list is a legacy of training separate forests with worker-specific
+        # tree counts and seeds. Workers now receive identical parameters, so
+        # collapse the list only after checking that assumption.
+        # TODO: Fix Dask RF get_params(deep=False) upstream to return a single
+        # estimator-level dictionary, then remove this compatibility hack.
+        if isinstance(parameters, list):
+            assert parameters, "Dask estimator returned no worker parameters"
+            assert all(isinstance(item, dict) for item in parameters), (
+                "Dask worker parameters must be dictionaries"
+            )
+            assert all(item == parameters[0] for item in parameters[1:]), (
+                "Dask estimator parameters differ between workers"
+            )
+            return parameters[0]
+        return parameters
+
     def synchronize(self, value: Any = None) -> None:
         """Wait for distributed output and local GPU work to complete.
 
