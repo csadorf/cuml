@@ -53,8 +53,9 @@ Provider requirements:
 `from cuml import benchmark; artifacts = benchmark.run("my-suite.yaml",
 providers=["cuml", "scikit-learn"])` uses the same sequential isolated workers
 as the CLI. It returns provider-keyed JSON dictionaries and cleans temporary
-output by default. Supply `output="comparison"` to retain checkpoints and enable
-`resume=True`. The CLI continues to default to a timestamped directory.
+output by default. Pass a directory path to `output`, such as `output="./results"`,
+to save results and checkpoints. Use the same directory with `resume=True` to
+continue a run. The CLI defaults to a timestamped directory.
 See the [API reference](../api/cuml.benchmark) for failure diagnostics,
 temporary cleanup and per-provider resume semantics.
 
@@ -157,8 +158,8 @@ The `cuml.accel` provider includes multiple upstream distribution packages.
 Its HDBSCAN binding is the standalone hdbscan implementation, not sklearn's
 HDBSCAN.
 
-See the [API and schema reference](../api/cuml.benchmark) for suite validation
-and the generated schema.
+Suite loading validates the manifest structure, inference inputs, provider
+compatibility, and workload IDs before execution.
 
 ## Timing and results
 
@@ -198,7 +199,8 @@ Each results file contains:
   total elapsed console time.
 
 Each provider saves its results file after every case, including failures.
-See the [API and schema reference](../api/cuml.benchmark) for the results schema.
+The results JSON Schema is packaged at
+`cuml/benchmark/schemas/benchmark-result.schema.json`.
 
 ## Resume a run
 
