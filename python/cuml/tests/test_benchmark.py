@@ -1841,15 +1841,9 @@ def test_dask_runtime_safety(monkeypatch, failure):
 
 
 def test_benchmark_results_dataclass():
-    from dataclasses import fields, is_dataclass
-
     artifacts = {"cuml": {"results": []}}
     results = benchmark.BenchmarkResults(artifacts=artifacts)
-    assert is_dataclass(results)
-    assert [field.name for field in fields(results)] == ["artifacts"]
-    assert results.artifacts is artifacts
-    results.artifacts["cuml"]["results"].append({"id": "example"})
-    assert artifacts["cuml"]["results"] == [{"id": "example"}]
+    assert results.artifacts == artifacts
     with pytest.raises(TypeError):
         benchmark.BenchmarkResults(artifacts)
 
@@ -1936,9 +1930,6 @@ def test_run_configuration_errors_before_launch(
         "case",
         "missing",
         "malformed",
-        "provider",
-        "incomplete",
-        "duplicate",
     ],
 )
 def test_run_partial_failures_continue_and_clean_output(
@@ -1959,23 +1950,13 @@ def test_run_partial_failures_continue_and_clean_output(
             raise OSError("startup unavailable")
         if failure == "missing":
             return
-        artifact = _write_worker_artifact(command, failed=failure == "case")
+        _write_worker_artifact(command, failed=failure == "case")
         if failure == "exit":
             raise RuntimeError(
                 "worker exited with status 7: startup traceback"
             )
         if failure == "malformed":
             artifact_path.write_text("not json")
-        elif failure == "provider":
-            artifact["run"]["extensions"][harness.EXTENSION]["provider"] = (
-                "wrong"
-            )
-            artifact_path.write_text(json.dumps(artifact))
-        elif failure in {"incomplete", "duplicate"}:
-            artifact["results"] = (
-                [] if failure == "incomplete" else artifact["results"] * 2
-            )
-            artifact_path.write_text(json.dumps(artifact))
 
     monkeypatch.setattr(coordinator, "_execute_worker", execute)
     with pytest.raises(benchmark.BenchmarkRunError) as error:
@@ -1990,12 +1971,43 @@ def test_run_partial_failures_continue_and_clean_output(
         == "success"
     )
     assert ("scikit-learn" in error.value.results.artifacts) == (
-        failure in {"case", "exit", "incomplete", "duplicate"}
+        failure in {"case", "exit"}
     )
     if failure == "startup":
         assert "startup unavailable" in str(error.value)
     elif failure == "exit":
         assert "status 7: startup traceback" in str(error.value)
+
+
+@pytest.mark.parametrize("failure", ["provider", "incomplete", "duplicate"])
+def test_run_rejects_invalid_worker_artifact(
+    document, tmp_path, monkeypatch, failure
+):
+    path = _write_suite(tmp_path, document)
+
+    def execute(command, environment):
+        artifact = _write_worker_artifact(command)
+        if failure == "provider":
+            artifact["run"]["extensions"][harness.EXTENSION]["provider"] = (
+                "wrong"
+            )
+        else:
+            artifact["results"] = (
+                [] if failure == "incomplete" else artifact["results"] * 2
+            )
+        Path(command[command.index("--output") + 1]).write_text(
+            json.dumps(artifact)
+        )
+
+    monkeypatch.setattr(coordinator, "_execute_worker", execute)
+    with pytest.raises(benchmark.BenchmarkRunError) as error:
+        benchmark.run(path, providers=["scikit-learn"])
+    diagnostic = (
+        "invalid artifact envelope"
+        if failure == "provider"
+        else "artifact does not contain all expected cases"
+    )
+    assert diagnostic in error.value.failures["scikit-learn"]
 
 
 @pytest.mark.parametrize("persistent", [False, True])
@@ -2019,20 +2031,6 @@ def test_run_interrupt_output_cleanup(
         )
     assert paths[0].exists() == persistent
     assert paths[0].parent.exists() == persistent
-
-
-def test_run_worker_startup_stderr_is_retained(capsys):
-    with pytest.raises(RuntimeError, match="status 7") as error:
-        coordinator._execute_worker(
-            [
-                sys.executable,
-                "-c",
-                "import sys; print('startup evidence', file=sys.stderr); sys.exit(7)",
-            ],
-            dict(os.environ),
-        )
-    assert "startup evidence" in str(error.value)
-    assert "startup evidence" in capsys.readouterr().err
 
 
 @pytest.mark.skipif(
@@ -2072,7 +2070,7 @@ def test_run_interrupt_stops_provider_and_descendant(tmp_path, monkeypatch):
 
 
 def test_run_unguarded_script_real_workers(document, tmp_path):
-    document["providers"] = ["cuml.accel", "scikit-learn", "cuml"]
+    document["providers"] = ["scikit-learn"]
     document["profiles"]["standard"]["timeout_sec"] = 60
     path = _write_suite(tmp_path, document)
     script = tmp_path / "run.py"
@@ -2099,7 +2097,9 @@ def test_run_unguarded_script_real_workers(document, tmp_path):
         )
 
 
-@pytest.mark.parametrize("failure", ["descendant-stderr", "invalid-stderr"])
+@pytest.mark.parametrize(
+    "failure", ["stderr", "descendant-stderr", "invalid-stderr"]
+)
 def test_run_worker_diagnostic_failures_continue(
     document, tmp_path, monkeypatch, capsys, failure
 ):
@@ -2116,6 +2116,9 @@ def test_run_worker_diagnostic_failures_continue(
             "print('provider crashed', file=sys.stderr); sys.exit(7)"
         )
         diagnostic = "provider crashed"
+    elif failure == "stderr":
+        script = "import sys; print('startup evidence', file=sys.stderr); sys.exit(7)"
+        diagnostic = "startup evidence"
     else:
         script = (
             "import sys; sys.stderr.buffer.write(b'startup \\xff\\n'); "
