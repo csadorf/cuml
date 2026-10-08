@@ -1626,14 +1626,13 @@ def test_real_backend_smoke(monkeypatch, tmp_path, provider, workload):
     _validate_artifact(artifact)
 
 
-@pytest.mark.parametrize("fallback", [False, True])
-def test_dask_synchronization(monkeypatch, fallback):
+@pytest.mark.parametrize("collection", [False, True])
+@pytest.mark.parametrize("nested", [False, True])
+def test_dask_synchronization(monkeypatch, collection, nested):
     events = []
 
     def wait(value):
         events.append("wait")
-        if fallback:
-            raise TypeError("not a future")
 
     modules = {
         "dask.distributed": SimpleNamespace(wait=wait),
@@ -1646,12 +1645,14 @@ def test_dask_synchronization(monkeypatch, fallback):
         ),
     }
     monkeypatch.setattr(importlib, "import_module", modules.__getitem__)
-    get_backend("cuml.dask").synchronize(
+    value = (
         SimpleNamespace(compute=lambda: events.append("compute"))
+        if collection
+        else object()
     )
-    assert events == (
-        ["wait", "compute", "gpu"] if fallback else ["wait", "gpu"]
-    )
+    get_backend("cuml.dask").synchronize((value, [value]) if nested else value)
+    expected = ["compute", "gpu"] if collection else ["wait", "gpu"]
+    assert events == expected * (2 if nested else 1)
 
 
 @pytest.mark.parametrize("estimator", ["PCA", "LabelEncoder", "MultinomialNB"])

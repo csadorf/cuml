@@ -43,7 +43,8 @@ Provider requirements:
   The harness creates one local cluster for the provider run. Select GPUs with
   `CUDA_VISIBLE_DEVICES` (for example, `CUDA_VISIBLE_DEVICES=4,5`). Numeric
   inputs use GPU-backed Dask arrays, except DBSCAN, which broadcasts a complete
-  local input itself. LabelEncoder uses a Dask-cuDF Series.
+  local input itself. LabelEncoder uses a Dask-cuDF Series. Lazy outputs are
+  computed before timing ends.
 - Estimator availability and accepted constructor parameters depend on installed
   packages.
 

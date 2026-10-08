@@ -88,12 +88,17 @@ class DaskBackend(CumlBackend):
         value : Any, optional
             Distributed output to wait for or compute.
         """
+        if isinstance(value, (tuple, list)):
+            for item in value:
+                self.synchronize(item)
+            return
         if value is not None:
-            try:
+            # wait() only waits for existing futures; it does not execute a
+            # lazy collection's graph, and can return without doing any work.
+            if hasattr(value, "compute"):
+                value.compute()
+            else:
                 importlib.import_module("dask.distributed").wait(value)
-            except (TypeError, AttributeError):
-                if hasattr(value, "compute"):
-                    value.compute()
         super().synchronize(value)
 
     @contextlib.contextmanager
