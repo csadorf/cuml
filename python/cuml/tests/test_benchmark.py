@@ -1654,6 +1654,35 @@ def test_dask_synchronization(monkeypatch, fallback):
     )
 
 
+@pytest.mark.parametrize("estimator", ["PCA", "LabelEncoder", "MultinomialNB"])
+def test_dask_input_conversion(estimator):
+    cp = pytest.importorskip("cupy")
+    pytest.importorskip("dask_cudf")
+    case = resolve_case(_request(estimator=estimator), PROFILE)
+    X = np.arange(512, dtype=np.float32).reshape(64, 8)
+    y = np.arange(64, dtype=np.int64) % 3
+    converted_X, converted_y = get_backend("cuml.dask").convert_data(case, X, y)
+    assert isinstance(converted_X._meta, cp.ndarray)
+    cp.testing.assert_array_equal(converted_X.compute(), cp.asarray(X))
+    if estimator == "LabelEncoder":
+        import cudf
+
+        assert isinstance(converted_y._meta, cudf.Series)
+        np.testing.assert_array_equal(converted_y.compute().to_numpy(), y)
+    else:
+        assert isinstance(converted_y._meta, cp.ndarray)
+        cp.testing.assert_array_equal(converted_y.compute(), cp.asarray(y))
+
+
+def test_dask_dbscan_uses_local_input():
+    case = resolve_case(_request(estimator="DBSCAN"), PROFILE)
+    X = np.zeros((64, 8), dtype=np.float32)
+    y = np.zeros(64, dtype=np.int64)
+    converted_X, converted_y = get_backend("cuml.dask").convert_data(case, X, y)
+    assert converted_X is X
+    assert converted_y is y
+
+
 @pytest.mark.parametrize("count", [0, 1])
 def test_dask_requires_multiple_gpus(monkeypatch, count):
     def import_module(name):

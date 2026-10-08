@@ -33,7 +33,12 @@ class DaskBackend(CumlBackend):
         y : Any
             Complete generated target data.
         """
+        # Distributed DBSCAN broadcasts a complete local array itself; it
+        # does not accept partitioned Dask collections.
+        if case.estimator == "DBSCAN":
+            return X, y
         da = importlib.import_module("dask.array")
+        cp = importlib.import_module("cupy")
         chunks = (max(1, case.generated_rows // 2), case.features)
         if case.dataset == "categorical" and case.estimator not in {
             "LabelEncoder",
@@ -43,8 +48,17 @@ class DaskBackend(CumlBackend):
             dask_cudf = importlib.import_module("dask_cudf")
             X = dask_cudf.from_cudf(cudf.from_pandas(X), npartitions=2)
         else:
-            X = da.from_array(X, chunks=chunks)
-        y = da.from_array(y, chunks=(chunks[0],))
+            X = da.from_array(X, chunks=chunks).map_blocks(
+                cp.asarray, meta=cp.empty((0, 0), dtype=X.dtype)
+            )
+        if case.estimator == "LabelEncoder":
+            cudf = importlib.import_module("cudf")
+            dask_cudf = importlib.import_module("dask_cudf")
+            y = dask_cudf.from_cudf(cudf.Series(y), npartitions=2)
+        else:
+            y = da.from_array(y, chunks=(chunks[0],)).map_blocks(
+                cp.asarray, meta=cp.empty((0,), dtype=y.dtype)
+            )
         return X, y
 
     def construct_estimator(
