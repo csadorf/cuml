@@ -2027,11 +2027,8 @@ def test_run_interrupt_stops_provider_and_descendant(tmp_path, monkeypatch):
     processes = []
     original = subprocess.Popen
 
-    class InterruptedStream:
-        def __init__(self, stream):
-            self.stream = stream
-
-        def __iter__(self):
+    class InterruptedProcess(original):
+        def communicate(self, **kwargs):
             deadline = time.monotonic() + 30
             while not pid_file.exists():
                 assert time.monotonic() < deadline
@@ -2040,14 +2037,6 @@ def test_run_interrupt_stops_provider_and_descendant(tmp_path, monkeypatch):
                 psutil.Process(pid) for pid in json.loads(pid_file.read_text())
             )
             raise KeyboardInterrupt
-
-        def close(self):
-            self.stream.close()
-
-    class InterruptedProcess(original):
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
-            self.stderr = InterruptedStream(self.stderr)
 
     monkeypatch.setattr(coordinator.subprocess, "Popen", InterruptedProcess)
     script = (
@@ -2089,4 +2078,67 @@ def test_run_unguarded_script_real_workers(document, tmp_path):
         assert (
             artifact["run"]["extensions"][harness.EXTENSION]["provider"]
             == provider
+        )
+
+
+@pytest.mark.parametrize("failure", ["descendant-stderr", "invalid-stderr"])
+def test_run_worker_diagnostic_failures_continue(
+    document, tmp_path, monkeypatch, capsys, failure
+):
+    if failure == "descendant-stderr" and os.name != "posix":
+        pytest.skip("descendant cleanup is POSIX-specific")
+    document["providers"] = ["scikit-learn", "cuml"]
+    path = _write_suite(tmp_path, document)
+    pid_file = tmp_path / "descendant.pid"
+    if failure == "descendant-stderr":
+        script = (
+            "import subprocess, sys; "
+            "child = subprocess.Popen([sys.executable, '-c', 'import time; time.sleep(3)']); "
+            f"open({str(pid_file)!r}, 'w').write(str(child.pid)); "
+            "print('provider crashed', file=sys.stderr); sys.exit(7)"
+        )
+        diagnostic = "provider crashed"
+    else:
+        script = (
+            "import sys; sys.stderr.buffer.write(b'startup \\xff\\n'); "
+            "sys.stderr.flush(); sys.exit(7)"
+        )
+        diagnostic = "startup \ufffd"
+    execute_worker = coordinator._execute_worker
+    calls = []
+
+    def execute(command, environment):
+        provider = command[command.index("--provider") + 1]
+        calls.append(provider)
+        _write_worker_artifact(command)
+        execute_worker(
+            [
+                sys.executable,
+                "-c",
+                script if provider == "scikit-learn" else "pass",
+            ],
+            environment,
+        )
+
+    monkeypatch.setattr(coordinator, "_execute_worker", execute)
+    started = time.monotonic()
+    with pytest.raises(benchmark.BenchmarkRunError) as error:
+        benchmark.run(path, providers=document["providers"])
+    assert time.monotonic() - started < 2
+    assert calls == document["providers"]
+    assert list(error.value.artifacts) == document["providers"]
+    assert list(error.value.failures) == ["scikit-learn"]
+    assert "status 7" in error.value.failures["scikit-learn"]
+    assert diagnostic in error.value.failures["scikit-learn"]
+    assert diagnostic in capsys.readouterr().err
+    if failure == "descendant-stderr":
+        import psutil
+
+        try:
+            descendant = psutil.Process(int(pid_file.read_text()))
+        except psutil.NoSuchProcess:
+            return
+        _, alive = psutil.wait_procs([descendant], timeout=1)
+        assert all(
+            process.status() == psutil.STATUS_ZOMBIE for process in alive
         )
