@@ -48,6 +48,16 @@ Provider requirements:
 - Estimator availability and accepted constructor parameters depend on installed
   packages.
 
+## Run from Python
+
+`from cuml import benchmark; artifacts = benchmark.run("my-suite.yaml",
+providers=["cuml", "scikit-learn"])` uses the same sequential isolated workers
+as the CLI. It returns provider-keyed JSON dictionaries and cleans temporary
+output by default. Supply `output="comparison"` to retain checkpoints and enable
+`resume=True`. The CLI continues to default to a timestamped directory.
+See the [API reference](../api/cuml.benchmark) for failure diagnostics,
+temporary cleanup and per-provider resume semantics.
+
 ## Define a suite
 
 Save this manifest as `my-suite.yaml`:
