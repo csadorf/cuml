@@ -15,8 +15,10 @@ import signal
 import subprocess
 import sys
 import time
+from dataclasses import dataclass
 from pathlib import Path
 from tempfile import TemporaryDirectory
+from typing import Any
 
 from .suite import SuiteError, SuitePlan, load_suite_reference
 
@@ -27,22 +29,33 @@ DEFAULT_PROVIDER = "cuml"
 _EXTENSION = "com.nvidia.cuml.benchmark"
 
 
+@dataclass(kw_only=True)
+class BenchmarkResults:
+    """Hold benchmark artifacts keyed by provider.
+
+    Parameters
+    ----------
+    artifacts : dict[str, dict[str, Any]]
+        Parsed JSON artifacts keyed by provider.
+    """
+
+    artifacts: dict[str, dict[str, Any]]
+
+
 class BenchmarkRunError(RuntimeError):
     """Report provider execution failures after all selected workers finish.
 
     Attributes
     ----------
-    artifacts : dict[str, dict]
-        Available provider artifacts, including failed or partial checkpoints.
-        Malformed artifacts are excluded. These dictionaries remain usable
-        after temporary output has been removed.
+    results : BenchmarkResults
+        Available results, including failed or partial checkpoints.
     failures : dict[str, str]
         Failed providers and diagnostic messages (including worker stderr).
     """
 
-    def __init__(self, artifacts: dict[str, dict], failures: dict[str, str]):
-        """Retain partial artifacts and provider failure diagnostics."""
-        self.artifacts = artifacts
+    def __init__(self, results: BenchmarkResults, failures: dict[str, str]):
+        """Retain partial results and provider failure diagnostics."""
+        self.results = results
         self.failures = failures
         super().__init__(
             "Benchmark providers failed: "
@@ -59,7 +72,7 @@ def run(
     providers: list[str] | None = None,
     output: str | Path | None = None,
     resume: bool = False,
-) -> dict[str, dict]:
+) -> BenchmarkResults:
     """Run a built-in or YAML suite in sequential isolated interpreters.
 
     Parameters
@@ -72,8 +85,8 @@ def run(
         Selected suite providers; defaults to ['cuml']. Suite declaration order
         determines execution order.
     output : str or Path, optional
-        Directory for existing per-provider JSON artifacts and case checkpoints.
-        If omitted, temporary output is removed on success, failure or interrupt.
+        Directory for results and checkpoints. If omitted, results are returned
+        in memory and temporary files are removed.
     resume : bool, default=False
         Retain successful cases and retry failures in an explicit existing output
         directory. Each provider worker checks compatibility before executing
@@ -82,8 +95,8 @@ def run(
 
     Returns
     -------
-    dict[str, dict]
-        Provider-keyed existing JSON artifacts, usable after temporary cleanup.
+    BenchmarkResults
+        Benchmark results containing JSON artifacts keyed by provider.
 
     Raises
     ------
@@ -219,7 +232,7 @@ def _run_plan(
     *,
     resume: bool = False,
     verbose: bool = False,
-) -> dict[str, dict]:
+) -> BenchmarkResults:
     """Run isolated provider workers sequentially, retaining each checkpoint."""
     if resume and not output.is_dir():
         raise SuiteError("--resume requires an existing output directory")
@@ -316,6 +329,7 @@ def _run_plan(
         len(suite.runs) - len(failures),
         len(failures),
     )
+    results = BenchmarkResults(artifacts=artifacts)
     if failures:
-        raise BenchmarkRunError(artifacts, failures)
-    return artifacts
+        raise BenchmarkRunError(results, failures)
+    return results

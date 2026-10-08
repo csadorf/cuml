@@ -16,11 +16,13 @@ isolated provider execution as the CLI.
 
     from cuml import benchmark
 
-    artifacts = benchmark.run(
+    results = benchmark.run(
         "my-suite.yaml", providers=["cuml", "scikit-learn"]
     )
 
-Results are JSON dictionaries keyed by provider. The defaults are the
+``run()`` returns a ``BenchmarkResults`` dataclass. Its ``artifacts`` field holds
+JSON dictionaries keyed by provider, for example ``results.artifacts["cuml"]``.
+The defaults are the
 ``estimators`` suite, ``standard`` profile, and ``cuml`` provider. Customize
 workloads and execution counts through YAML.
 
@@ -29,5 +31,7 @@ Pass a directory path to ``output`` to save results and checkpoints, for example
 run. Omitting ``output`` uses temporary storage.
 
 .. autofunction:: cuml.benchmark.run
+
+.. autoclass:: cuml.benchmark.BenchmarkResults
 
 .. autoclass:: cuml.benchmark.BenchmarkRunError

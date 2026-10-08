@@ -1840,6 +1840,20 @@ def test_dask_runtime_safety(monkeypatch, failure):
 # Public runner uses the same provider coordinator as the CLI.
 
 
+def test_benchmark_results_dataclass():
+    from dataclasses import fields, is_dataclass
+
+    artifacts = {"cuml": {"results": []}}
+    results = benchmark.BenchmarkResults(artifacts=artifacts)
+    assert is_dataclass(results)
+    assert [field.name for field in fields(results)] == ["artifacts"]
+    assert results.artifacts is artifacts
+    results.artifacts["cuml"]["results"].append({"id": "example"})
+    assert artifacts["cuml"]["results"] == [{"id": "example"}]
+    with pytest.raises(TypeError):
+        benchmark.BenchmarkResults(artifacts)
+
+
 def test_run_builtin_defaults_and_temporary_cleanup(monkeypatch):
     paths = []
 
@@ -1850,9 +1864,10 @@ def test_run_builtin_defaults_and_temporary_cleanup(monkeypatch):
         _write_worker_artifact(command)
 
     monkeypatch.setattr(coordinator, "_execute_worker", execute)
-    artifacts = benchmark.run(profile="smoke")
-    assert list(artifacts) == ["cuml"]
-    assert artifacts["cuml"]["results"]
+    results = benchmark.run(profile="smoke")
+    assert isinstance(results, benchmark.BenchmarkResults)
+    assert list(results.artifacts) == ["cuml"]
+    assert results.artifacts["cuml"]["results"]
     assert not paths[0].parent.exists()
 
 
@@ -1869,9 +1884,10 @@ def test_run_yaml_persistence_and_resume(
         _write_worker_artifact(command)
 
     monkeypatch.setattr(coordinator, "_execute_worker", execute)
-    artifacts = benchmark.run(
+    results = benchmark.run(
         reference_type(path), providers=["scikit-learn"], output=output
     )
+    artifacts = results.artifacts
     assert (
         json.loads((output / "scikit-learn.json").read_text())
         == artifacts["scikit-learn"]
@@ -1880,7 +1896,7 @@ def test_run_yaml_persistence_and_resume(
         benchmark.run(
             path, providers=["scikit-learn"], output=output, resume=True
         )
-        == artifacts
+        == results
     )
     assert calls == [False, True]
     with pytest.raises(SuiteError, match="results already exist"):
@@ -1968,10 +1984,12 @@ def test_run_partial_failures_continue_and_clean_output(
     assert not paths[0].parent.exists()
     assert list(error.value.failures) == ["scikit-learn"]
     assert (
-        error.value.artifacts["cuml"]["results"][0]["outcome"]["status"]
+        error.value.results.artifacts["cuml"]["results"][0]["outcome"][
+            "status"
+        ]
         == "success"
     )
-    assert ("scikit-learn" in error.value.artifacts) == (
+    assert ("scikit-learn" in error.value.results.artifacts) == (
         failure in {"case", "exit", "incomplete", "duplicate"}
     )
     if failure == "startup":
@@ -2061,7 +2079,7 @@ def test_run_unguarded_script_real_workers(document, tmp_path):
     script.write_text(
         "from cuml import benchmark\nimport json\n"
         f"artifacts = benchmark.run({str(path)!r}, providers={document['providers']!r}, output={str(tmp_path / 'results')!r})\n"
-        "print(json.dumps(artifacts))\n"
+        "print(json.dumps(artifacts.artifacts))\n"
     )
     completed = subprocess.run(
         [sys.executable, str(script)],
@@ -2126,7 +2144,8 @@ def test_run_worker_diagnostic_failures_continue(
         benchmark.run(path, providers=document["providers"])
     assert time.monotonic() - started < 2
     assert calls == document["providers"]
-    assert list(error.value.artifacts) == document["providers"]
+    assert isinstance(error.value.results, benchmark.BenchmarkResults)
+    assert list(error.value.results.artifacts) == document["providers"]
     assert list(error.value.failures) == ["scikit-learn"]
     assert "status 7" in error.value.failures["scikit-learn"]
     assert diagnostic in error.value.failures["scikit-learn"]
