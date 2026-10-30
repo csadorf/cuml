@@ -2075,7 +2075,7 @@ def test_native_instrumentation_rejects_nondefault_output_type():
 
     backend = get_backend("cuml")
     with cuml.using_output_type("numpy"):
-        with pytest.raises(AssertionError, match="default global output_type"):
+        with pytest.raises(ValueError, match="default global output_type"):
             with backend.instrumentation(None, "measurement", 0):
                 pytest.fail("nondefault output type must be rejected")
         assert cuml.global_settings.output_type == "numpy"

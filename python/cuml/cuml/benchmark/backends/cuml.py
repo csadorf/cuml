@@ -133,7 +133,8 @@ class NativeCumlBackend(CumlBackend):
     ) -> Iterator[VerificationResult]:
         """Require default output behavior."""
         cuml = importlib.import_module("cuml")
-        assert cuml.global_settings.output_type is None, (
-            "Native benchmarks require the default global output_type=None"
-        )
+        if cuml.global_settings.output_type is not None:
+            raise ValueError(
+                "Native benchmarks require the default global output_type=None"
+            )
         yield VerificationResult()
