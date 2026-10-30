@@ -2081,6 +2081,16 @@ def test_native_instrumentation_rejects_nondefault_output_type():
         assert cuml.global_settings.output_type == "numpy"
 
 
+@pytest.mark.parametrize("output_type", ["numpy", "pandas"])
+def test_native_estimator_rejects_host_output_default(output_type):
+    class Estimator:
+        def __init__(self):
+            self.output_type = output_type
+
+    with pytest.raises(ValueError, match="device-resident estimator outputs"):
+        get_backend("cuml").construct_estimator(Estimator, {})
+
+
 def test_native_preparation_precedes_initial_fit_and_timing(monkeypatch):
     backend = get_backend("cuml")
     events = []

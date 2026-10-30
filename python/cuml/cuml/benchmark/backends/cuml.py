@@ -107,6 +107,23 @@ class NativeCumlBackend(CumlBackend):
     host inputs, and Dask has its own distributed preparation and output policy.
     """
 
+    def construct_estimator(
+        self,
+        estimator_class: type[Any],
+        parameters: dict[str, Any],
+        runtime: Any = None,
+    ) -> Any:
+        """Construct an estimator and reject host-output configuration."""
+        estimator = super().construct_estimator(
+            estimator_class, parameters, runtime
+        )
+        if getattr(estimator, "output_type", None) in ("numpy", "pandas"):
+            raise ValueError(
+                "Native benchmarks require device-resident estimator outputs; "
+                f"got output_type={estimator.output_type!r}"
+            )
+        return estimator
+
     def convert_data(
         self, case: ResolvedCase, X: Any, y: Any
     ) -> tuple[Any, Any]:
